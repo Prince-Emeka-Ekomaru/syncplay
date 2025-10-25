@@ -112,12 +112,6 @@ const Navbar = () => {
             <img src="/syncplay nobg (1).png" alt="syncplay eSports" />
           </Link>
 
-          {/* Right Side Buttons */}
-          <div className="navbar-actions">
-            <Link to="/tournaments" className="btn-join">{t.join}</Link>
-            <Link to="/events" className="btn-events">{t.events}</Link>
-          </div>
-
           {/* Mobile Menu Overlay */}
           <div className={`navbar-menu ${isMobileMenuOpen ? 'active' : ''}`}>
             <ul className="navbar-nav">

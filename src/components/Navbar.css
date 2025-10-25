@@ -271,48 +271,6 @@
 }
 
 /* Right Side Action Buttons */
-.navbar-actions {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.btn-join,
-.btn-events {
-  padding: 0.5rem 1.75rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-radius: 4px;
-  transition: var(--transition-normal);
-  white-space: nowrap;
-}
-
-.btn-join {
-  background: transparent;
-  color: var(--color-white);
-  border: 2px solid var(--color-white);
-}
-
-.btn-join:hover {
-  background: var(--color-white);
-  color: var(--color-dark);
-}
-
-.btn-events {
-  background: var(--color-primary-red);
-  color: var(--color-white);
-  border: 2px solid var(--color-primary-red);
-}
-
-.btn-events:hover {
-  background: var(--color-white);
-  color: var(--color-primary-red);
-  border-color: var(--color-white);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
-}
 
 /* Invisible Click Outside Overlay */
 .click-outside-overlay {
@@ -639,16 +597,6 @@
     flex: 1;
   }
 
-  .navbar-actions {
-    gap: 0.5rem;
-  }
-
-  .btn-join,
-  .btn-events {
-    padding: 0.6rem 1rem;
-    font-size: 0.75rem;
-  }
-
   .navbar-menu {
     width: 280px;
   }
@@ -661,18 +609,5 @@
 
   .social-sidebar:hover {
     left: 0;
-  }
-
-  .btn-join span,
-  .btn-events span {
-    display: none;
-  }
-
-  .btn-join::after {
-    content: 'JOIN';
-  }
-
-  .btn-events::after {
-    content: 'EVENTS';
   }
 }
