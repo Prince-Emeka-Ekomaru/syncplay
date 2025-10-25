@@ -179,11 +179,11 @@ const AdminRegistrations = () => {
             <tbody>
               {sortedRegistrations.map((reg, index) => (
                 <tr key={reg.id}>
-                  <td>{index + 1}</td>
-                  <td className="team-name-cell">
+                  <td data-label="#">{index + 1}</td>
+                  <td data-label="Team Name" className="team-name-cell">
                     <strong>{reg.team_name}</strong>
                   </td>
-                  <td className="player-cell">
+                  <td data-label="Player 1" className="player-cell">
                     <div className="player-info">
                       <strong>{reg.player1_name}</strong>
                       {reg.player1_tournament_id && (
@@ -197,7 +197,7 @@ const AdminRegistrations = () => {
                       </span>
                     </div>
                   </td>
-                  <td className="player-cell">
+                  <td data-label="Player 2" className="player-cell">
                     <div className="player-info">
                       <strong>{reg.player2_name}</strong>
                       {reg.player2_tournament_id && (
@@ -211,7 +211,7 @@ const AdminRegistrations = () => {
                       </span>
                     </div>
                   </td>
-                  <td className="contact-cell">
+                  <td data-label="Contact" className="contact-cell">
                     <div className="contact-info">
                       <a href={`mailto:${reg.player1_email}`}>
                         <i className="fas fa-envelope"></i> {reg.player1_email}
@@ -219,10 +219,10 @@ const AdminRegistrations = () => {
                       <span><i className="fas fa-phone"></i> {reg.player1_phone}</span>
                     </div>
                   </td>
-                  <td className="payment-ref-cell">
+                  <td data-label="Payment Ref" className="payment-ref-cell">
                     <code>{reg.payment_reference}</code>
                   </td>
-                  <td className="date-cell">
+                  <td data-label="Date" className="date-cell">
                     {new Date(reg.created_at).toLocaleDateString('en-NG', {
                       month: 'short',
                       day: 'numeric',

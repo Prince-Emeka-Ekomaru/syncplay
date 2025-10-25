@@ -544,75 +544,18 @@
   }
 }
 
-/* Tablet Responsive (768px - 1100px) */
+/* Hide trapezoid logo on mobile - too complex for small screens */
 @media (max-width: 768px) {
   .navbar-logo {
-    width: 120px !important;
-    height: 70px !important;
-    margin-top: -0.2rem;
-    clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 30% 100%);
+    display: none !important;
   }
-
-  .navbar-logo img {
-    width: 80%;
-    height: 80%;
+  
+  .navbar-container {
+    justify-content: space-between;
   }
-
-  .navbar.scrolled .navbar-logo {
-    height: 60px !important;
-    width: 110px !important;
-  }
-}
-
-/* Mobile Landscape (481px - 767px) */
-@media (max-width: 600px) {
-  .navbar-logo {
-    width: 100px !important;
-    height: 60px !important;
-    margin-top: 0;
-    clip-path: polygon(0% 0%, 100% 0%, 65% 100%, 35% 100%);
-    border: 1.5px solid rgba(230, 57, 70, 0.3);
-  }
-
-  .navbar-logo img {
-    width: 75%;
-    height: 75%;
-  }
-
-  .navbar.scrolled .navbar-logo {
-    height: 55px !important;
-    width: 95px !important;
-  }
-}
-
-/* Mobile Portrait (320px - 480px) */
-@media (max-width: 480px) {
-  .navbar-logo {
-    width: 85px !important;
-    height: 55px !important;
-    margin-top: 0;
-    clip-path: polygon(0% 0%, 100% 0%, 60% 100%, 40% 100%);
-    border: 1px solid rgba(230, 57, 70, 0.25);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-  }
-
-  .navbar-logo img {
-    width: 70%;
-    height: 70%;
-  }
-
-  .navbar-logo::before {
-    opacity: 0.7;
-  }
-
-  .navbar.scrolled .navbar-logo {
-    height: 50px !important;
-    width: 80px !important;
-  }
-
-  .navbar.scrolled .navbar-logo img {
-    width: 65%;
-    height: 65%;
+  
+  .navbar-left {
+    flex: 1;
   }
 
   .navbar-actions {
