@@ -211,12 +211,12 @@
 }
 
 .navbar-logo img {
-  width: 85%;
-  height: 85%;
+  width: 95%;
+  height: 95%;
   object-fit: contain;
   object-position: center;
   transition: var(--transition-normal);
-  opacity: 0.9;
+  opacity: 0.95;
   position: relative;
   z-index: 2;
   filter: contrast(1.1) brightness(1.05);
@@ -238,8 +238,10 @@
 }
 
 .navbar.scrolled .navbar-logo img {
+  width: 95%;
+  height: 95%;
   object-fit: contain;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 /* Right Side Action Buttons */
@@ -617,14 +619,19 @@
   }
 
   .navbar-logo img {
-    width: 70%;
-    height: 70%;
+    width: 90%;
+    height: 90%;
   }
 
   .navbar.scrolled .navbar-logo {
     height: calc(100% + 1.8rem) !important;
     width: 100px !important;
     margin-top: -0.9rem !important;
+  }
+
+  .navbar.scrolled .navbar-logo img {
+    width: 90%;
+    height: 90%;
   }
 
   .navbar-menu {
@@ -640,14 +647,19 @@
   }
 
   .navbar-logo img {
-    width: 65%;
-    height: 65%;
+    width: 88%;
+    height: 88%;
   }
 
   .navbar.scrolled .navbar-logo {
     height: calc(100% + 1.5rem) !important;
     width: 85px !important;
     margin-top: -0.75rem !important;
+  }
+
+  .navbar.scrolled .navbar-logo img {
+    width: 88%;
+    height: 88%;
   }
 }
 
