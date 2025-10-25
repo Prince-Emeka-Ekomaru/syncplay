@@ -71,7 +71,7 @@ const Navbar = () => {
 
       <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="navbar-container">
-          {/* Left Side: Hamburger + Language */}
+          {/* Left Side: Hamburger Only */}
           <div className="navbar-left">
             <button 
               className={`navbar-toggle ${isMobileMenuOpen ? 'active' : ''}`}
@@ -82,13 +82,22 @@ const Navbar = () => {
               <span></span>
               <span></span>
             </button>
-            
-            <div className="language-selector" onClick={toggleLangDropdown}>
-              <span>{currentLang.flag} {currentLang.code.toUpperCase()}</span>
+          </div>
+
+          {/* Centered Logo */}
+          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+            <img src="/syncplay nobg (1).png" alt="syncplay eSports" />
+          </Link>
+
+          {/* Mobile Menu Overlay */}
+          <div className={`navbar-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+            {/* Language Selector Inside Mobile Menu */}
+            <div className="mobile-language-selector" onClick={toggleLangDropdown}>
+              <span>{currentLang.code.toUpperCase()}</span>
               <i className={`fas fa-chevron-down ${isLangDropdownOpen ? 'rotate' : ''}`}></i>
               
               {isLangDropdownOpen && (
-                <div className="language-dropdown">
+                <div className="language-dropdown-mobile">
                   {languages.map(lang => (
                     <div
                       key={lang.code}
@@ -107,15 +116,6 @@ const Navbar = () => {
                 </div>
               )}
             </div>
-          </div>
-
-          {/* Centered Logo */}
-          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-            <img src="/syncplay nobg (1).png" alt="syncplay eSports" />
-          </Link>
-
-          {/* Mobile Menu Overlay */}
-          <div className={`navbar-menu ${isMobileMenuOpen ? 'active' : ''}`}>
             <ul className="navbar-nav">
               <li className="nav-item">
                 <Link to="/" className="nav-link" onClick={closeMobileMenu}>

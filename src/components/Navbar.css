@@ -78,48 +78,13 @@
 }
 
 /* Language Selector */
+/* Hide old desktop language selector - now only in mobile menu */
 .language-selector {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--color-white);
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: var(--transition-normal);
-  background: rgba(255, 255, 255, 0.05);
+  display: none;
 }
 
-.language-selector:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.language-selector i {
-  font-size: 0.75rem;
-  opacity: 0.7;
-  transition: transform 0.3s ease;
-}
-
-.language-selector i.rotate {
-  transform: rotate(180deg);
-}
-
-/* Language Dropdown - Styled like CLA */
 .language-dropdown {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 0;
-  min-width: 100px;
-  background: rgba(200, 200, 200, 0.95);
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  z-index: 10001;
-  animation: dropdownFadeIn 0.2s ease;
-  backdrop-filter: blur(10px);
+  display: none;
 }
 
 @keyframes dropdownFadeIn {
@@ -311,6 +276,58 @@
 
 .navbar-menu.active {
   left: 0;
+}
+
+/* Mobile Language Selector Inside Menu - Like CLA */
+.mobile-language-selector {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: rgba(100, 180, 255, 0.15);
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mobile-language-selector:hover {
+  background: rgba(100, 180, 255, 0.25);
+}
+
+.mobile-language-selector span {
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.mobile-language-selector i {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: transform 0.3s ease;
+}
+
+.mobile-language-selector i.rotate {
+  transform: rotate(180deg);
+}
+
+/* Language Dropdown Inside Mobile Menu */
+.language-dropdown-mobile {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: rgba(200, 200, 200, 0.95);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  z-index: 10001;
+  animation: dropdownFadeIn 0.2s ease;
+  backdrop-filter: blur(10px);
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .navbar-nav {
