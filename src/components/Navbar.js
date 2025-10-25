@@ -177,6 +177,38 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
+
+            {/* Mobile Menu CTA Buttons */}
+            <div className="mobile-menu-actions">
+              <Link to="/events" className="mobile-btn mobile-btn-primary" onClick={closeMobileMenu}>
+                {t.events}
+              </Link>
+              <Link to="/register" className="mobile-btn mobile-btn-secondary" onClick={closeMobileMenu}>
+                {t.joinTournaments}
+              </Link>
+            </div>
+
+            {/* Mobile Menu Social Icons */}
+            <div className="mobile-menu-social">
+              <a href="https://www.instagram.com/syncplay_esports/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href="https://www.tiktok.com/@syncplay_esport" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                <i className="fab fa-tiktok"></i>
+              </a>
+              <a href="https://discord.gg/utstb8rGgM" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+                <i className="fab fa-discord"></i>
+              </a>
+              <a href="https://www.youtube.com/@syncplayEsports" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <i className="fab fa-youtube"></i>
+              </a>
+              <a href="https://x.com/SyncplayEsport" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                <i className="fab fa-x-twitter"></i>
+              </a>
+              <a href="https://facebook.com/syncplayesports" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <i className="fab fa-facebook"></i>
+              </a>
+            </div>
           </div>
         </div>
       </nav>
