@@ -76,9 +76,6 @@ const NewsArticle = () => {
                   <button className="share-btn twitter">
                     <i className="fab fa-twitter"></i>
                   </button>
-                  <button className="share-btn facebook">
-                    <i className="fab fa-facebook"></i>
-                  </button>
                   <button className="share-btn linkedin">
                     <i className="fab fa-linkedin"></i>
                   </button>

@@ -54,7 +54,6 @@ const Contact = () => {
     { icon: 'fa-tiktok', url: 'https://tiktok.com', name: 'TikTok' },
     { icon: 'fa-discord', url: 'https://discord.com', name: 'Discord' },
     { icon: 'fa-youtube', url: 'https://youtube.com', name: 'YouTube' },
-    { icon: 'fa-facebook', url: 'https://facebook.com', name: 'Facebook' },
     { icon: 'fa-telegram', url: 'https://telegram.org', name: 'Telegram' }
   ];
 

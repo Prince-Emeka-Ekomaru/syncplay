@@ -64,9 +64,6 @@ const Footer = () => {
                 <a href="https://x.com/SyncplayEsport" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
                   <i className="fab fa-twitter"></i>
                 </a>
-                <a href="https://facebook.com/syncplayesports" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                  <i className="fab fa-facebook"></i>
-                </a>
               </div>
             </div>
           </div>
