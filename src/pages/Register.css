@@ -1,0 +1,742 @@
+.register-page {
+  padding-top: 70px;
+}
+
+/* Register Hero */
+.register-hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--color-primary-red) 0%, var(--color-dark) 100%);
+  color: var(--color-white);
+  padding: 4rem 0 3rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.register-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    repeating-linear-gradient(45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 255, 255, 0.03) 10px,
+      rgba(255, 255, 255, 0.03) 20px);
+}
+
+.register-hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.register-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 0.5rem;
+  font-weight: 900;
+}
+
+.register-hero p {
+  font-size: 1.5rem;
+  opacity: 0.95;
+  margin-bottom: 1.5rem;
+}
+
+.tournament-details-hero {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-size: 1rem;
+}
+
+.tournament-details-hero span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.9;
+}
+
+.tournament-details-hero span.slots-warning {
+  color: #FFD700;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.slots-alert {
+  margin-top: 1.5rem;
+  padding: 1rem 2rem;
+  background: rgba(255, 215, 0, 0.2);
+  border: 2px solid #FFD700;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: #FFD700;
+  animation: slideInDown 0.5s ease-out;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slots-alert i {
+  font-size: 1.2rem;
+  animation: shake 1s infinite;
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Registration Full Message */
+.registration-full-message {
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.full-icon {
+  font-size: 5rem;
+  color: var(--color-primary-red);
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+.registration-full-message h2 {
+  font-size: 2.5rem;
+  color: var(--color-dark);
+  margin-bottom: 1rem;
+}
+
+.registration-full-message p {
+  font-size: 1.2rem;
+  color: var(--color-dark);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.full-subtitle {
+  font-size: 1rem !important;
+  opacity: 0.8;
+  margin-bottom: 2rem !important;
+}
+
+.full-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+/* Registration Form Section */
+.register-form-section {
+  background-color: var(--color-light-gray);
+  padding: var(--spacing-xl) 0;
+  min-height: 70vh;
+}
+
+.register-form-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--color-white);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress Bar */
+.registration-progress {
+  margin-bottom: 3rem;
+}
+
+.progress-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--color-light-gray);
+  border: 3px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--color-gray);
+  transition: all 0.3s ease;
+}
+
+.progress-step.active .step-circle {
+  background: var(--color-primary-red);
+  border-color: var(--color-primary-red);
+  color: var(--color-white);
+}
+
+.progress-step.completed .step-circle {
+  background: #4CAF50;
+  border-color: #4CAF50;
+  color: var(--color-white);
+}
+
+.step-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-gray);
+  text-align: center;
+}
+
+.progress-step.active .step-label {
+  color: var(--color-primary-red);
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 4px;
+  background: #E0E0E0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--color-primary-red);
+  transition: width 0.4s ease;
+}
+
+/* Registration Steps */
+.registration-step {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.registration-step h2 {
+  color: var(--color-dark);
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.step-description {
+  color: var(--color-gray);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* Form Styles */
+.registration-form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  color: var(--color-dark);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.required {
+  color: var(--color-primary-red);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #E0E0E0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background-color: var(--color-white);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary-red);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+.form-group input.error,
+.form-group select.error {
+  border-color: #dc3545;
+}
+
+.form-group small {
+  display: block;
+  color: var(--color-gray);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+/* Platform Display */
+.platform-display {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1.5rem;
+  background: linear-gradient(135deg, #003087 0%, #0070cc 100%);
+  border-radius: 8px;
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(0, 48, 135, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.platform-display i {
+  font-size: 2rem;
+  opacity: 0.95;
+}
+
+.platform-display span {
+  flex: 1;
+  letter-spacing: 0.5px;
+}
+
+.error-message {
+  display: block;
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--color-light-gray);
+}
+
+.form-actions .btn {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+}
+
+/* Review Section */
+.review-section {
+  background: var(--color-light-gray);
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.review-section h3 {
+  color: var(--color-dark);
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.review-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.review-item:last-child {
+  border-bottom: none;
+}
+
+.review-label {
+  font-weight: 600;
+  color: var(--color-gray);
+}
+
+.review-value {
+  color: var(--color-dark);
+  font-weight: 500;
+}
+
+/* Payment Info Section */
+.payment-info {
+  background: linear-gradient(135deg, rgba(230, 57, 70, 0.05) 0%, rgba(230, 57, 70, 0.02) 100%);
+  border: 2px solid var(--color-primary-red);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.payment-info h3 {
+  color: var(--color-dark);
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.payment-info h3 i {
+  color: var(--color-primary-red);
+}
+
+.payment-details {
+  background: var(--color-white);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.payment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.payment-label {
+  font-weight: 600;
+  color: var(--color-gray);
+  font-size: 1.1rem;
+}
+
+.payment-value {
+  color: var(--color-primary-red);
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.payment-note {
+  color: var(--color-gray);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.payment-note strong {
+  color: var(--color-dark);
+}
+
+/* Terms Section */
+.terms-section {
+  background: #FFF9E6;
+  border: 2px solid #FFD700;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.checkbox-group {
+  margin-bottom: 1rem;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto;
+  margin-top: 0.25rem;
+  cursor: pointer;
+}
+
+.checkbox-group label.error {
+  color: #dc3545;
+}
+
+.checkbox-group a {
+  color: var(--color-primary-red);
+  text-decoration: underline;
+}
+
+/* Success Page */
+.registration-success {
+  text-align: center;
+  padding: 2rem 0;
+  animation: fadeIn 0.6s ease;
+}
+
+.success-icon {
+  font-size: 5rem;
+  color: #4CAF50;
+  margin-bottom: 1.5rem;
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+.registration-success h2 {
+  color: var(--color-dark);
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.success-message {
+  font-size: 1.2rem;
+  color: var(--color-gray);
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.success-message strong {
+  color: var(--color-primary-red);
+}
+
+.payment-reference {
+  background: var(--color-light-gray);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 2rem auto;
+  max-width: 500px;
+  border-left: 4px solid var(--color-primary-red);
+}
+
+.payment-reference p {
+  margin: 0.5rem 0;
+  color: var(--color-dark);
+  font-size: 1rem;
+}
+
+.payment-reference strong {
+  color: var(--color-primary-red);
+}
+
+.reference-note {
+  font-size: 0.85rem;
+  color: var(--color-gray);
+  font-style: italic;
+}
+
+.success-details {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+
+.detail-card {
+  background: var(--color-light-gray);
+  padding: 2rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.detail-card i {
+  font-size: 2.5rem;
+  color: var(--color-primary-red);
+}
+
+.detail-card strong {
+  display: block;
+  color: var(--color-dark);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-card span {
+  color: var(--color-gray);
+  font-size: 1.1rem;
+}
+
+.next-steps {
+  background: var(--color-light-gray);
+  padding: 2rem;
+  border-radius: 12px;
+  margin: 2.5rem 0;
+  text-align: left;
+}
+
+.next-steps h3 {
+  color: var(--color-dark);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.next-steps ul {
+  list-style: none;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.next-steps li {
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background: var(--color-white);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+}
+
+.next-steps li i {
+  color: #4CAF50;
+  font-size: 1.2rem;
+}
+
+.success-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .register-form-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .tournament-details-hero {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .progress-steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  .success-details {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .success-details {
+    grid-template-columns: 1fr;
+  }
+
+  .success-actions {
+    flex-direction: column;
+  }
+
+  .success-actions .btn {
+    width: 100%;
+  }
+
+  .registration-success h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .register-hero h1 {
+    font-size: 2rem;
+  }
+
+  .register-hero p {
+    font-size: 1.2rem;
+  }
+
+  .step-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .step-label {
+    font-size: 0.75rem;
+  }
+}

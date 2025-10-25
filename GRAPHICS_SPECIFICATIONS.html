@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>syncplay eSports - GRAPHICS_SPECIFICATIONS</title>
+    <style>
+        @media screen {
+            body { font-family: -apple-system, sans-serif; font-size: 14px; line-height: 1.8; color: #333; max-width: 1200px; margin: 0 auto; padding: 40px; background: #f5f5f5; }
+            .container { background: white; padding: 40px; box-shadow: 0 0 20px rgba(0,0,0,0.1); border-radius: 8px; }
+        }
+        @media print {
+            body { font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.4; color: #000; margin: 0; padding: 0; }
+            .container { padding: 0; }
+            h1 { page-break-before: always; }
+            h1:first-of-type { page-break-before: avoid; }
+            h2, h3 { page-break-after: avoid; }
+            pre, blockquote, table { page-break-inside: avoid; }
+        }
+        h1 { color: #E63946; font-size: 28px; border-bottom: 3px solid #E63946; padding-bottom: 12px; margin-top: 40px; margin-bottom: 20px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: #1A1A1D; font-size: 22px; margin-top: 35px; margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+        h3 { color: #E63946; font-size: 18px; margin-top: 25px; margin-bottom: 12px; }
+        h4 { font-size: 16px; margin-top: 20px; margin-bottom: 10px; color: #333; }
+        code { background-color: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-family: "Courier New", monospace; font-size: 0.9em; color: #c7254e; }
+        pre { background-color: #f8f8f8; padding: 16px; border-radius: 5px; border-left: 4px solid #E63946; margin: 15px 0; }
+        pre code { background-color: transparent; padding: 0; color: #333; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #E63946; color: white; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .print-button { position: fixed; top: 20px; right: 20px; background: #E63946; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; box-shadow: 0 2px 10px rgba(230, 57, 70, 0.3); z-index: 1000; }
+        .print-button:hover { background: #d62839; }
+        @media print { .print-button { display: none; } }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">📄 Save as PDF</button>
+    <div class="container"><h1>syncplay eSports - Graphics &amp; Design Specifications</h1>
+<p><strong>Last Updated</strong>: October 24, 2025<br><strong>Brand</strong>: syncplay eSports<br><strong>Tournament</strong>: 2v2 EA Sports FC 26 - November 30, 2025</p>
+<hr>
+<h2>📐 TABLE OF CONTENTS</h2>
+<ol>
+<li><a href="#brand-guidelines">Brand Guidelines</a></li>
+<li><a href="#all-platform-sizes-quick-reference">All Platform Sizes Quick Reference</a></li>
+<li><a href="#instagram-graphics">Instagram Graphics</a></li>
+<li><a href="#facebook-graphics">Facebook Graphics</a></li>
+<li><a href="#twitterx-graphics">Twitter/X Graphics</a></li>
+<li><a href="#tiktok-graphics">TikTok Graphics</a></li>
+<li><a href="#youtube-graphics">YouTube Graphics</a></li>
+<li><a href="#campaign-specific-templates">Campaign-Specific Templates</a></li>
+<li><a href="#design-assets-checklist">Design Assets Checklist</a></li>
+</ol>
+<hr>
+<h2>🎨 BRAND GUIDELINES</h2>
+<h3>Brand Colors</h3>
+<pre><code>Primary Red:   #E63946 (RGB: 230, 57, 70)
+Black:         #1A1A1D (RGB: 26, 26, 29)
+White:         #FFFFFF (RGB: 255, 255, 255)
+Dark Gray:     #4A4A4D (RGB: 74, 74, 77) - For secondary text
+Light Gray:    #F5F5F5 (RGB: 245, 245, 245) - For backgrounds
+</code></pre>
+<h3>Typography</h3>
+<ul>
+<li><strong>Headlines</strong>: Bold, Sans-serif (e.g., Montserrat Bold, Bebas Neue)</li>
+<li><strong>Body Text</strong>: Regular Sans-serif (e.g., Open Sans, Inter)</li>
+<li><strong>Numbers (Prize amounts)</strong>: Bold, impactful font</li>
+<li><strong>Minimum font size</strong>: 12pt for body text, 18pt for important info</li>
+</ul>
+<h3>Logo Usage</h3>
+<ul>
+<li><strong>Primary Logo</strong>: <code>syncplay nobg.png</code> (White text in red circle)</li>
+<li><strong>Alternative Logo</strong>: <code>syncplay nobg (1).png</code> (White text in black circle)</li>
+<li><strong>Text Logo (Red)</strong>: <code>syncplay text nobg 1.png</code></li>
+<li><strong>Text Logo (Black)</strong>: <code>syncplay text nobg 2.png</code></li>
+<li><strong>Minimum Size</strong>: 100px width (never smaller)</li>
+<li><strong>Clear Space</strong>: Maintain space equal to logo height around logo</li>
+</ul>
+<h3>Key Visual Elements</h3>
+<ul>
+<li><strong>Tournament Badge</strong>: Star icon + &quot;FIRST TOURNAMENT&quot; or &quot;ASỌMPI MBỤ&quot;</li>
+<li><strong>Prize Pool Graphic</strong>: Gold/trophy theme for ₦1.5M</li>
+<li><strong>Platform Icon</strong>: PlayStation logo (always visible for gaming content)</li>
+<li><strong>CTA Buttons</strong>: Red background, white text, rounded corners</li>
+</ul>
+<hr>
+<h2>📊 ALL PLATFORM SIZES - QUICK REFERENCE</h2>
+<h3>INSTAGRAM</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Size</th>
+<th>Aspect Ratio</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Feed Post (Square)</td>
+<td>1080×1080px</td>
+<td>1:1</td>
+<td>Main posts, announcements</td>
+</tr>
+<tr>
+<td>Feed Post (Portrait)</td>
+<td>1080×1350px</td>
+<td>4:5</td>
+<td>Detailed content, graphics</td>
+</tr>
+<tr>
+<td>Story</td>
+<td>1080×1920px</td>
+<td>9:16</td>
+<td>Daily updates, polls, countdowns</td>
+</tr>
+<tr>
+<td>Reels</td>
+<td>1080×1920px</td>
+<td>9:16</td>
+<td>Video content, challenges</td>
+</tr>
+<tr>
+<td>Carousel</td>
+<td>1080×1080px each</td>
+<td>1:1</td>
+<td>Multi-slide content</td>
+</tr>
+</tbody></table>
+<h3>FACEBOOK</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Size</th>
+<th>Aspect Ratio</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cover Photo</td>
+<td>820×312px</td>
+<td>2.63:1</td>
+<td>Profile header</td>
+</tr>
+<tr>
+<td>Feed Post</td>
+<td>1200×630px</td>
+<td>1.91:1</td>
+<td>Shared content, links</td>
+</tr>
+<tr>
+<td>Event Cover</td>
+<td>1920×1080px</td>
+<td>16:9</td>
+<td>Tournament event page</td>
+</tr>
+<tr>
+<td>Story</td>
+<td>1080×1920px</td>
+<td>9:16</td>
+<td>Quick updates</td>
+</tr>
+</tbody></table>
+<h3>TWITTER/X</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Size</th>
+<th>Aspect Ratio</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Header</td>
+<td>1500×500px</td>
+<td>3:1</td>
+<td>Profile banner</td>
+</tr>
+<tr>
+<td>In-stream Photo</td>
+<td>1600×900px</td>
+<td>16:9</td>
+<td>Tweet images</td>
+</tr>
+<tr>
+<td>Card Image</td>
+<td>800×418px</td>
+<td>1.91:1</td>
+<td>Link previews</td>
+</tr>
+</tbody></table>
+<h3>TIKTOK</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Size</th>
+<th>Aspect Ratio</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Video</td>
+<td>1080×1920px</td>
+<td>9:16</td>
+<td>All TikTok content</td>
+</tr>
+<tr>
+<td>Profile Picture</td>
+<td>200×200px</td>
+<td>1:1</td>
+<td>Account avatar</td>
+</tr>
+</tbody></table>
+<h3>YOUTUBE</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Size</th>
+<th>Aspect Ratio</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Thumbnail</td>
+<td>1280×720px</td>
+<td>16:9</td>
+<td>Video thumbnails</td>
+</tr>
+<tr>
+<td>Channel Banner</td>
+<td>2560×1440px</td>
+<td>16:9</td>
+<td>Channel header</td>
+</tr>
+<tr>
+<td>Video Ad</td>
+<td>1920×1080px</td>
+<td>16:9</td>
+<td>Pre-roll ads</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>📱 INSTAGRAM GRAPHICS</h2>
+<h3>1. LAUNCH ANNOUNCEMENT POST</h3>
+<p><strong>Size</strong>: 1080×1350px (4:5 Portrait)</p>
+<p><strong>Layout</strong>:</p>
+<pre><code>┌─────────────────────┐
+│  SYNCPLAY LOGO      │ (Top 15%)
+│                     │
+│  &quot;INTRODUCING&quot;      │ (Header)
+│  syncplay eSports   │ (Large text)
+│                     │
+│  [Game Screenshot]  │ (Middle 40%)
+│                     │
+│  KEY INFO:          │
+│  📅 Nov 30, 2025    │
+│  💰 ₦1.5M Prize     │
+│  👥 32 Teams        │
+│                     │
+│  REGISTER NOW       │ (CTA Button)
+│  SYNCPLAY.CO        │
+└─────────────────────┘
+</code></pre>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Background: Dark gradient (Black to Dark Red)</li>
+<li>Logo: White version, top center</li>
+<li>Game screenshot: EA Sports FC 26 gameplay, slightly dimmed</li>
+<li>Info icons: White with red accent</li>
+<li>CTA button: Solid red (#E63946), white text, bold</li>
+<li>Font sizes: Title 72pt, Body 36pt, CTA 48pt</li>
+</ul>
+<hr>
+<h3>2. PRIZE POOL HIGHLIGHT POST</h3>
+<p><strong>Size</strong>: 1080×1080px (1:1 Square)</p>
+<p><strong>Layout</strong>:</p>
+<pre><code>┌─────────────────────┐
+│                     │
+│   ₦1,500,000        │ (Massive, gold)
+│   PRIZE POOL        │
+│                     │
+│ ┌─────────────────┐ │
+│ │ 🥇 ₦800,000     │ │
+│ │ 🥈 ₦400,000     │ │
+│ │ 🥉 ₦300,000     │ │
+│ └─────────────────┘ │
+│                     │
+│  NOVEMBER 30        │
+│  syncplay eSports   │
+└─────────────────────┘
+</code></pre>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Background: Trophy/stadium bokeh effect</li>
+<li>Main amount: Gold gradient (#FFD700 to #FFA500), 120pt</li>
+<li>Breakdown: White boxes with semi-transparent background</li>
+<li>Medals: Emoji or colored icons</li>
+<li>syncplay logo: Bottom, small watermark</li>
+</ul>
+<hr>
+<h3>3. COUNTDOWN SERIES (30 DAYS, 14 DAYS, 7 DAYS, 48 HRS)</h3>
+<p><strong>Size</strong>: 1080×1350px (4:5 Portrait)</p>
+<p><strong>Layout Template</strong>:</p>
+<pre><code>┌─────────────────────┐
+│                     │
+│       30            │ (HUGE number)
+│      DAYS           │
+│                     │
+│  UNTIL TOURNAMENT   │
+│                     │
+│  [Tournament Info]  │
+│  • Date             │
+│  • Prize            │
+│  • Teams            │
+│                     │
+│  SPOTS REMAINING:   │
+│  █████░░░░░  X/32   │ (Progress bar)
+│                     │
+│  REGISTER NOW       │
+└─────────────────────┘
+</code></pre>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Background: Changes intensity each week (darker = closer to event)</li>
+<li>Number: 180pt, bold, white with red outline</li>
+<li>Progress bar: Red filled portion, gray unfilled</li>
+<li>Urgency increases with design intensity</li>
+</ul>
+<p><strong>Color Variations</strong>:</p>
+<ul>
+<li>30 Days: Medium red (#E63946)</li>
+<li>14 Days: Darker red (#D62839)</li>
+<li>7 Days: Deep red (#C71F2E)</li>
+<li>48 Hours: Black with red glow effect</li>
+</ul>
+<hr>
+<h3>4. INSTAGRAM STORY TEMPLATES</h3>
+<p><strong>Size</strong>: 1080×1920px (9:16)</p>
+<h4>Template A: Daily Update</h4>
+<pre><code>┌─────────────┐
+│ @syncplay   │ (Top 10%)
+│ syncplay    │
+├─────────────┤
+│             │
+│             │
+│   CONTENT   │ (Middle 70%)
+│    AREA     │
+│             │
+│             │
+├─────────────┤
+│ SWIPE UP ⬆  │ (Bottom 10%)
+│ LINK        │
+└─────────────┘
+</code></pre>
+<h4>Template B: Poll/Question</h4>
+<pre><code>┌─────────────┐
+│ syncplay    │
+├─────────────┤
+│  QUESTION   │
+│             │
+│ [Poll Box]  │
+│  Option A   │
+│  Option B   │
+│             │
+│ [Results]   │
+└─────────────┘
+</code></pre>
+<h4>Template C: Countdown Sticker</h4>
+<pre><code>┌─────────────┐
+│             │
+│ TOURNAMENT  │
+│   STARTS    │
+│             │
+│ [Countdown] │
+│  XX:XX:XX   │
+│             │
+│ Nov 30      │
+└─────────────┘
+</code></pre>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Top safe zone: 250px from top (avoid notches)</li>
+<li>Bottom safe zone: 200px from bottom (avoid UI)</li>
+<li>Use Instagram native stickers: countdown, poll, question, link</li>
+<li>Brand colors throughout</li>
+</ul>
+<hr>
+<h3>5. INSTAGRAM CAROUSEL POST</h3>
+<p><strong>Size</strong>: 1080×1080px each slide (1:1)</p>
+<p><strong>Slide Structure</strong> (Tournament Guide Example):</p>
+<p><strong>Slide 1 - Cover</strong>:</p>
+<ul>
+<li>&quot;EVERYTHING YOU NEED TO KNOW&quot;</li>
+<li>syncplay logo</li>
+<li>&quot;Swipe →&quot; indicator</li>
+</ul>
+<p><strong>Slide 2 - Prize Breakdown</strong>:</p>
+<ul>
+<li>Visual prize structure</li>
+<li>Gold/silver/bronze theme</li>
+</ul>
+<p><strong>Slide 3 - How to Register</strong>:</p>
+<ul>
+<li>Step-by-step visual guide</li>
+<li>Icons for each step</li>
+</ul>
+<p><strong>Slide 4 - Tournament Format</strong>:</p>
+<ul>
+<li>Bracket visualization</li>
+<li>Group stage explanation</li>
+</ul>
+<p><strong>Slide 5 - Rules</strong>:</p>
+<ul>
+<li>Key rules listed</li>
+<li>Icons for clarity</li>
+</ul>
+<p><strong>Slide 6 - Important Dates</strong>:</p>
+<ul>
+<li>Calendar visual</li>
+<li>All key dates</li>
+</ul>
+<p><strong>Slide 7 - CTA</strong>:</p>
+<ul>
+<li>&quot;Ready? Register Now&quot;</li>
+<li>Link reminder</li>
+<li>syncplay branding</li>
+</ul>
+<hr>
+<h2>📘 FACEBOOK GRAPHICS</h2>
+<h3>1. FACEBOOK COVER PHOTO</h3>
+<p><strong>Size</strong>: 820×312px (2.63:1)</p>
+<p><strong>Layout</strong>:</p>
+<pre><code>┌──────────────────────────────────────────────────┐
+│ [LOGO]    NIGERIA&#39;S PREMIER eFOOTBALL PLATFORM  │
+│           Professional Tournaments • Real Prizes  │
+│                                    [REGISTER NOW] │
+└──────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>Safe Zones</strong>:</p>
+<ul>
+<li>Left 170px: Profile picture area (avoid important content)</li>
+<li>Center 640×312px: Always visible on all devices</li>
+<li>Mobile displays center 640×312px</li>
+</ul>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Background: Split design - dark left, red gradient right</li>
+<li>Logo: Left side, above profile picture zone</li>
+<li>Text: Center-right, white on dark/red background</li>
+<li>CTA button: Far right, red button graphic</li>
+</ul>
+<hr>
+<h3>2. FACEBOOK EVENT COVER</h3>
+<p><strong>Size</strong>: 1920×1080px (16:9)</p>
+<p><strong>Layout</strong>:</p>
+<pre><code>┌────────────────────────────────────────────────┐
+│              syncplay eSports PRESENTS          │
+│                                                 │
+│           2v2 EA SPORTS FC 26 TOURNAMENT        │
+│                                                 │
+│    [Game Graphic]        [Tournament Info]     │
+│                          📅 Nov 30              │
+│                          💰 ₦1.5M               │
+│                          👥 32 Teams            │
+│                                                 │
+│              REGISTER AT SYNCPLAY.CO            │
+└────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Background: Stadium atmosphere or game screenshot</li>
+<li>Title: Large, bold, top third</li>
+<li>Split layout: Visual left, info right</li>
+<li>Dark overlay on background (60% opacity) for text readability</li>
+</ul>
+<hr>
+<h3>3. FACEBOOK POST IMAGE</h3>
+<p><strong>Size</strong>: 1200×630px (1.91:1)</p>
+<p><strong>Use Cases</strong>:</p>
+<ul>
+<li>Link shares (with preview)</li>
+<li>Announcement posts</li>
+<li>General updates</li>
+</ul>
+<p><strong>Layout</strong> (Tournament Announcement):</p>
+<pre><code>┌────────────────────────────────────┐
+│  [Logo]    syncplay eSports        │
+│                                    │
+│      2v2 TOURNAMENT                │
+│      November 30, 2025             │
+│                                    │
+│      ₦1,500,000 PRIZE POOL         │
+│                                    │
+│      REGISTER NOW                  │
+└────────────────────────────────────┘
+</code></pre>
+<hr>
+<h2>🐦 TWITTER/X GRAPHICS</h2>
+<h3>1. TWITTER HEADER</h3>
+<p><strong>Size</strong>: 1500×500px (3:1)</p>
+<p><strong>Layout</strong>:</p>
+<pre><code>┌───────────────────────────────────────────────────┐
+│ [LOGO]                        NOV 30 • ₦1.5M     │
+│ syncplay                      32 TEAMS            │
+│ eSports                       REGISTRATION OPEN   │
+│                               SYNCPLAY.CO          │
+└───────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>Safe Zones</strong>:</p>
+<ul>
+<li>Left 200px: Profile picture overlay (desktop)</li>
+<li>Center 1500×500px: Always visible</li>
+</ul>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Left third: Branding &amp; logo</li>
+<li>Right two-thirds: Tournament info</li>
+<li>Background: Action game footage, darkened</li>
+<li>Text: White with red accents</li>
+</ul>
+<hr>
+<h3>2. TWITTER POST IMAGE</h3>
+<p><strong>Size</strong>: 1600×900px (16:9)</p>
+<p><strong>Tournament Announcement Template</strong>:</p>
+<pre><code>┌──────────────────────────────────────┐
+│                                      │
+│      INAUGURAL TOURNAMENT            │
+│                                      │
+│      2v2 EA SPORTS FC 26             │
+│      November 30, 2025               │
+│                                      │
+│      💰 ₦1.5M Prize Pool             │
+│      👥 32 Teams                     │
+│      🎮 PlayStation                  │
+│                                      │
+│      REGISTER: SYNCPLAY.CO           │
+│                                      │
+└──────────────────────────────────────┘
+</code></pre>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Landscape orientation</li>
+<li>Large, bold text</li>
+<li>Key info with icons</li>
+<li>syncplay logo watermark (bottom corner)</li>
+</ul>
+<hr>
+<h3>3. TWITTER CARD IMAGE</h3>
+<p><strong>Size</strong>: 800×418px (1.91:1)</p>
+<p><strong>Use Case</strong>: Link preview when sharing syncplay.co</p>
+<p><strong>Layout</strong>:</p>
+<pre><code>┌─────────────────────────────┐
+│  syncplay eSports           │
+│                             │
+│  Nigeria&#39;s Premier          │
+│  eFootball Platform         │
+│                             │
+│  [Small graphic/logo]       │
+└─────────────────────────────┘
+</code></pre>
+<hr>
+<h2>🎵 TIKTOK GRAPHICS</h2>
+<h3>1. TIKTOK VIDEO OVERLAY</h3>
+<p><strong>Size</strong>: 1080×1920px (9:16)</p>
+<p><strong>Text Placement Zones</strong>:</p>
+<pre><code>┌─────────────┐
+│  @syncplay  │ ← Top 200px (safe zone)
+│             │
+│             │
+│   VIDEO     │ ← Middle (video content)
+│  CONTENT    │
+│             │
+│             │
+│  CAPTION    │ ← Bottom 300px (text overlay)
+│  TEXT HERE  │
+│             │
+│ [Avoid      │ ← Bottom 100px (UI buttons)
+│  this area] │
+└─────────────┘
+</code></pre>
+<p><strong>Text Specifications</strong>:</p>
+<ul>
+<li>Font: Bold, high contrast</li>
+<li>Size: Minimum 60pt</li>
+<li>Color: White with black outline or shadow</li>
+<li>Position: Upper third or lower third (never center)</li>
+</ul>
+<p><strong>Safe Zones</strong>:</p>
+<ul>
+<li>Top 200px: Username display</li>
+<li>Bottom 300px: Description &amp; hashtags</li>
+<li>Right side 150px: Like/Share/Comment buttons</li>
+</ul>
+<hr>
+<h3>2. TIKTOK THUMBNAIL</h3>
+<p><strong>Size</strong>: 1080×1920px (9:16)</p>
+<p><strong>Hook Template</strong> (First Frame):</p>
+<pre><code>┌─────────────┐
+│             │
+│  ₦1.5M      │ (Large, attention-grabbing)
+│             │
+│  PRIZE      │
+│  POOL       │
+│             │
+│  Nov 30     │
+└─────────────┘
+</code></pre>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>First frame must grab attention in &lt;1 second</li>
+<li>Use bold numbers, bright colors</li>
+<li>High contrast for small mobile screens</li>
+</ul>
+<hr>
+<h2>📺 YOUTUBE GRAPHICS</h2>
+<h3>1. YOUTUBE THUMBNAIL</h3>
+<p><strong>Size</strong>: 1280×720px (16:9)
+<strong>Aspect Ratio</strong>: 16:9
+<strong>File Size</strong>: Under 2MB
+<strong>Format</strong>: JPG or PNG</p>
+<p><strong>Layout Template</strong>:</p>
+<pre><code>┌────────────────────────────────────────┐
+│                                        │
+│    [Background Image]                  │
+│                                        │
+│    LARGE TEXT                          │
+│    WITH HIGH CONTRAST                  │
+│                                        │
+│    [syncplay logo]    [Tournament Date]│
+└────────────────────────────────────────┘
+</code></pre>
+<p><strong>Design Guidelines</strong>:</p>
+<ul>
+<li>Text: Maximum 3-4 words, 80pt+</li>
+<li>Face thumbnails: If showing people, faces should be large and expressive</li>
+<li>High contrast: Bright elements on dark background</li>
+<li>Brand consistency: Always include syncplay logo</li>
+<li>Mobile test: Check legibility at 320px width</li>
+</ul>
+<p><strong>Example Thumbnail Text</strong>:</p>
+<ul>
+<li>&quot;₦1.5M TOURNAMENT&quot;</li>
+<li>&quot;REGISTER NOW&quot;</li>
+<li>&quot;WHO WILL WIN?&quot;</li>
+<li>&quot;TOURNAMENT DAY&quot;</li>
+</ul>
+<hr>
+<h3>2. YOUTUBE CHANNEL BANNER</h3>
+<p><strong>Size</strong>: 2560×1440px (16:9)
+<strong>Safe Zones</strong>:</p>
+<ul>
+<li>TV: Full 2560×1440px</li>
+<li>Desktop: 2560×423px (center)</li>
+<li>Tablet: 1855×423px (center)</li>
+<li>Mobile: 1546×423px (center)</li>
+</ul>
+<p><strong>Layout</strong> (Safe Zone):</p>
+<pre><code>┌────────────────────────────────────────┐
+│ [Keep important content in this area]  │
+│                                        │
+│  [LOGO]    syncplay eSports            │
+│           Nigeria&#39;s #1 eSports Platform │
+│           Next Tournament: Nov 30       │
+│                                        │
+└────────────────────────────────────────┘
+</code></pre>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Center 1546×423px: ALL critical info here</li>
+<li>Full canvas: Decorative background</li>
+<li>syncplay logo: Left or center</li>
+<li>Tournament info: Center or right</li>
+</ul>
+<hr>
+<h3>3. YOUTUBE VIDEO AD (Pre-Roll)</h3>
+<p><strong>Size</strong>: 1920×1080px (16:9)
+<strong>Duration</strong>: 15 seconds (skippable after 5s)</p>
+<p><strong>Frame-by-Frame Structure</strong>:</p>
+<p><strong>Frame 1 (0-2s)</strong>: HOOK</p>
+<pre><code>┌────────────────────────────┐
+│                            │
+│      ₦1,500,000            │
+│                            │
+│   (Gold, pulsing effect)   │
+└────────────────────────────┘
+</code></pre>
+<p><strong>Frame 2 (3-5s)</strong>: PROBLEM/QUESTION</p>
+<pre><code>┌────────────────────────────┐
+│  What would you do with    │
+│  1.5 million Naira?        │
+│                            │
+│  [Gameplay footage]        │
+└────────────────────────────┘
+</code></pre>
+<p><strong>Frame 3 (6-10s)</strong>: SOLUTION</p>
+<pre><code>┌────────────────────────────┐
+│  syncplay eSports          │
+│  2v2 Tournament            │
+│  November 30               │
+│  32 Teams Only             │
+└────────────────────────────┘
+</code></pre>
+<p><strong>Frame 4 (11-15s)</strong>: CTA</p>
+<pre><code>┌────────────────────────────┐
+│  REGISTER NOW              │
+│                            │
+│  SYNCPLAY.CO/REGISTER      │
+│                            │
+│  [QR Code]                 │
+└────────────────────────────┘
+</code></pre>
+<hr>
+<h2>🎯 CAMPAIGN-SPECIFIC TEMPLATES</h2>
+<h3>1. &quot;SPOTS FILLING FAST&quot; URGENCY POST</h3>
+<p><strong>Size</strong>: 1080×1080px (Instagram Square)</p>
+<p><strong>Layout</strong>:</p>
+<pre><code>┌─────────────────────┐
+│  SPOTS FILLING FAST │ (Red alert banner)
+│                     │
+│   ███████░░░        │ (Progress bar)
+│   24/32 TEAMS       │
+│   REGISTERED        │
+│                     │
+│   ONLY 8 SPOTS      │
+│   REMAINING         │
+│                     │
+│   ⏰ TIME RUNNING   │
+│      OUT            │
+│                     │
+│   REGISTER NOW      │
+│   SYNCPLAY.CO       │
+└─────────────────────┘
+</code></pre>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Alert banner: Animated red flash (GIF/video)</li>
+<li>Progress bar: Red filled, gray remaining</li>
+<li>Timer: Countdown element</li>
+<li>High urgency colors: Red, yellow, black</li>
+</ul>
+<hr>
+<h3>2. PLAYER SPOTLIGHT TEMPLATE</h3>
+<p><strong>Size</strong>: 1080×1350px (Instagram Portrait)</p>
+<p><strong>Layout</strong>:</p>
+<pre><code>┌─────────────────────┐
+│  PLAYER SPOTLIGHT   │
+│                     │
+│  [Player Photo]     │ (Top 40%)
+│                     │
+├─────────────────────┤
+│  PLAYER NAME        │
+│  @PSN_ID            │
+│                     │
+│  Team: [Name]       │
+│  From: [City]       │
+│                     │
+│  STATS:             │
+│  🏆 Wins: XX        │
+│  ⚽ Goals: XX       │
+│  📊 Rating: XX/10   │
+│                     │
+│  &quot;Quote&quot;            │
+│                     │
+│  syncplay eSports   │
+└─────────────────────┘
+</code></pre>
+<hr>
+<h3>3. TEAM vs TEAM MATCH ANNOUNCEMENT</h3>
+<p><strong>Size</strong>: 1200×675px (16:9)</p>
+<p><strong>Layout</strong>:</p>
+<pre><code>┌────────────────────────────────────────┐
+│        ROUND OF 16 • MATCH 1           │
+│                                        │
+│  [Team A Logo]         [Team B Logo]   │
+│  TEAM NAME A    VS    TEAM NAME B      │
+│                                        │
+│           LIVE NOW                     │
+│      WATCH AT SYNCPLAY.CO              │
+│                                        │
+│  [Powered by The Twelfth Man]          │
+└────────────────────────────────────────┘
+</code></pre>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Split screen: Team colors on each side</li>
+<li>Center line: VS element with glow effect</li>
+<li>Animated: Team logos can pulse</li>
+<li>Live indicator: Red dot (animated)</li>
+</ul>
+<hr>
+<h3>4. WINNER ANNOUNCEMENT GRAPHIC</h3>
+<p><strong>Size</strong>: 1080×1350px (Instagram Portrait)</p>
+<p><strong>Layout</strong>:</p>
+<pre><code>┌─────────────────────┐
+│  🏆 CHAMPIONS 🏆    │
+│                     │
+│  [Team Photo/Logo]  │
+│                     │
+│  TEAM NAME          │
+│                     │
+│  WINNERS OF         │
+│  syncplay 2v2       │
+│  TOURNAMENT         │
+│                     │
+│  PRIZE: ₦800,000    │
+│                     │
+│  [Confetti Effect]  │
+│                     │
+│  CONGRATULATIONS!   │
+└─────────────────────┘
+</code></pre>
+<p><strong>Design Notes</strong>:</p>
+<ul>
+<li>Gold theme: Gold gradient background</li>
+<li>Confetti: Animated overlay</li>
+<li>Trophy: 3D rendered or high-quality icon</li>
+<li>Celebratory colors: Gold, white, red accents</li>
+</ul>
+<hr>
+<h3>5. &quot;THANK YOU&quot; POST-TOURNAMENT</h3>
+<p><strong>Size</strong>: 1080×1080px (Square)</p>
+<p><strong>Layout</strong>:</p>
+<pre><code>┌─────────────────────┐
+│  THANK YOU NIGERIA  │
+│                     │
+│  [Highlight Photo]  │
+│                     │
+│  32 TEAMS           │
+│  64 PLAYERS         │
+│  1 CHAMPION         │
+│                     │
+│  NEXT TOURNAMENT:   │
+│  [Date]             │
+│                     │
+│  syncplay eSports   │
+└─────────────────────┘
+</code></pre>
+<hr>
+<h2>✅ DESIGN ASSETS CHECKLIST</h2>
+<h3>PRIORITY 1: Launch Campaign (Week 1)</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Instagram Launch Post (1080×1350px)</li>
+<li><input disabled="" type="checkbox"> Facebook Cover Photo (820×312px)</li>
+<li><input disabled="" type="checkbox"> Twitter Header (1500×500px)</li>
+<li><input disabled="" type="checkbox"> Instagram Story Template (1080×1920px)</li>
+<li><input disabled="" type="checkbox"> Prize Pool Graphic (1080×1080px)</li>
+</ul>
+<h3>PRIORITY 2: Tournament Promotion (Week 2-3)</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Countdown Series (4 designs: 30, 14, 7, 48hrs)</li>
+<li><input disabled="" type="checkbox"> Registration CTA Post (1080×1080px)</li>
+<li><input disabled="" type="checkbox"> Tournament Format Infographic (Carousel, 7 slides)</li>
+<li><input disabled="" type="checkbox"> Team Spotlight Template (1080×1350px)</li>
+<li><input disabled="" type="checkbox"> Facebook Event Cover (1920×1080px)</li>
+</ul>
+<h3>PRIORITY 3: Engagement Content (Week 3-4)</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Poll/Question Story Templates (3 variations)</li>
+<li><input disabled="" type="checkbox"> &quot;Spots Filling Fast&quot; Urgency Post</li>
+<li><input disabled="" type="checkbox"> Player Spotlight Template</li>
+<li><input disabled="" type="checkbox"> Behind-the-Scenes Template</li>
+</ul>
+<h3>PRIORITY 4: Match Day Graphics (Tournament Day)</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Team vs Team Announcement Template</li>
+<li><input disabled="" type="checkbox"> Live Match Graphic</li>
+<li><input disabled="" type="checkbox"> Score Update Template</li>
+<li><input disabled="" type="checkbox"> Winner Announcement Graphic</li>
+<li><input disabled="" type="checkbox"> Thank You Post</li>
+</ul>
+<h3>PRIORITY 5: Video Content</h3>
+<ul>
+<li><input disabled="" type="checkbox"> YouTube Thumbnail Template</li>
+<li><input disabled="" type="checkbox"> TikTok Video Overlay Design</li>
+<li><input disabled="" type="checkbox"> Instagram Reels Intro/Outro</li>
+<li><input disabled="" type="checkbox"> YouTube Pre-Roll Ad (15s)</li>
+</ul>
+<hr>
+<h2>📦 FILE NAMING CONVENTION</h2>
+<p>Use consistent naming for easy organization:</p>
+<pre><code>[Platform]_[Type]_[Version/Date].[ext]
+
+Examples:
+- IG_LaunchPost_v1.png
+- FB_CoverPhoto_Final.png
+- TW_Header_Nov2025.png
+- IG_Story_Countdown_30Days.png
+- YT_Thumbnail_TournamentDay.jpg
+</code></pre>
+<hr>
+<h2>🎨 DESIGN SOFTWARE RECOMMENDATIONS</h2>
+<h3>For Graphics Creation:</h3>
+<ul>
+<li><strong>Adobe Photoshop</strong>: Best for detailed edits, photo manipulation</li>
+<li><strong>Adobe Illustrator</strong>: Best for logos, vector graphics</li>
+<li><strong>Canva Pro</strong>: Quick turnaround, templates available</li>
+<li><strong>Figma</strong>: Collaborative design, web-based</li>
+<li><strong>Adobe Express</strong>: Quick social media graphics</li>
+</ul>
+<h3>For Video Editing:</h3>
+<ul>
+<li><strong>Adobe Premiere Pro</strong>: Professional video editing</li>
+<li><strong>Final Cut Pro</strong>: Mac users, professional</li>
+<li><strong>CapCut</strong>: Quick TikTok/Reels editing</li>
+<li><strong>DaVinci Resolve</strong>: Free, professional-grade</li>
+</ul>
+<h3>For Animation:</h3>
+<ul>
+<li><strong>Adobe After Effects</strong>: Motion graphics, effects</li>
+<li><strong>Canva</strong>: Simple animated graphics</li>
+<li><strong>Keynote/PowerPoint</strong>: Basic animations</li>
+</ul>
+<hr>
+<h2>📊 EXPORT SETTINGS</h2>
+<h3>For Web/Social Media:</h3>
+<ul>
+<li><strong>Format</strong>: PNG (graphics with transparency), JPG (photos/backgrounds)</li>
+<li><strong>Color Mode</strong>: RGB (not CMYK)</li>
+<li><strong>Resolution</strong>: 72 DPI (web standard)</li>
+<li><strong>Compression</strong>: Medium to High (keep under 2MB per image)</li>
+</ul>
+<h3>For Print (if needed):</h3>
+<ul>
+<li><strong>Format</strong>: PDF or PNG</li>
+<li><strong>Color Mode</strong>: CMYK</li>
+<li><strong>Resolution</strong>: 300 DPI</li>
+<li><strong>Bleed</strong>: Add 3mm if printing</li>
+</ul>
+<h3>For Video:</h3>
+<ul>
+<li><strong>Format</strong>: MP4 (H.264 codec)</li>
+<li><strong>Frame Rate</strong>: 30fps or 60fps</li>
+<li><strong>Bitrate</strong>: 5-10 Mbps (good quality, manageable file size)</li>
+</ul>
+<hr>
+<h2>💡 DESIGN TIPS</h2>
+<h3>For Maximum Impact:</h3>
+<ol>
+<li><strong>High Contrast</strong>: Ensure text is readable on all backgrounds</li>
+<li><strong>White Space</strong>: Don&#39;t cram too much info</li>
+<li><strong>Hierarchy</strong>: Most important info = largest/boldest</li>
+<li><strong>Consistency</strong>: Use same color palette across all graphics</li>
+<li><strong>Mobile-First</strong>: Most viewers on mobile, design for small screens</li>
+<li><strong>Test on Device</strong>: View on actual phone before posting</li>
+</ol>
+<h3>For Engagement:</h3>
+<ol>
+<li><strong>Faces</strong>: Posts with faces get 38% more engagement</li>
+<li><strong>Bright Colors</strong>: Red, orange, yellow catch attention</li>
+<li><strong>Numbers</strong>: Use large numbers (prize amounts, stats)</li>
+<li><strong>Action Words</strong>: &quot;Register&quot;, &quot;Win&quot;, &quot;Join&quot; in CTAs</li>
+<li><strong>Emojis</strong>: Strategic use increases engagement</li>
+</ol>
+<hr>
+<p><strong>END OF GRAPHICS SPECIFICATIONS</strong></p>
+<p><em>Need a specific design created? Use these specs as your design brief!</em></p>
+<p><strong>Last Updated</strong>: October 24, 2025</p>
+</div>
+</body>
+</html>
