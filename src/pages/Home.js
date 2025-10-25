@@ -89,7 +89,7 @@ const Home = () => {
               <i className="fab fa-youtube"></i>
             </a>
             <a href="https://x.com/SyncplayEsport" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-              <i className="fab fa-x-twitter"></i>
+              <i className="fab fa-twitter"></i>
             </a>
             <a href="https://facebook.com/syncplayesports" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <i className="fab fa-facebook"></i>
