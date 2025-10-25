@@ -98,8 +98,10 @@ const Navbar = () => {
                         selectLanguage(lang.code);
                       }}
                     >
-                      <span className="lang-flag">{lang.flag}</span>
-                      <span className="lang-name">{lang.name}</span>
+                      {lang.code === currentLanguage && (
+                        <i className="fas fa-check lang-checkmark"></i>
+                      )}
+                      <span className="lang-name">{lang.code.toUpperCase()}</span>
                     </div>
                   ))}
                 </div>

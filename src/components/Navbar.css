@@ -107,19 +107,19 @@
   transform: rotate(180deg);
 }
 
-/* Language Dropdown */
+/* Language Dropdown - Styled like CLA */
 .language-dropdown {
   position: absolute;
   top: calc(100% + 0.5rem);
   left: 0;
-  min-width: 180px;
-  background: rgb(15, 25, 40);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  min-width: 100px;
+  background: rgba(200, 200, 200, 0.95);
+  border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   z-index: 10001;
   animation: dropdownFadeIn 0.2s ease;
+  backdrop-filter: blur(10px);
 }
 
 @keyframes dropdownFadeIn {
@@ -137,11 +137,12 @@
 .lang-option {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
 }
 
 .lang-option:last-child {
@@ -149,13 +150,17 @@
 }
 
 .lang-option:hover {
-  background: rgba(230, 57, 70, 0.1);
-  padding-left: 1.25rem;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .lang-option.active {
-  background: rgba(230, 57, 70, 0.2);
-  border-left: 3px solid var(--color-primary-red);
+  background: rgba(100, 180, 255, 0.3);
+}
+
+.lang-checkmark {
+  font-size: 0.85rem;
+  color: rgb(30, 120, 200);
+  font-weight: bold;
 }
 
 .lang-flag {
@@ -163,9 +168,10 @@
 }
 
 .lang-name {
-  color: var(--color-white);
-  font-size: 0.9rem;
-  font-weight: 500;
+  color: rgb(30, 40, 60);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 /* Hamburger Toggle - Always Visible */
@@ -583,22 +589,43 @@
   }
 }
 
-/* Hide trapezoid logo on mobile - too complex for small screens */
+/* Trapezoid logo responsive - keep it visible like CLA */
 @media (max-width: 768px) {
   .navbar-logo {
-    display: none !important;
+    width: 100px !important;
+    height: 60px !important;
+    margin-top: 0;
   }
 
-  .navbar-container {
-    justify-content: space-between;
+  .navbar-logo img {
+    width: 70%;
+    height: 70%;
   }
 
-  .navbar-left {
-    flex: 1;
+  .navbar.scrolled .navbar-logo {
+    height: 55px !important;
+    width: 90px !important;
   }
 
   .navbar-menu {
     width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-logo {
+    width: 85px !important;
+    height: 50px !important;
+  }
+
+  .navbar-logo img {
+    width: 65%;
+    height: 65%;
+  }
+
+  .navbar.scrolled .navbar-logo {
+    height: 45px !important;
+    width: 75px !important;
   }
 }
 
