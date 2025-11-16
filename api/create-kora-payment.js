@@ -8,6 +8,17 @@
  */
 
 export default async function handler(req, res) {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+
+  // Handle preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ 
@@ -30,9 +41,11 @@ export default async function handler(req, res) {
   // Check if secret key is configured
   if (!process.env.KORA_SECRET_KEY) {
     console.error('KORA_SECRET_KEY not configured');
+    console.error('Available env vars:', Object.keys(process.env).filter(k => k.includes('KORA')));
     return res.status(500).json({
       success: false,
-      message: 'Server configuration error. Please contact support.'
+      message: 'Server configuration error. KORA_SECRET_KEY not found. Please check Vercel environment variables.',
+      debug: process.env.NODE_ENV || 'unknown'
     });
   }
 
@@ -45,7 +58,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        amount: amount, // Amount in Naira (not kobo)
+        amount: amount.toString(), // Amount in Naira (ensure it's a string)
         currency: 'NGN',
         reference: reference,
         customer: {
