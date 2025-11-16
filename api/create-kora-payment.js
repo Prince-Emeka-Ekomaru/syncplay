@@ -50,9 +50,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Prepare request body - Kora Pay expects specific format
+    // Kora Pay might expect amount in kobo (smallest currency unit)
+    // Try both formats: first try kobo, if that fails, try Naira
+    // Amount comes in as Naira, convert to kobo (multiply by 100)
+    const amountInKobo = Math.round(parseFloat(amount) * 100);
+    const amountInNaira = parseFloat(amount).toFixed(2);
+    
+    // Prepare request body - Try with kobo first (most payment gateways use smallest unit)
     const requestBody = {
-      amount: parseFloat(amount).toFixed(2), // Amount in Naira with 2 decimal places
+      amount: amountInKobo.toString(), // Amount in kobo (100,000 Naira = 10,000,000 kobo)
       currency: 'NGN',
       reference: reference,
       customer: {
