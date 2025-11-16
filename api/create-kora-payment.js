@@ -64,8 +64,9 @@ export default async function handler(req, res) {
     // 2. Use base URL without query params
     // 3. URL must be registered in Kora Pay dashboard
     
-    // Try Option 1: Use only redirect_url (remove callback_url)
-    // Some APIs only accept one redirect field
+    // Kora Pay error specifically mentions callback_url
+    // Try using callback_url (required field) instead of redirect_url
+    // Also try base URL without query params (some APIs require this)
     const baseUrl = callback_url.split('?')[0]; // Get base URL without query params
     
     const requestBody = {
@@ -76,9 +77,9 @@ export default async function handler(req, res) {
         email: email,
         name: metadata?.teamName || 'Customer',
       },
-      // Try redirect_url only (remove callback_url to avoid conflict)
-      redirect_url: callback_url,
-      // Don't include callback_url - might be causing the conflict
+      // Try callback_url with base URL (no query params) - might need to be registered
+      callback_url: baseUrl, // Use base URL without query params
+      // Some APIs require the URL to be registered in dashboard first
     };
 
     // Add metadata if provided
