@@ -119,8 +119,6 @@ export default async function handler(req, res) {
       data = await response.json();
     }
 
-    const data = await response.json();
-
     console.log('Kora Pay API Response:', {
       status: response.status,
       statusText: response.statusText,
