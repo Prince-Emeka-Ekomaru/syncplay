@@ -126,11 +126,20 @@ export default async function handler(req, res) {
     });
 
     // Check if payment link was created successfully
-    if (response.ok && data.data && data.data.checkout_url) {
+    // Payment Links API might return different field names
+    const paymentLink = data.data?.checkout_url || 
+                       data.data?.link || 
+                       data.data?.payment_link || 
+                       data.data?.url ||
+                       data.link ||
+                       data.payment_link ||
+                       data.url;
+
+    if (response.ok && paymentLink) {
       return res.status(200).json({
         success: true,
-        checkout_url: data.data.checkout_url,
-        reference: data.data.reference,
+        checkout_url: paymentLink,
+        reference: data.data?.reference || data.reference || reference,
       });
     }
 
