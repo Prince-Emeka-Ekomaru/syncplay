@@ -79,44 +79,48 @@ export function isGatewayAvailable(gateway) {
 
 /**
  * Kora Pay Payment Handler
- * Kora Pay uses a redirect-based checkout flow
+ * Creates payment link via backend API (which uses secret key)
  */
-export function initializeKoraPayment(config) {
-  return new Promise((resolve, reject) => {
-    // Kora Pay redirects to their checkout page
-    // We'll construct the checkout URL with required parameters
-    const amount = config.amount / 100; // Convert from kobo to Naira
-    
-    // Kora Pay checkout URL format
-    // Note: In production, you should create payment links via Kora API
-    // For now, we use the redirect URL pattern
-    const checkoutParams = new URLSearchParams({
-      public_key: config.publicKey,
-      amount: amount.toString(),
-      currency: 'NGN',
-      reference: config.reference,
-      email: config.email,
-      callback_url: `${window.location.origin}${window.location.pathname}?payment=kora&ref=${config.reference}`,
-      metadata: JSON.stringify({
-        teamName: config.metadata?.teamName,
-        player1Name: config.metadata?.player1Name,
-        player2Name: config.metadata?.player2Name,
+export async function initializeKoraPayment(config) {
+  const amount = config.amount / 100; // Convert from kobo to Naira
+  const callbackUrl = `${window.location.origin}${window.location.pathname}?payment=kora&ref=${config.reference}`;
+  
+  // Store payment reference for verification after redirect
+  sessionStorage.setItem('kora_payment_reference', config.reference);
+  sessionStorage.setItem('kora_payment_redirect', 'true');
+  
+  try {
+    // Call backend API to create payment link
+    const response = await fetch('/api/create-kora-payment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: amount,
+        email: config.email,
+        reference: config.reference,
+        callback_url: callbackUrl,
+        metadata: {
+          teamName: config.metadata?.teamName,
+          player1Name: config.metadata?.player1Name,
+          player2Name: config.metadata?.player2Name,
+        },
       }),
     });
 
-    const koraCheckoutUrl = `https://checkout.korapay.com/?${checkoutParams.toString()}`;
-    
-    // Store payment reference for verification after redirect
-    sessionStorage.setItem('kora_payment_reference', config.reference);
-    sessionStorage.setItem('kora_payment_redirect', 'true');
-    
-    // Redirect to Kora Pay checkout
-    window.location.href = koraCheckoutUrl;
-    
-    // Note: This will redirect away from the page
-    // The callback will be handled when user returns via URL params
-    // We'll check for payment status in the Register component on mount
-  });
+    const data = await response.json();
+
+    if (data.success && data.checkout_url) {
+      // Redirect to Kora Pay checkout
+      window.location.href = data.checkout_url;
+    } else {
+      throw new Error(data.message || 'Failed to create payment link');
+    }
+  } catch (error) {
+    console.error('Kora Pay payment initialization error:', error);
+    throw new Error(error.message || 'Failed to initialize payment. Please try again.');
+  }
 }
 
 
