@@ -58,14 +58,24 @@ export default async function handler(req, res) {
     const amountValue = parseFloat(amount);
     
     // Prepare request body
+    // The error shows callback_url validation issue
+    // Kora Pay might require:
+    // 1. callback_url to be registered in dashboard
+    // 2. Different field name (redirect_url)
+    // 3. URL without query parameters
+    // 4. Just the base domain
+    
+    // Try with redirect_url instead of callback_url (some payment gateways use this)
     const requestBody = {
-      amount: amountValue, // Try as number first (100000 for 100k Naira)
+      amount: amountValue, // Amount in Naira (100000 for 100k Naira)
       currency: 'NGN',
       reference: reference,
       customer: {
         email: email,
         name: metadata?.teamName || 'Customer',
       },
+      redirect_url: callback_url, // Try redirect_url instead of callback_url
+      // Also include callback_url in case both are needed
       callback_url: callback_url,
     };
 
