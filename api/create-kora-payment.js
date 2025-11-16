@@ -84,6 +84,12 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
+    console.log('Kora Pay API Response:', {
+      status: response.status,
+      statusText: response.statusText,
+      data: data,
+    });
+
     // Check if payment link was created successfully
     if (response.ok && data.data && data.data.checkout_url) {
       return res.status(200).json({
@@ -93,12 +99,25 @@ export default async function handler(req, res) {
       });
     }
 
-    // Handle API errors
-    console.error('Kora Pay API Error:', data);
+    // Handle API errors - return detailed error for debugging
+    console.error('Kora Pay API Error:', {
+      status: response.status,
+      statusText: response.statusText,
+      data: data,
+      requestBody: requestBody,
+    });
+    
+    // Extract error message from Kora Pay response
+    const errorMessage = data.message || 
+                        data.error?.message || 
+                        data.data?.message ||
+                        'Failed to create payment link';
+    
     return res.status(response.status || 500).json({
       success: false,
-      message: data.message || 'Failed to create payment link',
+      message: errorMessage,
       error: data,
+      koraResponse: data, // Include full response for debugging
     });
 
   } catch (error) {
