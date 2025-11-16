@@ -57,8 +57,9 @@ export default async function handler(req, res) {
     // Try format 1: Number in Naira (most likely)
     const amountValue = parseFloat(amount);
     
-    // Use Kora Pay Payment Links API (simpler, no callback_url registration needed)
-    // Payment links are shareable URLs that don't require callback_url
+    // Use Kora Pay charges/initialize API
+    // The error shows metadata field names are invalid
+    // Kora Pay might require specific metadata format or no metadata at all
     const requestBody = {
       amount: amountValue, // Amount in Naira (100000 for 100k Naira)
       currency: 'NGN',
@@ -67,15 +68,14 @@ export default async function handler(req, res) {
         email: email,
         name: metadata?.teamName || 'Customer',
       },
-      // Payment links don't require callback_url - they redirect after payment
-      // But include it if the API accepts it for redirect after payment
-      redirect_url: callback_url, // Where to redirect after payment
+      // Try callback_url instead of redirect_url (might be required)
+      callback_url: callback_url,
     };
 
-    // Add metadata if provided
-    if (metadata && Object.keys(metadata).length > 0) {
-      requestBody.metadata = metadata;
-    }
+    // Don't include metadata - it's causing validation errors
+    // The error shows: metadatateamName, metadataplayer2Name are invalid
+    // Kora Pay might not accept nested metadata or these field names
+    // If metadata is needed, we'll need to check Kora Pay docs for correct format
 
     // Try Payment Links API first (simpler, no callback_url issues)
     // If that doesn't work, fall back to charges/initialize
