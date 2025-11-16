@@ -59,13 +59,15 @@ export default async function handler(req, res) {
     
     // Prepare request body
     // The error shows callback_url validation issue
-    // Kora Pay might require:
-    // 1. callback_url to be registered in dashboard
-    // 2. Different field name (redirect_url)
-    // 3. URL without query parameters
-    // 4. Just the base domain
+    // Try different approaches:
+    // 1. Remove callback_url, use only redirect_url
+    // 2. Use base URL without query params
+    // 3. URL must be registered in Kora Pay dashboard
     
-    // Try with redirect_url instead of callback_url (some payment gateways use this)
+    // Try Option 1: Use only redirect_url (remove callback_url)
+    // Some APIs only accept one redirect field
+    const baseUrl = callback_url.split('?')[0]; // Get base URL without query params
+    
     const requestBody = {
       amount: amountValue, // Amount in Naira (100000 for 100k Naira)
       currency: 'NGN',
@@ -74,9 +76,9 @@ export default async function handler(req, res) {
         email: email,
         name: metadata?.teamName || 'Customer',
       },
-      redirect_url: callback_url, // Try redirect_url instead of callback_url
-      // Also include callback_url in case both are needed
-      callback_url: callback_url,
+      // Try redirect_url only (remove callback_url to avoid conflict)
+      redirect_url: callback_url,
+      // Don't include callback_url - might be causing the conflict
     };
 
     // Add metadata if provided
@@ -124,16 +126,29 @@ export default async function handler(req, res) {
       requestBody: requestBody,
     });
     
+    // Log the detailed callback_url error if available
+    if (data.data && data.data.callback_url) {
+      console.error('Callback URL Error Details:', JSON.stringify(data.data.callback_url, null, 2));
+    }
+    
     // Extract error message from Kora Pay response
     const errorMessage = data.message || 
                         data.error?.message || 
                         data.data?.message ||
                         'Failed to create payment link';
     
+    // Include detailed error info
+    const errorDetails = {
+      message: errorMessage,
+      validationErrors: data.data || {},
+      callbackUrlError: data.data?.callback_url || null,
+    };
+    
     return res.status(response.status || 500).json({
       success: false,
       message: errorMessage,
       error: data,
+      errorDetails: errorDetails, // More detailed error info
       koraResponse: data, // Include full response for debugging
     });
 
