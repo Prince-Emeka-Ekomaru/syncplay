@@ -111,11 +111,27 @@ export async function initializeKoraPayment(config) {
 
     const data = await response.json();
 
+    console.log('Backend API Response:', {
+      status: response.status,
+      data: data,
+    });
+
     if (data.success && data.checkout_url) {
       // Redirect to Kora Pay checkout
       window.location.href = data.checkout_url;
     } else {
-      throw new Error(data.message || 'Failed to create payment link');
+      // Show more detailed error
+      const errorMsg = data.message || 
+                      data.error?.message || 
+                      data.koraResponse?.message ||
+                      'Failed to create payment link';
+      
+      console.error('Payment link creation failed:', {
+        message: errorMsg,
+        fullResponse: data,
+      });
+      
+      throw new Error(errorMsg);
     }
   } catch (error) {
     console.error('Kora Pay payment initialization error:', error);
