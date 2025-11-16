@@ -50,6 +50,28 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Prepare request body - Kora Pay expects specific format
+    const requestBody = {
+      amount: parseFloat(amount).toFixed(2), // Amount in Naira with 2 decimal places
+      currency: 'NGN',
+      reference: reference,
+      customer: {
+        email: email,
+        name: metadata?.teamName || 'Customer',
+      },
+      callback_url: callback_url,
+    };
+
+    // Add metadata if provided
+    if (metadata && Object.keys(metadata).length > 0) {
+      requestBody.metadata = metadata;
+    }
+
+    console.log('Kora Pay API Request:', {
+      url: 'https://api.korapay.com/merchant/api/v1/charges/initialize',
+      body: requestBody,
+    });
+
     // Call Kora Pay API to create payment link
     const response = await fetch('https://api.korapay.com/merchant/api/v1/charges/initialize', {
       method: 'POST',
@@ -57,17 +79,7 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${process.env.KORA_SECRET_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        amount: amount.toString(), // Amount in Naira (ensure it's a string)
-        currency: 'NGN',
-        reference: reference,
-        customer: {
-          email: email,
-          name: metadata?.teamName || 'Customer',
-        },
-        callback_url: callback_url,
-        metadata: metadata || {},
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     const data = await response.json();
