@@ -129,6 +129,7 @@ export default async function handler(req, res) {
     // Log the detailed callback_url error if available
     if (data.data && data.data.callback_url) {
       console.error('Callback URL Error Details:', JSON.stringify(data.data.callback_url, null, 2));
+      console.error('Full Error Data:', JSON.stringify(data.data, null, 2));
     }
     
     // Extract error message from Kora Pay response
