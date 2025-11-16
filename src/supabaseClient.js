@@ -39,7 +39,7 @@ export async function isRegistrationFull() {
 }
 
 // Helper function to save registration
-export async function saveRegistration(paymentReference, formData) {
+export async function saveRegistration(paymentReference, formData, paymentGateway = 'paystack') {
   try {
     const { data, error } = await supabase
       .from('registrations')
@@ -48,6 +48,7 @@ export async function saveRegistration(paymentReference, formData) {
           payment_reference: paymentReference,
           payment_status: 'completed',
           payment_amount: 10000000, // 100,000 Naira in kobo
+          payment_gateway: paymentGateway,
           team_name: formData.teamName,
           player1_name: formData.player1Name,
           player1_email: formData.player1Email,

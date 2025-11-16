@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
-import { saveRegistration } from '../supabaseClient';
+import { saveRegistration, supabase } from '../supabaseClient';
 import { useRegistrationCount } from '../hooks/useRegistrationCount';
+import {
+  initializePayment,
+  initializePaymentGateways,
+  getAvailableGateways,
+  getActiveGateway,
+  PAYMENT_GATEWAYS,
+  getGatewayDisplayName,
+  getGatewayIcon,
+} from '../services/paymentService';
 import './Register.css';
 
 const Register = () => {
@@ -38,6 +47,64 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [selectedPaymentGateway, setSelectedPaymentGateway] = useState(null);
+  const [availableGateways, setAvailableGateways] = useState([]);
+  const [paymentLoading, setPaymentLoading] = useState(false);
+
+  // Initialize payment gateways on mount
+  useEffect(() => {
+    const loadPaymentGateways = async () => {
+      await initializePaymentGateways(supabase);
+      const gateways = getAvailableGateways();
+      setAvailableGateways(gateways);
+      setSelectedPaymentGateway(gateways[0] || PAYMENT_GATEWAYS.KORA);
+    };
+    loadPaymentGateways();
+  }, []);
+
+  // Handle Kora Pay callback after redirect
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentRef = urlParams.get('ref');
+    const paymentGateway = urlParams.get('payment');
+
+    if (paymentGateway === 'kora' && paymentRef) {
+      // Check if we have pending registration data
+      const pendingData = sessionStorage.getItem('pending_registration');
+      const storedRef = sessionStorage.getItem('kora_payment_reference');
+
+      if (pendingData && storedRef === paymentRef) {
+        try {
+          const formData = JSON.parse(pendingData);
+          
+          // Verify payment with Kora (you should verify on backend)
+          // For now, we'll assume payment was successful if we got redirected back
+          // In production, verify payment status via Kora API
+          
+          saveRegistration(paymentRef, formData, PAYMENT_GATEWAYS.KORA)
+            .then(() => {
+              console.log('Registration saved to database!');
+              refresh();
+              setCurrentStep(5);
+              
+              // Clean up session storage
+              sessionStorage.removeItem('pending_registration');
+              sessionStorage.removeItem('kora_payment_reference');
+              sessionStorage.removeItem('kora_payment_redirect');
+              
+              // Clean URL
+              window.history.replaceState({}, document.title, window.location.pathname);
+            })
+            .catch((error) => {
+              console.error('Error saving registration:', error);
+              alert('Payment successful but registration save failed. Please contact support with reference: ' + paymentRef);
+            });
+        } catch (error) {
+          console.error('Error processing Kora callback:', error);
+        }
+      }
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -119,77 +186,66 @@ const Register = () => {
     window.scrollTo(0, 0);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateStep(4)) {
+      if (!selectedPaymentGateway) {
+        alert('Please select a payment method');
+        return;
+      }
+
+      setPaymentLoading(true);
       console.log('Form validated, initializing payment...');
       console.log('Player 1 Email:', formData.player1Email);
       console.log('Team Name:', formData.teamName);
+      console.log('Selected Gateway:', selectedPaymentGateway);
       
-      // Create Paystack configuration with current form data
-      const paystackConfig = {
-        reference: new Date().getTime().toString(),
+      // Get the appropriate public key based on selected gateway
+      let publicKey;
+      if (selectedPaymentGateway === PAYMENT_GATEWAYS.KORA) {
+        publicKey = process.env.REACT_APP_KORA_PUBLIC_KEY;
+      }
+
+      if (!publicKey) {
+        alert(`Payment gateway not configured. Please contact support.`);
+        setPaymentLoading(false);
+        return;
+      }
+
+      // Create payment configuration
+      const paymentConfig = {
+        reference: `SP-${Date.now()}`,
         email: formData.player1Email,
         amount: 10000000, // 100,000 Naira in kobo
-        publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
+        publicKey: publicKey,
         metadata: {
           teamName: formData.teamName,
           player1Name: formData.player1Name,
+          player1Phone: formData.player1Phone,
           player2Name: formData.player2Name,
-          custom_fields: [
-            {
-              display_name: "Team Name",
-              variable_name: "team_name",
-              value: formData.teamName
-            },
-            {
-              display_name: "Player 1",
-              variable_name: "player1",
-              value: formData.player1Name
-            },
-            {
-              display_name: "Player 2",
-              variable_name: "player2",
-              value: formData.player2Name
-            }
-          ]
+          player2Phone: formData.player2Phone,
         }
       };
-      
-      // Initialize payment with fresh config
-      const PaystackPop = window.PaystackPop;
-      const handler = PaystackPop.setup({
-        key: paystackConfig.publicKey,
-        email: paystackConfig.email,
-        amount: paystackConfig.amount,
-        ref: paystackConfig.reference,
-        metadata: paystackConfig.metadata,
-        onClose: function() {
-          console.log('Payment popup closed');
-          alert('Payment was not completed. Please try again to complete your registration.');
-        },
-        callback: function(response) {
-          console.log('Payment successful!', response);
-          console.log('Reference:', response.reference);
-          
-          // Save registration to Supabase (handle async separately)
-          saveRegistration(response.reference, formData)
-            .then(() => {
-              console.log('Registration saved to database!');
-              // Refresh slot count
-              refresh();
-              // Move to success step
-              setCurrentStep(5);
-            })
-            .catch((error) => {
-              console.error('Error saving registration:', error);
-              alert('Payment successful but registration save failed. Please contact support with reference: ' + response.reference);
-              window.location.href = '/';
-            });
+
+      try {
+        // For Kora Pay, it redirects, so we handle it differently
+        // Store form data in sessionStorage for after redirect
+        sessionStorage.setItem('pending_registration', JSON.stringify(formData));
+        sessionStorage.setItem('selected_gateway', selectedPaymentGateway);
+        
+        // Initialize payment using the payment service
+        // This will redirect to Kora Pay checkout
+        await initializePayment(paymentConfig, selectedPaymentGateway);
+        
+        // Note: For Kora Pay, redirect happens, so we don't reach here
+        // The callback will be handled when user returns via URL params
+      } catch (error) {
+        console.error('Payment error:', error);
+        if (error.message !== 'Payment window closed') {
+          alert(`Payment failed: ${error.message}. Please try again.`);
         }
-      });
-      
-      handler.openIframe();
+        setPaymentLoading(false);
+      }
     }
   };
 
@@ -525,8 +581,35 @@ const Register = () => {
             <span className="payment-label">{t.entryFee}:</span>
             <span className="payment-value">₦100,000</span>
           </div>
+          
+          {/* Payment Gateway Selection */}
+          {availableGateways.length > 1 && (
+            <div className="payment-gateway-selector">
+              <label className="payment-gateway-label">
+                <i className="fas fa-credit-card"></i> Select Payment Method:
+              </label>
+              <div className="gateway-options">
+                {availableGateways.map((gateway) => (
+                  <div
+                    key={gateway}
+                    className={`gateway-option ${
+                      selectedPaymentGateway === gateway ? 'selected' : ''
+                    }`}
+                    onClick={() => setSelectedPaymentGateway(gateway)}
+                  >
+                    <i className={getGatewayIcon(gateway)}></i>
+                    <span>{getGatewayDisplayName(gateway)}</span>
+                    {selectedPaymentGateway === gateway && (
+                      <i className="fas fa-check-circle check-icon"></i>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
           <p className="payment-note">
-            <strong>Note:</strong> You will be redirected to Paystack to complete your payment securely. 
+            <strong>Note:</strong> You will be redirected to {selectedPaymentGateway ? getGatewayDisplayName(selectedPaymentGateway) : 'the payment gateway'} to complete your payment securely. 
             Your spot will be confirmed immediately after successful payment.
           </p>
         </div>
@@ -564,8 +647,21 @@ const Register = () => {
         <button type="button" className="btn btn-secondary" onClick={prevStep}>
           <i className="fas fa-arrow-left"></i> {t.back}
         </button>
-        <button type="submit" className="btn btn-primary btn-large" onClick={handleSubmit}>
-          <i className="fas fa-check-circle"></i> {t.submitRegistration}
+        <button 
+          type="submit" 
+          className="btn btn-primary btn-large" 
+          onClick={handleSubmit}
+          disabled={paymentLoading}
+        >
+          {paymentLoading ? (
+            <>
+              <i className="fas fa-spinner fa-spin"></i> Processing Payment...
+            </>
+          ) : (
+            <>
+              <i className="fas fa-check-circle"></i> {t.submitRegistration}
+            </>
+          )}
         </button>
       </div>
     </div>

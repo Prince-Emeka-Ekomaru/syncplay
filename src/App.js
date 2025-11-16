@@ -16,6 +16,7 @@ import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import TournamentRules from './pages/TournamentRules';
 import AdminRegistrations from './pages/AdminRegistrations';
+import AdminPaymentSettings from './pages/AdminPaymentSettings';
 import './App.css';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/tournament-rules" element={<TournamentRules />} />
             <Route path="/admin/registrations" element={<AdminRegistrations />} />
+            <Route path="/admin/payment-settings" element={<AdminPaymentSettings />} />
           </Routes>
           <Footer />
         </div>
