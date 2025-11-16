@@ -77,13 +77,18 @@ export default async function handler(req, res) {
       requestBody.metadata = metadata;
     }
 
-    console.log('Kora Pay API Request:', {
-      url: 'https://api.korapay.com/merchant/api/v1/charges/initialize',
+    // Try Payment Links API first (simpler, no callback_url issues)
+    // If that doesn't work, fall back to charges/initialize
+    const paymentLinksUrl = 'https://api.korapay.com/merchant/api/v1/payment-links';
+    const chargesUrl = 'https://api.korapay.com/merchant/api/v1/charges/initialize';
+    
+    console.log('Kora Pay API Request (Payment Links):', {
+      url: paymentLinksUrl,
       body: requestBody,
     });
 
-    // Call Kora Pay API to create payment link
-    const response = await fetch('https://api.korapay.com/merchant/api/v1/charges/initialize', {
+    // Try Payment Links API first
+    let response = await fetch(paymentLinksUrl, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${process.env.KORA_SECRET_KEY}`,
@@ -91,6 +96,28 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify(requestBody),
     });
+
+    let data = await response.json();
+
+    // If Payment Links API doesn't exist (404) or fails, try charges/initialize
+    if (!response.ok && (response.status === 404 || response.status === 400)) {
+      console.log('Payment Links API failed, trying charges/initialize...');
+      console.log('Kora Pay API Request (Charges):', {
+        url: chargesUrl,
+        body: requestBody,
+      });
+      
+      response = await fetch(chargesUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.KORA_SECRET_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      data = await response.json();
+    }
 
     const data = await response.json();
 
