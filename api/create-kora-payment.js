@@ -58,8 +58,8 @@ export default async function handler(req, res) {
     const amountValue = parseFloat(amount);
     
     // Use Kora Pay charges/initialize API
-    // The error shows metadata field names are invalid
-    // Kora Pay might require specific metadata format or no metadata at all
+    // Error shows: "callback_url is not allowed" - Kora Pay doesn't accept it in request
+    // Callback URLs might need to be configured in dashboard, or they use webhooks
     const requestBody = {
       amount: amountValue, // Amount in Naira (100000 for 100k Naira)
       currency: 'NGN',
@@ -68,14 +68,13 @@ export default async function handler(req, res) {
         email: email,
         name: metadata?.teamName || 'Customer',
       },
-      // Try callback_url instead of redirect_url (might be required)
-      callback_url: callback_url,
+      // Don't include callback_url - Kora Pay says it's "not allowed"
+      // Callback URLs might be configured in dashboard settings
+      // Or Kora Pay might use webhooks instead
     };
 
-    // Don't include metadata - it's causing validation errors
-    // The error shows: metadatateamName, metadataplayer2Name are invalid
-    // Kora Pay might not accept nested metadata or these field names
-    // If metadata is needed, we'll need to check Kora Pay docs for correct format
+    // Don't include metadata - it was causing validation errors
+    // Don't include callback_url - Kora Pay says it's "not allowed"
 
     // Try Payment Links API first (simpler, no callback_url issues)
     // If that doesn't work, fall back to charges/initialize
