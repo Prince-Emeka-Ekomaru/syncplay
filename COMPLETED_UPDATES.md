@@ -86,7 +86,7 @@
 - ✅ "Leaderboard Coming Soon!" message
 - ✅ Professional coming soon design with:
   - Trophy icon with pulse animation
-  - Tournament details (Nov 30, ₦1.5M prize)
+  - Tournament details (Dec 20, ₦1.5M prize)
   - What will be displayed (Rankings, Stats, Earnings, Achievements)
   - Call-to-action buttons (Register + Learn More)
   - Timeline showing next steps

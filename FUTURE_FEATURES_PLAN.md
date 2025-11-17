@@ -126,8 +126,8 @@ const pastStreams = [
 
 | Feature | Priority | Timeline |
 |---------|----------|----------|
-| Basic YouTube embed | 🔴 HIGH | Before Nov 30 |
-| Live indicator | 🔴 HIGH | Before Nov 30 |
+| Basic YouTube embed | 🔴 HIGH | Before Dec 20 |
+| Live indicator | 🔴 HIGH | Before Dec 20 |
 | Stream schedule | 🟡 MEDIUM | 1 week before |
 | VOD archive | 🟢 LOW | After tournament |
 | Highlights/clips | 🟢 LOW | Week after tournament |
@@ -143,7 +143,7 @@ const pastStreams = [
 
 ### **Recommended Solution:**
 
-#### **Phase 1: Simple Results Display (After Nov 30)**
+#### **Phase 1: Simple Results Display (After Dec 20)**
 
 **Data Structure:**
 ```javascript
@@ -535,7 +535,7 @@ Teams NOT allowed:
 
 ### **Recommended Solution:**
 
-#### **Phase 1: Minimal Admin Panel (Before Nov 30)**
+#### **Phase 1: Minimal Admin Panel (Before Dec 20)**
 
 **Simple Admin Dashboard:**
 - View registrations from Paystack
@@ -819,7 +819,7 @@ Cons:
 
 ### **Implementation Roadmap:**
 
-#### **🔴 Phase 1 (Before Nov 30 - 1 Week)**
+#### **🔴 Phase 1 (Before Dec 20 - 1 Week)**
 **Minimal Admin Tools:**
 - [ ] Google Sheets integration with Paystack
 - [ ] Export registrations to CSV
@@ -870,7 +870,7 @@ Cons:
 
 ---
 
-### **Immediate Action for Nov 30 Tournament:**
+### **Immediate Action for Dec 20 Tournament:**
 
 **Manual Process (No coding needed):**
 
@@ -906,7 +906,7 @@ Cons:
 
 ## 📅 IMPLEMENTATION TIMELINE
 
-### **Before Nov 30 (3 Weeks)**
+### **Before Dec 20 (3 Weeks)**
 **Week 1 (Nov 1-7):**
 - [ ] Add team selection to registration ⚽
 - [ ] Create eligible teams list
@@ -933,7 +933,7 @@ Cons:
 
 ---
 
-### **After Nov 30 (Post-Tournament)**
+### **After Dec 20 (Post-Tournament)**
 **Week 1 (Dec 1-7):**
 - [ ] Post results ✅
 - [ ] Upload VODs
@@ -954,7 +954,7 @@ Cons:
 
 ## 💰 ESTIMATED COSTS
 
-### **Phase 1 (Manual - Nov 30)**
+### **Phase 1 (Manual - Dec 20)**
 - $0 - Use free tools
 
 ### **Phase 2 (Basic Admin - December)**
@@ -972,7 +972,7 @@ Cons:
 
 ## 🎯 RECOMMENDATIONS
 
-### **For Nov 30 Tournament:**
+### **For Dec 20 Tournament:**
 ✅ **Do:**
 1. Add team selection to registration (MUST HAVE)
 2. Set up YouTube streaming
@@ -998,7 +998,7 @@ Cons:
 **Tell me:**
 1. Do you want to add team selection to registration now?
 2. Should I create the YouTube embed for live streaming?
-3. Do you want a simple admin tool for managing the Nov 30 tournament?
+3. Do you want a simple admin tool for managing the Dec 20 tournament?
 4. What's your preference: Firebase (easy/fast) or Custom Backend (flexible)?
 
 I can implement any of these features immediately! 🚀
@@ -1006,7 +1006,7 @@ I can implement any of these features immediately! 🚀
 ---
 
 **Document Status:** Planning Phase  
-**Review Date:** After Nov 30 Tournament  
+**Review Date:** After Dec 20 Tournament  
 **Owner:** syncplay eSports Team
 
 

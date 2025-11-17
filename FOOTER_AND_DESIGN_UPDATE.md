@@ -47,7 +47,7 @@ Tournaments Page (`/tournaments`)
   1. Visit Registration
   2. Complete Payment (₦100,000)
   3. Get Confirmation (email + Discord)
-  4. Compete & Win (Nov 30, ₦1.5M)
+  4. Compete & Win (Dec 20, ₦1.5M)
 - **Modern visual elements:**
   - Icon-based steps (user-plus, credit-card, envelope, trophy)
   - Red connecting line between steps
