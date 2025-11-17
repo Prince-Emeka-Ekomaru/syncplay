@@ -155,7 +155,7 @@ export const translations = {
     tournamentRulesRegulations: 'Tournament Rules & Regulations',
     meetTheCompetition: 'Meet the Competition: Top Teams to Watch',
     newsArticleContent: `
-      <p>syncplay eSports is proud to announce our inaugural 2v2 EA Sports FC 26 Tournament, launching on November 30th, 2025! This historic event marks the beginning of syncplay's competitive eSports scene with an incredible ₦1,500,000 prize pool.</p>
+      <p>syncplay eSports is proud to announce our inaugural 2v2 EA Sports FC 26 Tournament, launching on December 20th, 2025! This historic event marks the beginning of syncplay's competitive eSports scene with an incredible ₦1,500,000 prize pool.</p>
       
       <p>This is more than just a tournament—it's the foundation of something special. We're bringing together the best eFootball players to compete in an exciting team format that will test strategy, coordination, and skill like never before.</p>
       

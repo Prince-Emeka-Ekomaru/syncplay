@@ -276,7 +276,7 @@ const Events = () => {
                 <i className="fas fa-rocket"></i>
               </div>
               <h3>{t.gettingStartedTitle}</h3>
-              <p>{t.gettingStartedDesc1} <strong>November 30, 2025</strong>.</p>
+              <p>{t.gettingStartedDesc1} <strong>December 20, 2025</strong>.</p>
               <p>{t.gettingStartedDesc2}</p>
               <p>{t.gettingStartedDesc3}</p>
               <Link to="/register" className="btn btn-primary">
