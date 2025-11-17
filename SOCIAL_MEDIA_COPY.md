@@ -1,7 +1,7 @@
 # syncplay eSports - Social Media Copy & Content
 
 **Last Updated**: October 24, 2025  
-**Tournament Launch**: November 30, 2025  
+**Tournament Launch**: December 20, 2025  
 **Prize Pool**: ₦1,500,000
 
 > **📐 Looking for graphics specs?** See [`GRAPHICS_SPECIFICATIONS.md`](GRAPHICS_SPECIFICATIONS.md)
@@ -45,7 +45,7 @@ syncplay eSports is officially LIVE! We're bringing professional eFootball tourn
 
 🏆 OUR FIRST TOURNAMENT:
 📍 2v2 EA Sports FC 26
-📅 November 30th, 2025
+📅 December 20th, 2025
 💰 ₦1.5 Million Prize Pool
 👥 32 Teams Only
 
@@ -87,7 +87,7 @@ This is YOUR chance to:
 ✅ Build your gaming legacy
 ✅ Make your mark in Nigerian eSports
 
-📅 Tournament: November 30th
+📅 Tournament: December 20th
 👥 32 Teams Only
 💵 Entry: ₦100K per team
 
@@ -167,7 +167,7 @@ Register: Link in bio
 - 20-30s: Celebration with prize money
 
 **ON-SCREEN TEXT**:
-- "Nov 30"
+- "Dec 20"
 - "₦1.5M"
 - "Your journey starts at syncplay.co"
 
@@ -185,7 +185,7 @@ Show different player types:
 - The tactical genius: *Pauses constantly*
 - The lucky winner: "Wait, I won??"
 
-**END CARD**: "Which one are you? Find out Nov 30th"
+**END CARD**: "Which one are you? Find out Dec 20th"
 
 ---
 
@@ -210,7 +210,7 @@ We're excited to announce the official launch of syncplay eSports - Nigeria's fi
 • Growing community of competitive players
 
 🏆 INAUGURAL TOURNAMENT: 2v2 EA SPORTS FC 26
-Date: November 30, 2025
+Date: December 20, 2025
 Prize Pool: ₦1,500,000 (One point five million Naira!)
 Format: 32 Teams (2 players per team)
 Entry Fee: ₦100,000 per team
@@ -244,7 +244,7 @@ Media Partner: @TheTwelfthMan - Your trusted source for eSports coverage
 
 syncplay eSports proudly presents our inaugural 2v2 EA Sports FC 26 Tournament with a massive ₦1,500,000 prize pool!
 
-📅 WHEN: November 30, 2025 | 3:00 PM WAT
+📅 WHEN: December 20, 2025 | 3:00 PM WAT
 📍 WHERE: Online (PlayStation Network)
 🎮 GAME: EA Sports FC 26
 👥 FORMAT: 2v2 (32 Teams Total)
@@ -280,7 +280,7 @@ syncplay eSports proudly presents our inaugural 2v2 EA Sports FC 26 Tournament w
 ⚠️ IMPORTANT NOTES:
 • Registration closes when 32 spots are filled
 • Both players must have PSN accounts
-• Teams must be available Nov 30th
+• Teams must be available Dec 20th
 • All rules available at www.syncplay.co/tournament-rules
 
 🎙️ LIVE COVERAGE: Matches will be streamed live with expert commentary by The Twelfth Man
@@ -329,7 +329,7 @@ What we're bringing to Nigerian gaming:
 🚨 FIRST TOURNAMENT ALERT 🚨
 
 2v2 EA Sports FC 26 Tournament
-📅 November 30, 2025
+📅 December 20, 2025
 💰 ₦1,500,000 Prize Pool
 👥 32 Teams (64 Players)
 💵 ₦100,000 Entry Fee
@@ -351,7 +351,7 @@ Our inaugural tournament prize breakdown:
 🥈 2nd Place: ₦400,000
 🥉 3rd Place: ₦300,000
 
-November 30th. 32 teams. One champion.
+December 20th. 32 teams. One champion.
 
 Are you ready? 🔥
 
@@ -377,7 +377,7 @@ Your 2v2 partner needs to know:
 
 Silent teammates = Easy losses
 
-Practice communication before Nov 30!
+Practice communication before Dec 20!
 
 #syncplayeSports #TournamentTips
 ```
@@ -409,7 +409,7 @@ Research:
 
 Knowledge = Advantage 🧠
 
-Tournament is Nov 30. Start studying!
+Tournament is Dec 20. Start studying!
 
 #syncplayeSports #EASFC26
 ```
@@ -469,7 +469,7 @@ Vote below! 👇
 
 **END CARD**: 
 ```
-November 30th could be your day
+December 20th could be your day
 Register: syncplay.co
 ```
 
@@ -495,7 +495,7 @@ Register: syncplay.co
 - Good communication
 - Shares the load
 - Strategic play
-- Caption: "This is the one you need for Nov 30"
+- Caption: "This is the one you need for Dec 20"
 
 **END**: "Find your partner. Register at syncplay.co"
 
@@ -515,7 +515,7 @@ syncplay eSports is LIVE!
 
 Nigeria's first professional eFootball tournament platform.
 
-First Tournament: Nov 30
+First Tournament: Dec 20
 Prize Pool: ₦1.5M
 32 Teams Only
 
@@ -531,7 +531,7 @@ THE MOMENT IS HERE! 🎮⚡
 syncplay eSports officially launches today with Nigeria's BIGGEST eFootball tournament!
 
 💰 ₦1.5 Million Prize Pool
-📅 November 30, 2025
+📅 December 20, 2025
 👥 32 Teams (First come, first served)
 🎮 2v2 EA Sports FC 26
 
@@ -617,7 +617,7 @@ Half the spots are GONE! ⚡
 
 At this rate, we'll be SOLD OUT in [estimated days].
 
-Don't let this be you on November 30th: "I wish I had registered..." 😢
+Don't let this be you on December 20th: "I wish I had registered..." 😢
 
 Register TODAY: syncplay.co/register
 
@@ -641,7 +641,7 @@ The ₦1.5M won't win itself! 💰
 **STORY 2**:
 ```
 [Tournament graphic]
-"NOVEMBER 30TH
+"DECEMBER 20TH
 ₦1.5 MILLION
 FINAL SPOTS"
 ```
@@ -676,7 +676,7 @@ SWIPE UP TO REGISTER"
 [Motivational message tailored to timeframe]
 
 💰 Prize Pool: ₦1,500,000
-📅 Date: November 30, 2025
+📅 Date: December 20, 2025
 👥 Teams: [Registered]/32
 
 [Urgency message]
@@ -722,7 +722,7 @@ Fun Facts:
 • Signature Move: [Skill move]
 • Confidence Level: [1-10]/10 💪
 
-[Player Name] and his partner are ready for November 30th. Are YOU?
+[Player Name] and his partner are ready for December 20th. Are YOU?
 
 Think you can beat them? Register now! Link in bio.
 
@@ -774,7 +774,7 @@ Here's what we're working on:
 
 But here's the truth: WE'RE JUST GETTING STARTED.
 
-After November 30th, expect:
+After December 20th, expect:
 • Regular weekly tournaments
 • Championship series
 • More games (eBasketball coming!)
@@ -813,7 +813,7 @@ syncplay eSports is hosting Nigeria's biggest eFootball tournament with ₦1,500
 ✅ Guaranteed prize pool
 ✅ 32 teams only
 
-November 30th. PlayStation. 2v2 Format.
+December 20th. PlayStation. 2v2 Format.
 
 Registration closes when spots fill. Don't miss out.
 ```
@@ -831,7 +831,7 @@ Registration closes when spots fill. Don't miss out.
 Stop playing for nothing. Start playing for ₦1.5 MILLION. 💰
 
 syncplay eSports 2v2 Tournament
-📅 November 30, 2025
+📅 December 20, 2025
 🎮 EA Sports FC 26
 💵 ₦100K entry, ₦750K first prize
 
@@ -877,7 +877,7 @@ Be part of history. Register your team today.
 #### AD 1: Branded Search
 **HEADLINE 1**: FIFA Tournament Nigeria ₦1.5M  
 **HEADLINE 2**: Professional eSports Platform  
-**HEADLINE 3**: Register Your Team - Nov 30
+**HEADLINE 3**: Register Your Team - Dec 20
 
 **DESCRIPTION 1**: Join Nigeria's premier eFootball tournament. 32 teams, ₦1.5M prize pool. PlayStation 2v2 format.
 
@@ -906,13 +906,13 @@ VOICEOVER:
 
 syncplay eSports presents Nigeria's biggest eFootball tournament. 
 
-November 30th. Are you ready? 
+December 20th. Are you ready? 
 
 Register now at syncplay.co."
 
 [ON-SCREEN TEXT]:
 • "₦1.5M PRIZE POOL"
-• "NOVEMBER 30"
+• "DECEMBER 20"
 • "SYNCPLAY.CO/REGISTER"
 ```
 
@@ -944,7 +944,7 @@ Team Number: [X] of 32
 
 TOURNAMENT INFORMATION:
 ━━━━━━━━━━━━━━━━━━━━
-📅 Date: November 30, 2025
+📅 Date: December 20, 2025
 ⏰ Time: 3:00 PM WAT (Check-in starts 2:00 PM)
 💰 Prize Pool: ₦1,500,000
 🎮 Platform: PlayStation
@@ -975,7 +975,7 @@ WHAT'S NEXT?
 
 IMPORTANT REMINDERS:
 ━━━━━━━━━━━━━━━━━━━━
-⚠️ Both players must be available November 30th
+⚠️ Both players must be available December 20th
 ⚠️ Check-in is mandatory by 2:00 PM WAT
 ⚠️ Late teams will be disqualified (no refunds)
 ⚠️ Review tournament rules carefully

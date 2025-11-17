@@ -102,7 +102,7 @@ Discord:   https://discord.gg/utstb8rGgM
 ```
 🎮 Nigeria's Premier eSports 🇳🇬
 🏆 EA Sports FC 26 Tournaments
-📅 Nov 30 | ₦1.5M Prize Pool
+📅 Dec 20 | ₦1.5M Prize Pool
 💬 Discord: discord.gg/utstb8rGgM
 🔗 Register 👇
 ```
@@ -113,7 +113,7 @@ Discord:   https://discord.gg/utstb8rGgM
 ### **TikTok Bio:**
 ```
 🎮 Nigeria's Premier eSports 🇳🇬
-🏆 EA Sports FC 26 | Nov 30
+🏆 EA Sports FC 26 | Dec 20
 💰 ₦1.5M Prize Pool
 💬 discord.gg/ZUQ565AG
 🔗 syncplay.co/register
@@ -125,7 +125,7 @@ Discord:   https://discord.gg/utstb8rGgM
 ```
 🎮 Nigeria's Premier eSports Platform 🇳🇬
 🏆 EA Sports FC 26 | eBasketball
-📅 First Tournament: Nov 30, 2025
+📅 First Tournament: Dec 20, 2025
 💰 ₦1.5M Prize Pool
 💬 discord.gg/ZUQ565AG
 🔗 syncplay.co/register
@@ -141,7 +141,7 @@ Nigeria's premier platform for competitive eFootball and eBasketball tournaments
 
 🏆 EA Sports FC 26 Tournaments
 💰 Big Prize Pools
-📅 First Tournament: November 30, 2025
+📅 First Tournament: December 20, 2025
 🎮 PlayStation Competitions
 
 🔗 Website: https://syncplay.co
@@ -168,7 +168,7 @@ Nigeria's premier platform for competitive eFootball and eBasketball!
 
 ━━━━━━━━━━━━━━━━━━━━━━━
 
-📅 FIRST TOURNAMENT: November 30, 2025
+📅 FIRST TOURNAMENT: December 20, 2025
 ⚽ EA SPORTS FC 26 - 2v2 Format
 💰 ₦1,500,000 PRIZE POOL
 🎮 PlayStation Only
@@ -246,7 +246,7 @@ LET'S GO! 🚀
 **YouTube:**
 - Video: "syncplay eSports LAUNCHES" (5-10 min)
 - Community post: Announcement
-- Schedule: First live stream Nov 30
+- Schedule: First live stream Dec 20
 
 **Discord:**
 - @everyone announcement
@@ -278,7 +278,7 @@ LET'S GO! 🚀
 - 32 teams FULL! ✅
 - 500+ Discord members
 
-### **Tournament Day (Nov 30):**
+### **Tournament Day (Dec 20):**
 - 500+ live viewers on YouTube
 - All 32 teams compete
 - Winner crowned
@@ -331,7 +331,7 @@ Hi [Team Name],
 
 Your registration for the syncplay 2v2 EA Sports FC 26 Tournament is confirmed!
 
-📅 Tournament Date: November 30, 2025
+📅 Tournament Date: December 20, 2025
 🏆 Prize Pool: ₦1,500,000
 💰 Payment: ₦100,000 (Confirmed)
 

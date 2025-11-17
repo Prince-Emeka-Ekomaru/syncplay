@@ -14,7 +14,7 @@ Your home page now shows **live slot availability** in multiple places!
 │   WHO WE ARE                        │
 │                                     │
 │   ┌──────┐  ┌──────┐  ┌──────┐    │
-│   │NOV 30│  │₦1.5M │  │  32  │    │ ← Static
+│   │DEC 20│  │₦1.5M │  │  32  │    │ ← Static
 │   │First │  │Prize │  │Team  │    │
 │   │Tourn.│  │Pool  │  │Slots │    │
 │   └──────┘  └──────┘  └──────┘    │
@@ -27,7 +27,7 @@ Your home page now shows **live slot availability** in multiple places!
 │   WHO WE ARE                        │
 │                                     │
 │   ┌──────┐  ┌──────┐  ┌──────┐    │
-│   │NOV 30│  │₦1.5M │  │  27  │    │ ← LIVE!
+│   │DEC 20│  │₦1.5M │  │  27  │    │ ← LIVE!
 │   │First │  │Prize │  │Slots │    │
 │   │Tourn.│  │Pool  │  │Left  │    │ ← "Left" instead of "Slots"
 │   └──────┘  └──────┘  └──────┘    │

@@ -2,7 +2,7 @@
 
 **Date:** October 25, 2025  
 **Status:** READY FOR PRODUCTION  
-**Tournament Launch:** November 30, 2025 (36 days)
+**Tournament Launch:** December 20, 2025 (36 days)
 
 ---
 
@@ -149,7 +149,7 @@ OTP: 123456
 ```
 Bio: 🎮 Nigeria's Premier eSports Platform
      🏆 EA Sports FC 26 | eBasketball
-     📅 First Tournament: Nov 30
+     📅 First Tournament: Dec 20
      💰 ₦1.5M Prize Pool
      🔗 syncplay.co/register
 ```
@@ -182,7 +182,7 @@ Bio: 🎮 Nigeria's Premier eSports Platform
 
 syncplay eSports is officially OPEN!
 
-🏆 FIRST TOURNAMENT: November 30
+🏆 FIRST TOURNAMENT: December 20
 ⚽ EA SPORTS FC 26 - 2v2 Format
 💰 ₦1,500,000 PRIZE POOL
    • 1st: ₦800,000
@@ -209,7 +209,7 @@ Social Setup:   Oct 28-31 (31 days)
 LAUNCH:         Nov 1 (29 days)
 Registration:   Nov 1-28 (0-28 days)
 Bracket:        Nov 28 (2 days)
-TOURNAMENT:     Nov 30 (0 days)
+TOURNAMENT:     Dec 20 (0 days)
 ```
 
 ---
@@ -260,7 +260,7 @@ NET PROFIT:              ₦1,287,000
 - [ ] Week 3 (Nov 15-21): 28 teams (87%)
 - [ ] Week 4 (Nov 22-28): 32 teams (100%)
 
-### **Social Media Goals (by Nov 30):**
+### **Social Media Goals (by Dec 20):**
 - [ ] Instagram: 1,000+ followers
 - [ ] TikTok: 500+ followers
 - [ ] YouTube: 300+ subscribers
@@ -291,7 +291,7 @@ NET PROFIT:              ₦1,287,000
    → PlayStation only (PSN ID required)
 
 3. "When is the tournament?"
-   → November 30, 2025, 3:00 PM WAT
+   → December 20, 2025, 3:00 PM WAT
 
 4. "How do I get confirmation?"
    → Email sent immediately after payment

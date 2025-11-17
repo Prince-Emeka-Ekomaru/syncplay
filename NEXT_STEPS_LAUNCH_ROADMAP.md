@@ -1,7 +1,7 @@
 # 🚀 syncplay eSports - Next Steps & Launch Roadmap
 
 **Date:** October 25, 2025  
-**Tournament Launch:** November 30, 2025  
+**Tournament Launch:** December 20, 2025  
 **Days Until Launch:** 36 days
 
 ---
@@ -216,7 +216,7 @@ Hi [Team Name],
 
 Your registration for the syncplay 2v2 EA Sports FC 26 Tournament is confirmed!
 
-📅 Tournament Date: November 30, 2025
+📅 Tournament Date: December 20, 2025
 🏆 Prize Pool: ₦1,500,000
 💰 Payment: ₦100,000 (Confirmed)
 
@@ -242,12 +242,12 @@ Hi [Team Name],
 
 The wait is almost over! Your team is registered for our inaugural 2v2 tournament.
 
-📅 Tournament: November 30, 2025, 3:00 PM WAT
+📅 Tournament: December 20, 2025, 3:00 PM WAT
 📺 Live Stream: youtube.com/@syncplayesports
 
 Important:
 - Bracket reveal: Nov 28
-- Check-in starts: Nov 30, 2:00 PM
+- Check-in starts: Dec 20, 2:00 PM
 - Late = Disqualified!
 
 Questions? Reply to this email.
@@ -263,7 +263,7 @@ Let's go!
 
 #### **Instagram** (@syncplayesports)
 - [ ] Profile photo: syncplay logo (white on red circle)
-- [ ] Bio: "🎮 Nigeria's Premier eSports Platform | eFootball & eBasketball | 💰 Prize Pools | 📅 First Tournament: Nov 30"
+- [ ] Bio: "🎮 Nigeria's Premier eSports Platform | eFootball & eBasketball | 💰 Prize Pools | 📅 First Tournament: Dec 20"
 - [ ] Link: syncplay.co/register
 - [ ] Post 3-4 times per week
 
@@ -293,7 +293,7 @@ Let's go!
 #### **Facebook Page**
 - [ ] Page setup
 - [ ] Share tournament info
-- [ ] Create event: Nov 30 tournament
+- [ ] Create event: Dec 20 tournament
 
 #### **Telegram Channel**
 - [ ] Create channel
@@ -424,7 +424,7 @@ Use `SOCIAL_MEDIA_CONTENT.md` as your guide.
 
 ---
 
-## 📋 PHASE 6: TOURNAMENT DAY (Nov 30)
+## 📋 PHASE 6: TOURNAMENT DAY (Dec 20)
 
 ### **Timeline:**
 

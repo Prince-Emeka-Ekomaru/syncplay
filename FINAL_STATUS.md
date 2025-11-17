@@ -47,7 +47,7 @@ X/Twitter: @SyncplayEsport
 Discord:   discord.gg/utstb8rGgM
 
 🏆 EA Sports FC 26 Tournament
-📅 November 30, 2025
+📅 December 20, 2025
 💰 ₦1,500,000 Prize Pool
 ```
 
@@ -154,7 +154,7 @@ Discord:   discord.gg/utstb8rGgM
 
 syncplay eSports officially launches TODAY! 🎉
 
-🏆 FIRST TOURNAMENT: November 30
+🏆 FIRST TOURNAMENT: December 20
 ⚽ EA SPORTS FC 26 - 2v2 Format
 💰 ₦1,500,000 PRIZE POOL
    • 1st: ₦800,000
@@ -181,7 +181,7 @@ History starts NOW! 🇳🇬🚀
 ```
 🎮 Nigeria's Premier eSports 🇳🇬
 🏆 EA Sports FC 26 Tournaments
-📅 Nov 30 | ₦1.5M Prize Pool
+📅 Dec 20 | ₦1.5M Prize Pool
 💬 discord.gg/utstb8rGgM
 🔗 Register 👇
 ```
@@ -189,7 +189,7 @@ History starts NOW! 🇳🇬🚀
 ### **TikTok Bio:**
 ```
 🎮 Nigeria's Premier eSports 🇳🇬
-🏆 EA Sports FC 26 | Nov 30
+🏆 EA Sports FC 26 | Dec 20
 💰 ₦1.5M Prize Pool
 💬 discord.gg/utstb8rGgM
 🔗 syncplay.co/register
@@ -199,7 +199,7 @@ History starts NOW! 🇳🇬🚀
 ```
 🎮 Nigeria's Premier eSports Platform 🇳🇬
 🏆 EA Sports FC 26 | eBasketball
-📅 Nov 30, 2025 | ₦1.5M Prize
+📅 Dec 20, 2025 | ₦1.5M Prize
 💬 discord.gg/utstb8rGgM
 🔗 syncplay.co/register
 ```
@@ -212,7 +212,7 @@ Nigeria's premier platform for competitive eFootball and eBasketball.
 
 🏆 EA Sports FC 26 Tournaments
 💰 Big Prize Pools
-📅 First Tournament: November 30, 2025
+📅 First Tournament: December 20, 2025
 🎮 PlayStation Competitions
 
 🔗 Website: https://syncplay.co
@@ -238,7 +238,7 @@ Subscribe for live tournament streams, highlights & gaming content!
 ⏳ Nov 1 (FRIDAY):       🚀 LAUNCH!
 ⏳ Nov 1-28:             Registration period
 ⏳ Nov 28:               Bracket reveal
-⏳ Nov 30:               🏆 TOURNAMENT DAY!
+⏳ Dec 20:               🏆 TOURNAMENT DAY!
 ```
 
 **36 days until tournament!**  
@@ -277,7 +277,7 @@ Subscribe for live tournament streams, highlights & gaming content!
 - Week 3: 28 teams (87%)
 - Week 4: 32 teams (100%) ✅
 
-### **Social Media Goals (by Nov 30):**
+### **Social Media Goals (by Dec 20):**
 - Instagram: 1,000+ followers
 - TikTok: 500+ followers
 - YouTube: 300+ subscribers
@@ -305,7 +305,7 @@ Subscribe for live tournament streams, highlights & gaming content!
 1. "How do I register?" → syncplay.co/register
 2. "What platform?" → PlayStation only
 3. "Entry fee?" → ₦100,000 per team
-4. "When?" → November 30, 2025, 3:00 PM WAT
+4. "When?" → December 20, 2025, 3:00 PM WAT
 5. "Discord link?" → discord.gg/utstb8rGgM
 
 ---

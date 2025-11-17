@@ -71,7 +71,7 @@ Tournaments Page (`/tournaments`)
 #### **Content Improvements:**
 - 📝 Specific tournament details included
 - 📝 Real payment amount (₦100,000)
-- 📝 Actual tournament date (November 30)
+- 📝 Actual tournament date (December 20)
 - 📝 Clear prize pool (₦1.5M)
 - 📝 Realistic steps for registration
 

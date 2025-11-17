@@ -36,7 +36,7 @@ const Players = () => {
                 <i className="fas fa-calendar-alt"></i>
                 <div>
                   <strong>{t.firstTournament}</strong>
-                  <span>November 30, 2025</span>
+                  <span>December 20, 2025</span>
                 </div>
               </div>
               <div className="detail-item">
@@ -101,7 +101,7 @@ const Players = () => {
                 <div className="timeline-item">
                   <div className="timeline-dot"></div>
                   <div className="timeline-content">
-                    <strong>November 30, 2025</strong>
+                    <strong>December 20, 2025</strong>
                     <p>{t.first2v2Tournament}</p>
                   </div>
                 </div>

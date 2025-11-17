@@ -267,7 +267,7 @@ Winner: SP-2025-001
 
 ## 🔮 Future Enhancements
 
-### **Phase 2** (After Nov 30):
+### **Phase 2** (After Dec 20):
 - Player profile pages (`/player/SP-2025-001`)
 - Match history tracking
 - Win/loss records

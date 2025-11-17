@@ -2,7 +2,7 @@
 
 **Last Updated**: October 24, 2025  
 **Brand**: syncplay eSports  
-**Tournament**: 2v2 EA Sports FC 26 - November 30, 2025
+**Tournament**: 2v2 EA Sports FC 26 - December 20, 2025
 
 ---
 
@@ -110,7 +110,7 @@ Light Gray:    #F5F5F5 (RGB: 245, 245, 245) - For backgrounds
 │  [Game Screenshot]  │ (Middle 40%)
 │                     │
 │  KEY INFO:          │
-│  📅 Nov 30, 2025    │
+│  📅 Dec 20, 2025    │
 │  💰 ₦1.5M Prize     │
 │  👥 32 Teams        │
 │                     │
@@ -145,7 +145,7 @@ Light Gray:    #F5F5F5 (RGB: 245, 245, 245) - For backgrounds
 │ │ 🥉 ₦300,000     │ │
 │ └─────────────────┘ │
 │                     │
-│  NOVEMBER 30        │
+│  DECEMBER 20        │
 │  syncplay eSports   │
 └─────────────────────┘
 ```
@@ -243,7 +243,7 @@ Light Gray:    #F5F5F5 (RGB: 245, 245, 245) - For backgrounds
 │ [Countdown] │
 │  XX:XX:XX   │
 │             │
-│ Nov 30      │
+│ Dec 20      │
 └─────────────┘
 ```
 
@@ -330,7 +330,7 @@ Light Gray:    #F5F5F5 (RGB: 245, 245, 245) - For backgrounds
 │           2v2 EA SPORTS FC 26 TOURNAMENT        │
 │                                                 │
 │    [Game Graphic]        [Tournament Info]     │
-│                          📅 Nov 30              │
+│                          📅 Dec 20              │
 │                          💰 ₦1.5M               │
 │                          👥 32 Teams            │
 │                                                 │
@@ -360,7 +360,7 @@ Light Gray:    #F5F5F5 (RGB: 245, 245, 245) - For backgrounds
 │  [Logo]    syncplay eSports        │
 │                                    │
 │      2v2 TOURNAMENT                │
-│      November 30, 2025             │
+│      December 20, 2025             │
 │                                    │
 │      ₦1,500,000 PRIZE POOL         │
 │                                    │
@@ -378,7 +378,7 @@ Light Gray:    #F5F5F5 (RGB: 245, 245, 245) - For backgrounds
 **Layout**:
 ```
 ┌───────────────────────────────────────────────────┐
-│ [LOGO]                        NOV 30 • ₦1.5M     │
+│ [LOGO]                        DEC 20 • ₦1.5M     │
 │ syncplay                      32 TEAMS            │
 │ eSports                       REGISTRATION OPEN   │
 │                               SYNCPLAY.CO          │
@@ -407,7 +407,7 @@ Light Gray:    #F5F5F5 (RGB: 245, 245, 245) - For backgrounds
 │      INAUGURAL TOURNAMENT            │
 │                                      │
 │      2v2 EA SPORTS FC 26             │
-│      November 30, 2025               │
+│      December 20, 2025               │
 │                                      │
 │      💰 ₦1.5M Prize Pool             │
 │      👥 32 Teams                     │
@@ -493,7 +493,7 @@ Light Gray:    #F5F5F5 (RGB: 245, 245, 245) - For backgrounds
 │  PRIZE      │
 │  POOL       │
 │             │
-│  Nov 30     │
+│  Dec 20     │
 └─────────────┘
 ```
 
@@ -555,7 +555,7 @@ Light Gray:    #F5F5F5 (RGB: 245, 245, 245) - For backgrounds
 │                                        │
 │  [LOGO]    syncplay eSports            │
 │           Nigeria's #1 eSports Platform │
-│           Next Tournament: Nov 30       │
+│           Next Tournament: Dec 20       │
 │                                        │
 └────────────────────────────────────────┘
 ```
@@ -599,7 +599,7 @@ Light Gray:    #F5F5F5 (RGB: 245, 245, 245) - For backgrounds
 ┌────────────────────────────┐
 │  syncplay eSports          │
 │  2v2 Tournament            │
-│  November 30               │
+│  December 20               │
 │  32 Teams Only             │
 └────────────────────────────┘
 ```

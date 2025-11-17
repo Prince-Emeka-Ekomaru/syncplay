@@ -95,7 +95,7 @@ Once you have the link, add it to:
 ```
 🎮 Nigeria's Premier eSports Platform
 🏆 EA Sports FC 26 Tournaments
-📅 First Event: Nov 30
+📅 First Event: Dec 20
 💬 Join Discord: discord.gg/syncplay123
 🔗 syncplay.co
 ```

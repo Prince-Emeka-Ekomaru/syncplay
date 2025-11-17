@@ -206,7 +206,7 @@ Nigeria's premier platform for competitive eFootball and eBasketball!
 
 ━━━━━━━━━━━━━━━━━━━━━━━
 
-📅 FIRST TOURNAMENT: November 30, 2025
+📅 FIRST TOURNAMENT: December 20, 2025
 ⚽ EA SPORTS FC 26 - 2v2 Format
 💰 ₦1,500,000 Prize Pool
 🎮 PlayStation Only
@@ -422,7 +422,7 @@ This is the official home for syncplay eSports!
 
 ━━━━━━━━━━━━━━━━━━━━━━━
 
-🏆 FIRST TOURNAMENT: NOVEMBER 30
+🏆 FIRST TOURNAMENT: DECEMBER 20
 ⚽ EA SPORTS FC 26 - 2v2
 💰 ₦1,500,000 PRIZE POOL
 
@@ -536,8 +536,8 @@ LET'S MAKE HISTORY TOGETHER! 🚀
 2. Fill in:
    ```
    Event Name: syncplay 2v2 Tournament
-   Start Date: November 30, 2025, 3:00 PM
-   End Date: November 30, 2025, 8:00 PM
+   Start Date: December 20, 2025, 3:00 PM
+   End Date: December 20, 2025, 8:00 PM
    Location: Online (YouTube Live)
    Description: 
    EA Sports FC 26 2v2 Tournament

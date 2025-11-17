@@ -31,7 +31,7 @@
 - [ ] Add channel banner (2560×1440px)
 - [ ] Upload channel trailer
 - [ ] Write channel description
-- [ ] Set up for live streaming (Nov 30)
+- [ ] Set up for live streaming (Dec 20)
 
 ---
 
@@ -153,14 +153,14 @@ All social links have been updated on:
 ```
 🎮 Nigeria's Premier eSports 🇳🇬
 🏆 EA Sports FC 26 Tournaments
-📅 Nov 30 | ₦1.5M Prize Pool
+📅 Dec 20 | ₦1.5M Prize Pool
 🔗 Register 👇
 ```
 
 **TikTok Bio:**
 ```
 🎮 Nigeria's Premier eSports 🇳🇬
-🏆 EA Sports FC 26 | Nov 30
+🏆 EA Sports FC 26 | Dec 20
 💰 ₦1.5M Prize Pool
 🔗 syncplay.co/register
 ```
@@ -169,7 +169,7 @@ All social links have been updated on:
 ```
 🎮 Nigeria's Premier eSports Platform 🇳🇬
 🏆 EA Sports FC 26 | eBasketball
-📅 First Tournament: Nov 30, 2025
+📅 First Tournament: Dec 20, 2025
 💰 ₦1.5M Prize Pool
 🔗 syncplay.co/register
 ```
@@ -182,7 +182,7 @@ Nigeria's premier platform for competitive eFootball and eBasketball tournaments
 
 🏆 EA Sports FC 26 Tournaments
 💰 Big Prize Pools
-📅 First Tournament: November 30, 2025
+📅 First Tournament: December 20, 2025
 🎮 PlayStation Competitions
 
 🔗 Website: https://syncplay.co
@@ -271,7 +271,7 @@ Subscribe for tournament streams, highlights, and gaming content!
 
 syncplay eSports officially launches TODAY! 🎉
 
-🏆 FIRST TOURNAMENT: November 30
+🏆 FIRST TOURNAMENT: December 20
 ⚽ EA SPORTS FC 26 - 2v2 Format
 💰 ₦1,500,000 PRIZE POOL
    • 1st: ₦800,000
@@ -308,7 +308,7 @@ History starts NOW! 🇳🇬🚀
 
 **Caption:**
 ```
-🚨 ₦1.5M PRIZE POOL! Nov 30! Are you ready? 🏆
+🚨 ₦1.5M PRIZE POOL! Dec 20! Are you ready? 🏆
 
 Link in bio to register! 🔗
 
@@ -321,7 +321,7 @@ Link in bio to register! 🔗
 ```
 🧵 THREAD: syncplay eSports is LIVE! Here's everything you need to know about Nigeria's new eSports platform 🎮🇳🇬
 
-1/ We're launching with our FIRST TOURNAMENT on November 30th
+1/ We're launching with our FIRST TOURNAMENT on December 20th
 EA SPORTS FC 26 - 2v2 Format
 ₦1,500,000 Prize Pool
 32 Teams Only
@@ -346,7 +346,7 @@ It's that simple! ✅
 ✓ 2 players per team
 ✓ EA Sports FC 26
 ✓ PSN IDs required
-✓ Must check in Nov 30
+✓ Must check in Dec 20
 
 5/ WHY syncplay?
 🎯 Fair competition
@@ -377,7 +377,7 @@ RT to support Nigerian eSports! 🔁❤️
 syncplay eSports officially launches with Nigeria's biggest eFootball tournament!
 
 🏆 TOURNAMENT DETAILS:
-📅 Date: November 30, 2025
+📅 Date: December 20, 2025
 ⚽ Game: EA Sports FC 26
 👥 Format: 2v2 Teams
 💰 Prize Pool: ₦1,500,000

@@ -49,7 +49,7 @@
 ### **Tournament Rules** (`/tournament-rules`)
 - **File**: `src/pages/TournamentRules.js`
 - **Sections**:
-  - Tournament Format (2v2, PlayStation, November 30)
+  - Tournament Format (2v2, PlayStation, December 20)
   - Eligibility Requirements
   - Registration Process
   - Match Rules (Game settings, team selection)
@@ -189,7 +189,7 @@ import TournamentRules from './pages/TournamentRules';
 4. **Tournament Specifics**
    - Entry fee: ₦100,000
    - Prize pool: ₦1,500,000
-   - Date: November 30, 2025
+   - Date: December 20, 2025
    - Platform: PlayStation only
    - Format: 2v2
 
@@ -290,7 +290,7 @@ All legal pages now display:
 ✅ **Mobile Responsive**
 ✅ **No Broken Features**
 
-**syncplay eSports is ready for tournament launch on November 30, 2025!** 🎮⚽
+**syncplay eSports is ready for tournament launch on December 20, 2025!** 🎮⚽
 
 ---
 

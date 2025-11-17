@@ -27,7 +27,7 @@ Nigeria's premier platform for competitive eFootball and eBasketball tournaments
 
 🏆 EA Sports FC 26 Tournaments
 💰 Big Prize Pools
-📅 First Tournament: November 30, 2025
+📅 First Tournament: December 20, 2025
 🎮 PlayStation Competitions
 
 🔗 Website: https://syncplay.co
@@ -62,7 +62,7 @@ Let's make Nigerian eSports history! 🇳🇬🚀
 ```
 🎮 Nigeria's Premier eSports 🇳🇬
 🏆 EA Sports FC 26 Tournaments
-💰 ₦1.5M Prize Pool | Nov 30
+💰 ₦1.5M Prize Pool | Dec 20
 🔗 syncplay.co/register
 ```
 
@@ -93,7 +93,7 @@ Let's make Nigerian eSports history! 🇳🇬🚀
 ```
 🎮 Nigeria's Premier eSports Platform 🇳🇬
 🏆 EA Sports FC 26 | eBasketball
-📅 First Tournament: Nov 30, 2025
+📅 First Tournament: Dec 20, 2025
 💰 ₦1.5M Prize Pool
 🔗 syncplay.co/register
 ```
@@ -102,7 +102,7 @@ Let's make Nigerian eSports history! 🇳🇬🚀
 ```
 🚨 BREAKING: syncplay eSports is LIVE! 🚨
 
-🏆 FIRST TOURNAMENT: November 30
+🏆 FIRST TOURNAMENT: December 20
 ⚽ EA SPORTS FC 26 - 2v2 Format
 💰 ₦1,500,000 PRIZE POOL
 🎮 PlayStation Only
@@ -153,7 +153,7 @@ RT to spread the word! 🔥
 ```
 🎮 Nigeria's Premier eSports 🇳🇬
 🏆 EA Sports FC 26 | eBasketball
-📅 First Tournament: Nov 30
+📅 First Tournament: Dec 20
 💰 ₦1.5M Prize Pool
 👇 Register Now!
 ```
@@ -175,7 +175,7 @@ RT to spread the word! 🔥
 - [ ] Create Facebook Page
 - [ ] Add profile & cover photos
 - [ ] Write about section
-- [ ] Create Facebook Event (Nov 30 tournament)
+- [ ] Create Facebook Event (Dec 20 tournament)
 - [ ] Post launch announcement
 
 ---
@@ -281,7 +281,7 @@ RT to spread the word! 🔥
 
 ---
 
-### **Tournament Day (Nov 30):**
+### **Tournament Day (Dec 20):**
 **Live Updates:**
 - Pre-tournament hype
 - Live match updates
@@ -325,7 +325,7 @@ All pre-written content is available in:
 - **Launch Week (Nov 1-7):** 2-3 posts/day
 - **Registration Period (Nov 8-28):** 1-2 posts/day
 - **Tournament Week (Nov 22-30):** 3-5 posts/day
-- **Tournament Day (Nov 30):** As many as needed!
+- **Tournament Day (Dec 20):** As many as needed!
 
 ### **Best Posting Times (Nigeria):**
 - **Morning:** 7:00 AM - 9:00 AM

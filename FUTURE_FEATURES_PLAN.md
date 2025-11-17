@@ -101,7 +101,7 @@ const pastStreams = [
   {
     id: 1,
     title: "2v2 EA Sports FC 26 Tournament - Finals",
-    date: "November 30, 2025",
+    date: "December 20, 2025",
     youtubeId: "VIDEO_ID",
     thumbnail: "thumbnail.jpg",
     duration: "3:45:00",
@@ -151,7 +151,7 @@ const pastEvents = [
   {
     id: 1,
     title: "Inaugural 2v2 EA Sports FC 26 Tournament",
-    date: "November 30, 2025",
+    date: "December 20, 2025",
     format: "2v2",
     teams: 32,
     prizePool: "₦1,500,000",

@@ -236,7 +236,7 @@ After this works:
    - Monitor admin dashboard
    - Watch slots fill up!
 
-3. **Future Enhancements** (After Nov 30)
+3. **Future Enhancements** (After Dec 20)
    - Add authentication to admin page
    - Email confirmations (SendGrid/Mailgun)
    - SMS notifications

@@ -64,7 +64,7 @@ All pages are functional and fully designed:
   - Tournament count: 3 formats
   - Currency: All prices in Naira (₦)
   - Platform: PlayStation only
-  - First tournament: November 30, 2025
+  - First tournament: December 20, 2025
   - Prize pool: ₦1,500,000
 
 ---

@@ -161,7 +161,7 @@ export const translations = {
       
       <h3>Tournament Details</h3>
       
-      <p><strong>Date:</strong> November 30, 2025<br/>
+      <p><strong>Date:</strong> December 20, 2025<br/>
       <strong>Time:</strong> 15:00 UTC<br/>
       <strong>Format:</strong> 2v2 Team Competition<br/>
       <strong>Teams:</strong> 32 Teams (64 Players)<br/>
@@ -202,8 +202,8 @@ export const translations = {
     `,
     
     // News Articles (Listing)
-    newsArticle1Title: 'syncplay eSports Launches - Historic 2v2 Tournament November 30th',
-    newsArticle1Excerpt: 'syncplay eSports officially launches with our inaugural 2v2 EA Sports FC 26 Tournament on November 30, 2025. Be part of history with a ₦1,500,000 prize pool...',
+    newsArticle1Title: 'syncplay eSports Launches - Historic 2v2 Tournament December 20th',
+    newsArticle1Excerpt: 'syncplay eSports officially launches with our inaugural 2v2 EA Sports FC 26 Tournament on December 20, 2025. Be part of history with a ₦1,500,000 prize pool...',
     newsArticle2Title: 'Registration Now Open - 2v2 EA Sports FC 26 Tournament',
     newsArticle2Excerpt: 'Registration is officially open for our first tournament! 32 teams will compete for ₦1.5M. Entry fee is ₦100,000 per team. Secure your spot now...',
     newsArticle3Title: 'Meet syncplay - Nigeria\'s New eSports Platform',
@@ -612,13 +612,13 @@ export const translations = {
     tournamentRulesRegulations: 'Tournament Rules & Regulations',
     meetTheCompetition: 'Meet the Competition: Top Teams to Watch',
     newsArticleContent: `
-      <p>syncplay eSports proudly announce our first 2v2 EA Sports FC 26 Tournament, wey go start on November 30th, 2025! This historic event mark the beginning of syncplay competitive eSports scene with incredible ₦1,500,000 prize pool.</p>
+      <p>syncplay eSports proudly announce our first 2v2 EA Sports FC 26 Tournament, wey go start on December 20th, 2025! This historic event mark the beginning of syncplay competitive eSports scene with incredible ₦1,500,000 prize pool.</p>
       
       <p>This na more than just tournament—na foundation of something special. We dey bring together the best eFootball players to compete for exciting team format wey go test strategy, coordination, and skill like never before.</p>
       
       <h3>Tournament Details</h3>
       
-      <p><strong>Date:</strong> November 30, 2025<br/>
+      <p><strong>Date:</strong> December 20, 2025<br/>
       <strong>Time:</strong> 15:00 UTC<br/>
       <strong>Format:</strong> 2v2 Team Competition<br/>
       <strong>Teams:</strong> 32 Teams (64 Players)<br/>
@@ -659,8 +659,8 @@ export const translations = {
     `,
     
     // News Articles (Listing)
-    newsArticle1Title: 'syncplay eSports Don Launch - Historic 2v2 Tournament November 30th',
-    newsArticle1Excerpt: 'syncplay eSports officially launch with our first 2v2 EA Sports FC 26 Tournament for November 30, 2025. Be part of history with ₦1,500,000 prize pool...',
+    newsArticle1Title: 'syncplay eSports Don Launch - Historic 2v2 Tournament December 20th',
+    newsArticle1Excerpt: 'syncplay eSports officially launch with our first 2v2 EA Sports FC 26 Tournament for December 20, 2025. Be part of history with ₦1,500,000 prize pool...',
     newsArticle2Title: 'Registration Don Open - 2v2 EA Sports FC 26 Tournament',
     newsArticle2Excerpt: 'Registration don officially open for our first tournament! 32 teams go compete for ₦1.5M. Entry fee na ₦100,000 per team. Secure your spot now...',
     newsArticle3Title: 'Meet syncplay - Nigeria New eSports Platform',
@@ -796,7 +796,7 @@ export const translations = {
     registerForEvents: 'FORUKỌSILẸ FUN AWỌN IṢẸLẸ', contactUs: 'KAN SI WA',
     
     // 2v2 Tournament
-    tournament2v2: 'IDIJE 2v2', firstTournamentBadge: 'IDIJE AKỌKỌ', launchingNov30: 'Ifilọlẹ ni November 30th, 2025',
+    tournament2v2: 'IDIJE 2v2', firstTournamentBadge: 'IDIJE AKỌKỌ', launchingNov30: 'Ifilọlẹ ni December 20th, 2025',
     team2v2Format: 'Ọna Ẹgbẹ 2v2', registerYourTeam: 'FORUKỌSILẸ ẸGBẸ RẸ',
     tournament2v2Desc: 'Idije 2v2 akọkọ wa! Darapọ pẹlu alabaṣepọ ki o dije fun ogo ati awọn ẹbun. Eyi ni ibi ti syncplay eSports ti bẹrẹ!',
     tournament2v2Details: 'Mu ẹlẹgbẹ kan ki o dije ninu idije eFootball 2v2 akọkọ wa. Iṣẹlẹ itan yii jẹ ibẹrẹ ti oju iṣere idije syncplay eSports.',
@@ -856,19 +856,19 @@ export const translations = {
     viewLeaderboard: 'Wo Tabili',
     
     // News Article Page
-    newsArticleTitle: 'Idije 2v2 EA Sports FC 26 Itan-Akọọlẹ - November 30th',
+    newsArticleTitle: 'Idije 2v2 EA Sports FC 26 Itan-Akọọlẹ - December 20th',
     tournamentAnnouncement: 'Ikede Idije',
     syncplayTeam: 'Ẹgbẹ syncplay',
     tournamentRulesRegulations: 'Awọn Ofin Ati Ilana Idije',
     meetTheCompetition: 'Pade Idije: Awọn Ẹgbẹ To Ga Julọ Lati Wo',
     newsArticleContent: `
-      <p>syncplay eSports fi igberaga kede Idije 2v2 EA Sports FC 26 akọkọ wa, ti yoo bẹrẹ ni November 30th, 2025! Iṣẹlẹ itan-akọọlẹ yii jẹ ibẹrẹ ti oju iṣere idije eSports syncplay pẹlu eto ẹbun nla ₦1,500,000!</p>
+      <p>syncplay eSports fi igberaga kede Idije 2v2 EA Sports FC 26 akọkọ wa, ti yoo bẹrẹ ni December 20th, 2025! Iṣẹlẹ itan-akọọlẹ yii jẹ ibẹrẹ ti oju iṣere idije eSports syncplay pẹlu eto ẹbun nla ₦1,500,000!</p>
       
       <p>Eyi ju idije lọ—o jẹ ipilẹ ti nkan pataki. A n mu awọn oṣere eFootball to dara julọ jọ lati dije ninu ọna ẹgbẹ ti o dun ti yoo ṣe idanwo ilana, iṣakojọ, ati ọgbọn bi ko ti ṣẹlẹ rí.</p>
       
       <h3>Awọn Alaye Idije</h3>
       
-      <p><strong>Ọjọ:</strong> November 30, 2025<br/>
+      <p><strong>Ọjọ:</strong> December 20, 2025<br/>
       <strong>Akoko:</strong> 15:00 UTC<br/>
       <strong>Ọna:</strong> Idije Ẹgbẹ 2v2<br/>
       <strong>Awọn Ẹgbẹ:</strong> Ẹgbẹ 32 (Awọn Oṣere 64)<br/>
@@ -909,8 +909,8 @@ export const translations = {
     `,
     
     // News Articles (Listing)
-    newsArticle1Title: 'syncplay eSports Bẹrẹ - Idije 2v2 Itan-Akọọlẹ November 30th',
-    newsArticle1Excerpt: 'syncplay eSports bẹrẹ ni osise pẹlu idije akọkọ wa 2v2 EA Sports FC 26 ni November 30, 2025. Jẹ apakan ti itan-akọọlẹ pẹlu epo ẹbun ₦1,500,000...',
+    newsArticle1Title: 'syncplay eSports Bẹrẹ - Idije 2v2 Itan-Akọọlẹ December 20th',
+    newsArticle1Excerpt: 'syncplay eSports bẹrẹ ni osise pẹlu idije akọkọ wa 2v2 EA Sports FC 26 ni December 20, 2025. Jẹ apakan ti itan-akọọlẹ pẹlu epo ẹbun ₦1,500,000...',
     newsArticle2Title: 'Iforukọsilẹ Ti Ṣi Bayi - Idije 2v2 EA Sports FC 26',
     newsArticle2Excerpt: 'Iforukọsilẹ ti ṣi ni osise fun idije akọkọ wa! Awọn ẹgbẹ 32 yoo dije fun ₦1.5M. Owo wiwọle jẹ ₦100,000 fun ẹgbẹ kọọkan. Daabobo aaye rẹ bayi...',
     newsArticle3Title: 'Pade syncplay - Pẹpẹ eSports Tuntun Nigeria',
@@ -1092,19 +1092,19 @@ export const translations = {
     viewLeaderboard: 'Duba Matsayi',
     
     // News Article Page
-    newsArticleTitle: 'Gasar 2v2 EA Sports FC 26 Mai Tarihi - November 30th',
+    newsArticleTitle: 'Gasar 2v2 EA Sports FC 26 Mai Tarihi - December 20th',
     tournamentAnnouncement: 'Sanarwar Gasar',
     syncplayTeam: 'Ƙungiyar syncplay',
     tournamentRulesRegulations: 'Ƙa\'idodi Da Dokokin Gasar',
     meetTheCompetition: 'Ku Hadu Da Gasar: Manyan Kungiyoyi Da Za Ku Kallo',
     newsArticleContent: `
-      <p>syncplay eSports da alfahari tana sanar da gasar mu ta farko ta 2v2 EA Sports FC 26, wanda zai fara a ranar November 30th, 2025! Wannan taron tarihi yana nuna farkon yanayin gasar eSports na syncplay tare da kuɗin kyauta mai yawa ₦1,500,000!</p>
+      <p>syncplay eSports da alfahari tana sanar da gasar mu ta farko ta 2v2 EA Sports FC 26, wanda zai fara a ranar December 20th, 2025! Wannan taron tarihi yana nuna farkon yanayin gasar eSports na syncplay tare da kuɗin kyauta mai yawa ₦1,500,000!</p>
       
       <p>Wannan ya wuce gasar kawai—shine tushen wani abu na musamman. Muna tattara mafi kyawun \'yan wasan eFootball don yin takara a cikin tsarin ƙungiya mai daɗi wanda zai gwada dabaru, haɗin kai, da ƙwarewa kamar ba a taɓa yi ba.</p>
       
       <h3>Cikakkun Bayanan Gasar</h3>
       
-      <p><strong>Ranar:</strong> November 30, 2025<br/>
+      <p><strong>Ranar:</strong> December 20, 2025<br/>
       <strong>Lokaci:</strong> 15:00 UTC<br/>
       <strong>Tsari:</strong> Gasar Ƙungiya 2v2<br/>
       <strong>Ƙungiyoyi:</strong> Ƙungiyoyi 32 (\'Yan Wasa 64)<br/>
@@ -1145,8 +1145,8 @@ export const translations = {
     `,
     
     // News Articles (Listing)
-    newsArticle1Title: 'syncplay eSports Ta Fara - Gasar 2v2 Mai Tarihi November 30th',
-    newsArticle1Excerpt: 'syncplay eSports ta fara a hukumance tare da gasar mu ta farko ta 2v2 EA Sports FC 26 a ranar November 30, 2025. Ku kasance cikin tarihi tare da kuɗin kyauta ₦1,500,000...',
+    newsArticle1Title: 'syncplay eSports Ta Fara - Gasar 2v2 Mai Tarihi December 20th',
+    newsArticle1Excerpt: 'syncplay eSports ta fara a hukumance tare da gasar mu ta farko ta 2v2 EA Sports FC 26 a ranar December 20, 2025. Ku kasance cikin tarihi tare da kuɗin kyauta ₦1,500,000...',
     newsArticle2Title: 'Rajista Ya Buɗe Yanzu - Gasar 2v2 EA Sports FC 26',
     newsArticle2Excerpt: 'An buɗe rajista a hukumance don gasar mu ta farko! Ƙungiyoyi 32 za su yi takara don ₦1.5M. Kuɗin shiga shine ₦100,000 ga kowane ƙungiya. Ku tabbatar da wurin ku yanzu...',
     newsArticle3Title: 'Ku Hadu Da syncplay - Sabuwar Dandalin eSports na Najeriya',
@@ -1304,19 +1304,19 @@ export const translations = {
     viewLeaderboard: 'Lee Ndepụta Nduzi',
     
     // News Article Page
-    newsArticleTitle: 'Asọmpi 2v2 EA Sports FC 26 Akụkọ Ihe Mere Eme - November 30th',
+    newsArticleTitle: 'Asọmpi 2v2 EA Sports FC 26 Akụkọ Ihe Mere Eme - December 20th',
     tournamentAnnouncement: 'Ọkwa Asọmpi',
     syncplayTeam: 'Otu syncplay',
     tournamentRulesRegulations: 'Iwu Na Ụkpụrụ Asọmpi',
     meetTheCompetition: 'Zute Ndị Asọmpi: Otu Ndị Kacha Mma Ile',
     newsArticleContent: `
-      <p>syncplay eSports ji nnukwu obi ụtọ ekwupụta asọmpi 2v2 EA Sports FC 26 mbụ anyị, nke ga-amalite na November 30th, 2025! Ihe omume akụkọ ihe mere eme a bụ mmalite nke ọnọdụ asọmpi eSports syncplay nwere oke ego nrite ₦1,500,000!</p>
+      <p>syncplay eSports ji nnukwu obi ụtọ ekwupụta asọmpi 2v2 EA Sports FC 26 mbụ anyị, nke ga-amalite na December 20th, 2025! Ihe omume akụkọ ihe mere eme a bụ mmalite nke ọnọdụ asọmpi eSports syncplay nwere oke ego nrite ₦1,500,000!</p>
       
       <p>Nke a karịrị naanị asọmpi - ọ bụ ntọala nke ihe pụrụ iche. Anyị na-akpọkọta ndị egwuregwu eFootball kachasị mma ka ha soro na ụdị otu na-atọ ụtọ nke ga-anwale atụmatụ, nhazi, na nka dị ka ọ dịtụbeghị mbụ.</p>
       
       <h3>Nkọwa Asọmpi</h3>
       
-      <p><strong>Ụbọchị:</strong> November 30, 2025<br/>
+      <p><strong>Ụbọchị:</strong> December 20, 2025<br/>
       <strong>Oge:</strong> 15:00 UTC<br/>
       <strong>Ụdị:</strong> Asọmpi Otu 2v2<br/>
       <strong>Otu:</strong> Otu 32 (Ndị Egwuregwu 64)<br/>
@@ -1357,8 +1357,8 @@ export const translations = {
     `,
     
     // News Articles (Listing)
-    newsArticle1Title: 'syncplay eSports Na-amalite - Asọmpi 2v2 Akụkọ Ihe Mere Eme November 30th',
-    newsArticle1Excerpt: 'syncplay eSports na-amalite n\'ụzọ gọọmentị na asọmpi mbụ anyị 2v2 EA Sports FC 26 na November 30, 2025. Bụrụ akụkụ nke akụkọ ihe mere eme na ego nrite ₦1,500,000...',
+    newsArticle1Title: 'syncplay eSports Na-amalite - Asọmpi 2v2 Akụkọ Ihe Mere Eme December 20th',
+    newsArticle1Excerpt: 'syncplay eSports na-amalite n\'ụzọ gọọmentị na asọmpi mbụ anyị 2v2 EA Sports FC 26 na December 20, 2025. Bụrụ akụkụ nke akụkọ ihe mere eme na ego nrite ₦1,500,000...',
     newsArticle2Title: 'Ndebanye Aha Mepere Ugbu A - Asọmpi 2v2 EA Sports FC 26',
     newsArticle2Excerpt: 'Ndebanye aha mepere n\'ụzọ gọọmentị maka asọmpi mbụ anyị! Otu 32 ga-asọmpi maka ₦1.5M. Ụgwọ ntinye bụ ₦100,000 kwa otu. Chekwaa ọnọdụ gị ugbu a...',
     newsArticle3Title: 'Zute syncplay - Ikpo Okwu eSports Ọhụrụ Nigeria',
@@ -1414,7 +1414,7 @@ export const translations = {
     registerForEvents: 'DEBANYE AHA MAKA IHE OMUME', contactUs: 'KPỌTỤRỤ ANYỊ',
     
     // 2v2 Tournament
-    tournament2v2: 'ASỌMPI 2v2', firstTournamentBadge: 'ASỌMPI MBỤ', launchingNov30: 'Mmalite na November 30th, 2025',
+    tournament2v2: 'ASỌMPI 2v2', firstTournamentBadge: 'ASỌMPI MBỤ', launchingNov30: 'Mmalite na December 20th, 2025',
     team2v2Format: 'Usoro Otu 2v2', registerYourTeam: 'DEBANYE OTU GỊ',
     tournament2v2Desc: 'Asọmpi 2v2 mbụ anyị! Jikọọ onwe gị na onye otu gị ka unu sọọ mpi maka ugwu na onyinye. Nke a bụ ebe syncplay eSports na-amalite!',
     tournament2v2Details: 'Kpọrọ otu onye otu ka unu sọọ mpi n\'asọmpi eFootball 2v2 mbụ anyị. Mmemme akụkọ ihe mere eme a bụ mmalite nke ebe asọmpi syncplay eSports.',

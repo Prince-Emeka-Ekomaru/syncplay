@@ -124,7 +124,7 @@
 - Primary: `#syncplayeSports #eFootball #EASFC26 #NigerianGaming`
 
 **Tournament Info:**
-- Date: November 30, 2025
+- Date: December 20, 2025
 - Prize: ₦1,500,000
 - Teams: 32
 - Entry: ₦100,000/team
