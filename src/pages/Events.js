@@ -15,7 +15,7 @@ const Events = () => {
       id: 1,
       title: t.tournament2v2,
       game: 'eFootball - EA Sports FC 26',
-      date: 'November 30, 2025',
+      date: 'December 20, 2025',
       time: '15:00 UTC',
       prize: '₦1,500,000',
       participants: loading ? '32 Teams (64 Players)' : `${totalSlots} Teams (${count} Registered, ${totalSlots * 2} Players Total)`,

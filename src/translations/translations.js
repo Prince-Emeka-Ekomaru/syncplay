@@ -299,7 +299,7 @@ export const translations = {
     // 2v2 Tournament
     tournament2v2: '2v2 TOURNAMENT',
     firstTournamentBadge: 'FIRST TOURNAMENT',
-    launchingNov30: 'Launching November 30th, 2025',
+    launchingNov30: 'Launching December 20th, 2025',
     team2v2Format: '2v2 Team Format',
     registerYourTeam: 'REGISTER YOUR TEAM',
     tournament2v2Desc: 'Our inaugural 2v2 tournament! Team up with a partner and compete for glory and prizes. This is where syncplay eSports begins!',
@@ -515,7 +515,7 @@ export const translations = {
     // 2v2 Tournament
     tournament2v2: '2v2 TOURNAMENT',
     firstTournamentBadge: 'FIRST TOURNAMENT',
-    launchingNov30: 'Launching November 30th, 2025',
+    launchingNov30: 'Launching December 20th, 2025',
     team2v2Format: '2v2 Team Format',
     registerYourTeam: 'REGISTER YOUR TEAM',
     tournament2v2Desc: 'Our first 2v2 tournament! Team up with partner and compete for glory and prizes. This na where syncplay eSports begin!',

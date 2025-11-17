@@ -33,7 +33,7 @@ const Home = () => {
   const newsArticles = [
     {
       id: 1,
-      title: 'syncplay eSports Launches - Historic 2v2 Tournament November 30th',
+      title: 'syncplay eSports Launches - Historic 2v2 Tournament December 20th',
       excerpt: 'syncplay eSports officially launches with our inaugural 2v2 EA Sports FC 26 Tournament. Be part of history with a ₦1,500,000 prize pool...',
       image: '/ea-sports-fc-26-xbox-one-xbox-series-x-s-microsoft-store-cover.jpg',
       date: 'October 23, 2025'
@@ -172,7 +172,7 @@ const Home = () => {
             </p>
             <div className="stats-grid">
               <div className="stat-item stat-item-highlight">
-                <h3>NOV 30</h3>
+                <h3>DEC 20</h3>
                 <p>{t.firstTournament}</p>
               </div>
               <div className="stat-item stat-item-highlight">

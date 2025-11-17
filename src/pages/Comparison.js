@@ -67,7 +67,7 @@ const Comparison = () => {
               <div className="launch-card">
                 <i className="fas fa-calendar-check"></i>
                 <h4>{t.firstTournament}</h4>
-                <p>November 30, 2025</p>
+                <p>December 20, 2025</p>
               </div>
               <div className="launch-card">
                 <i className="fas fa-users"></i>

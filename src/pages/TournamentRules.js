@@ -7,7 +7,7 @@ const TournamentRules = () => {
       <section className="legal-hero">
         <div className="container">
           <h1>Tournament Rules & Regulations</h1>
-          <p className="last-updated">EA Sports FC 26 - 2v2 Tournament | November 30, 2025</p>
+          <p className="last-updated">EA Sports FC 26 - 2v2 Tournament | December 20, 2025</p>
         </div>
       </section>
 
@@ -23,7 +23,7 @@ const TournamentRules = () => {
               <li><strong>Teams:</strong> 32 teams (64 players total)</li>
               <li><strong>Prize Pool:</strong> ₦1,500,000</li>
               <li><strong>Entry Fee:</strong> ₦100,000 per team</li>
-              <li><strong>Date:</strong> November 30, 2025</li>
+              <li><strong>Date:</strong> December 20, 2025</li>
               <li><strong>Start Time:</strong> 15:00 UTC</li>
             </ul>
 

@@ -110,7 +110,7 @@ const AdminRegistrations = () => {
         <div className="admin-header">
           <div className="header-content">
             <h1>Tournament Registrations</h1>
-            <p className="subtitle">2v2 EA Sports FC 26 - November 30, 2025</p>
+            <p className="subtitle">2v2 EA Sports FC 26 - December 20, 2025</p>
           </div>
           <div className="header-stats">
             <div className="stat-card">
