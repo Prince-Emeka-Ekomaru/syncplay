@@ -149,7 +149,7 @@ export const translations = {
     viewLeaderboard: 'View Leaderboard',
     
     // News Article Page
-    newsArticleTitle: 'Historic 2v2 EA Sports FC 26 Tournament - November 30th',
+    newsArticleTitle: 'Historic 2v2 EA Sports FC 26 Tournament - December 20th',
     tournamentAnnouncement: 'Tournament Announcement',
     syncplayTeam: 'syncplay Team',
     tournamentRulesRegulations: 'Tournament Rules & Regulations',
@@ -606,7 +606,7 @@ export const translations = {
     viewLeaderboard: 'See Leaderboard',
     
     // News Article Page
-    newsArticleTitle: 'Historic 2v2 EA Sports FC 26 Tournament - November 30th',
+    newsArticleTitle: 'Historic 2v2 EA Sports FC 26 Tournament - December 20th',
     tournamentAnnouncement: 'Tournament Announcement',
     syncplayTeam: 'syncplay Team',
     tournamentRulesRegulations: 'Tournament Rules & Regulations',
