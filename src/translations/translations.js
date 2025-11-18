@@ -1683,7 +1683,7 @@ export const translations = {
     `,
     
     // News Articles (Listing)
-    newsArticle1Title: 'syncplay eSports Lance - Tournoi Historique 2v2 le 30 Novembre',
+    newsArticle1Title: 'syncplay eSports Lance - Tournoi Historique 2v2 le 20 Décembre',
     newsArticle1Excerpt: 'syncplay eSports lance officiellement notre tournoi inaugural 2v2 EA Sports FC 26 le 20 décembre 2025. Faites partie de l\'histoire avec une cagnotte exclusive...',
     newsArticle2Title: 'Inscriptions Maintenant Ouvertes - Tournoi 2v2 EA Sports FC 26',
     newsArticle2Excerpt: 'Les inscriptions sont officiellement ouvertes pour notre premier tournoi ! 32 équipes vont concourir pour ₦1.5M. Les frais d\'entrée sont de ₦100,000 par équipe. Sécurisez votre place maintenant...',
