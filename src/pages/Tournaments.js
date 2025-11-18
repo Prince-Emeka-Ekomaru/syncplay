@@ -207,7 +207,7 @@ const Tournaments = () => {
                   <span>{t.activePlayers}</span>
                 </div>
                 <div className="stat">
-                  <strong>₦1.5M+</strong>
+                  <strong>Exclusive</strong>
                   <span>{t.totalPrizes}</span>
                 </div>
               </div>
