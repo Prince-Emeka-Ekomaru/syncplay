@@ -17,7 +17,7 @@ const Events = () => {
       game: 'eFootball - EA Sports FC 26',
       date: 'December 20, 2025',
       time: '15:00 UTC',
-      prize: '₦1,500,000',
+      prize: t.exclusivePrizePoolShort,
       participants: loading ? '32 Teams (64 Players)' : `${totalSlots} Teams (${count} Registered, ${totalSlots * 2} Players Total)`,
       status: t.registrationOpen,
       image: '/ea-sports-fc-26-xbox-one-xbox-series-x-s-microsoft-store-cover.jpg',

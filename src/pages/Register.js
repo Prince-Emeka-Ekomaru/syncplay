@@ -687,10 +687,10 @@ const Register = () => {
         </div>
         <div className="detail-card">
           <i className="fas fa-trophy"></i>
-          <div>
-            <strong>{t.prizePoolLabel}</strong>
-            <span>₦1,500,000</span>
-          </div>
+            <div>
+              <strong>{t.prizePoolLabel}</strong>
+              <span>{t.exclusivePrizePoolShort}</span>
+            </div>
         </div>
         <div className="detail-card">
           <i className="fas fa-check-circle"></i>
@@ -792,7 +792,7 @@ const Register = () => {
           <p>EA Sports FC 26 - 2v2 {t.tournaments}</p>
           <div className="tournament-details-hero">
             <span><i className="fas fa-calendar"></i> December 20, 2025</span>
-            <span><i className="fas fa-trophy"></i> ₦1,500,000 {t.prizePoolLabel}</span>
+            <span><i className="fas fa-trophy"></i> {t.exclusivePrizePoolShort}</span>
             <span><i className="fas fa-money-bill-wave"></i> ₦100,000 {t.entryFee}</span>
             <span className={slotsRemaining <= 5 ? 'slots-warning' : ''}>
               <i className="fas fa-users"></i> {slotsRemaining}/{totalSlots} {t.teams} Available

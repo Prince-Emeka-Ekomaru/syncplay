@@ -77,7 +77,7 @@ const Comparison = () => {
               <div className="launch-card">
                 <i className="fas fa-trophy"></i>
                 <h4>{t.prizePoolLabel}</h4>
-                <p>₦1,500,000</p>
+                <p>{t.exclusivePrizePoolShort}</p>
               </div>
             </div>
 

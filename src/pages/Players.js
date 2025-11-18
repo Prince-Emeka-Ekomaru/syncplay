@@ -50,7 +50,7 @@ const Players = () => {
                 <i className="fas fa-trophy"></i>
                 <div>
                   <strong>{t.prizePoolLabel}</strong>
-                  <span>₦1,500,000</span>
+                <span>{t.exclusivePrizePoolShort}</span>
                 </div>
               </div>
             </div>
