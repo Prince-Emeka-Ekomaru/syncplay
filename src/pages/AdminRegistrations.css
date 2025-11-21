@@ -500,22 +500,6 @@
   font-size: 1.1rem;
 }
 
-/* Auto-refresh Toggle */
-.auto-refresh-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  background: #f5f5f5;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.95rem;
-}
-
-.auto-refresh-toggle input[type="checkbox"] {
-  cursor: pointer;
-}
-
 /* Bracket Container */
 .bracket-container {
   background: var(--color-white);

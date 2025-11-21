@@ -9,21 +9,12 @@ const AdminRegistrations = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('created_at');
   const [activeTab, setActiveTab] = useState('registrations'); // 'registrations' or 'bracket'
-  const [autoRefresh, setAutoRefresh] = useState(true);
   const [matchResults, setMatchResults] = useState({}); // Store match winners: { "round-1-match-1": teamId, ... }
 
   useEffect(() => {
     fetchRegistrations();
     loadMatchResults();
-    
-    // Auto-refresh every 10 seconds if enabled
-    if (autoRefresh) {
-      const interval = setInterval(() => {
-        fetchRegistrations();
-      }, 10000);
-      return () => clearInterval(interval);
-    }
-  }, [autoRefresh]);
+  }, []);
 
   // Load match results from localStorage
   const loadMatchResults = () => {
@@ -382,16 +373,8 @@ const AdminRegistrations = () => {
             </>
           ) : (
             <div className="control-buttons">
-              <label className="auto-refresh-toggle">
-                <input
-                  type="checkbox"
-                  checked={autoRefresh}
-                  onChange={(e) => setAutoRefresh(e.target.checked)}
-                />
-                <span>Auto-refresh (10s)</span>
-              </label>
               <button className="btn btn-primary" onClick={fetchRegistrations}>
-                <i className="fas fa-sync-alt"></i> Refresh Now
+                <i className="fas fa-sync-alt"></i> Refresh
               </button>
               <button className="btn btn-success" onClick={handlePrintBracket}>
                 <i className="fas fa-print"></i> Print Bracket
