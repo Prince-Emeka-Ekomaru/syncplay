@@ -10,9 +10,11 @@ const AdminRegistrations = () => {
   const [sortBy, setSortBy] = useState('created_at');
   const [activeTab, setActiveTab] = useState('registrations'); // 'registrations' or 'bracket'
   const [autoRefresh, setAutoRefresh] = useState(true);
+  const [matchResults, setMatchResults] = useState({}); // Store match winners: { "round-1-match-1": teamId, ... }
 
   useEffect(() => {
     fetchRegistrations();
+    loadMatchResults();
     
     // Auto-refresh every 10 seconds if enabled
     if (autoRefresh) {
@@ -22,6 +24,36 @@ const AdminRegistrations = () => {
       return () => clearInterval(interval);
     }
   }, [autoRefresh]);
+
+  // Load match results from localStorage
+  const loadMatchResults = () => {
+    try {
+      const saved = localStorage.getItem('tournament_match_results');
+      if (saved) {
+        setMatchResults(JSON.parse(saved));
+      }
+    } catch (error) {
+      console.error('Error loading match results:', error);
+    }
+  };
+
+  // Save match result
+  const saveMatchResult = (round, matchNumber, winnerTeamId) => {
+    const key = `round-${round}-match-${matchNumber}`;
+    const newResults = { ...matchResults, [key]: winnerTeamId };
+    setMatchResults(newResults);
+    try {
+      localStorage.setItem('tournament_match_results', JSON.stringify(newResults));
+    } catch (error) {
+      console.error('Error saving match result:', error);
+    }
+  };
+
+  // Get match winner
+  const getMatchWinner = (round, matchNumber) => {
+    const key = `round-${round}-match-${matchNumber}`;
+    return matchResults[key] || null;
+  };
 
   const fetchRegistrations = async () => {
     setLoading(true);
@@ -102,6 +134,11 @@ const AdminRegistrations = () => {
     window.URL.revokeObjectURL(url);
   };
 
+  // Helper function to find team by ID
+  const findTeamById = (teamId, teams) => {
+    return teams.find(team => team.id === teamId) || null;
+  };
+
   // Generate bracket matches from registrations
   const generateBracket = () => {
     // Sort registrations by registration date (first come, first served)
@@ -117,87 +154,139 @@ const AdminRegistrations = () => {
     const round1 = [];
     for (let i = 0; i < teamCount; i += 2) {
       if (i + 1 < teamCount) {
+        const matchNum = Math.floor(i / 2) + 1;
+        const winnerId = getMatchWinner(1, matchNum);
         round1.push({
-          matchNumber: Math.floor(i / 2) + 1,
+          matchNumber: matchNum,
           team1: sortedTeams[i],
           team2: sortedTeams[i + 1],
           round: 1,
-          roundName: 'Round of 32'
+          roundName: 'Round of 32',
+          winnerId: winnerId
         });
       } else {
         // Odd number of teams - bye for last team
+        const matchNum = Math.floor(i / 2) + 1;
+        const winnerId = getMatchWinner(1, matchNum);
+        // Bye automatically advances (winner defaults to team1 if not set)
         round1.push({
-          matchNumber: Math.floor(i / 2) + 1,
+          matchNumber: matchNum,
           team1: sortedTeams[i],
           team2: null,
           round: 1,
           roundName: 'Round of 32',
-          bye: true
+          bye: true,
+          winnerId: winnerId || sortedTeams[i]?.id // Bye automatically advances
         });
       }
     }
     // Fill remaining slots with empty matches
     while (round1.length < 16) {
+      const matchNum = round1.length + 1;
+      const winnerId = getMatchWinner(1, matchNum);
       round1.push({
-        matchNumber: round1.length + 1,
+        matchNumber: matchNum,
         team1: null,
         team2: null,
         round: 1,
-        roundName: 'Round of 32'
+        roundName: 'Round of 32',
+        winnerId: winnerId
       });
     }
     rounds.push(round1);
 
-    // Round 2: Round of 16 (8 matches)
+    // Round 2: Round of 16 (8 matches) - Advance winners from Round 1
     const round2 = [];
     for (let i = 0; i < 8; i++) {
+      const matchNum = i + 1;
+      const match1Num = i * 2 + 1;
+      const match2Num = i * 2 + 2;
+      const winner1Id = getMatchWinner(1, match1Num);
+      const winner2Id = getMatchWinner(1, match2Num);
+      const winnerId = getMatchWinner(2, matchNum);
+      
+      // Get teams from previous round winners
+      const team1 = winner1Id ? findTeamById(winner1Id, sortedTeams) : null;
+      const team2 = winner2Id ? findTeamById(winner2Id, sortedTeams) : null;
+      
       round2.push({
-        matchNumber: i + 1,
-        team1: null,
-        team2: null,
+        matchNumber: matchNum,
+        team1: team1,
+        team2: team2,
         round: 2,
         roundName: 'Round of 16',
-        winnerFrom: `Match ${i * 2 + 1} vs Match ${i * 2 + 2}`
+        winnerFrom: `Match ${match1Num} vs Match ${match2Num}`,
+        winnerId: winnerId
       });
     }
     rounds.push(round2);
 
-    // Round 3: Quarterfinals (4 matches)
+    // Round 3: Quarterfinals (4 matches) - Advance winners from Round 2
     const round3 = [];
     for (let i = 0; i < 4; i++) {
+      const matchNum = i + 1;
+      const match1Num = i * 2 + 1;
+      const match2Num = i * 2 + 2;
+      const winner1Id = getMatchWinner(2, match1Num);
+      const winner2Id = getMatchWinner(2, match2Num);
+      const winnerId = getMatchWinner(3, matchNum);
+      
+      const team1 = winner1Id ? findTeamById(winner1Id, sortedTeams) : null;
+      const team2 = winner2Id ? findTeamById(winner2Id, sortedTeams) : null;
+      
       round3.push({
-        matchNumber: i + 1,
-        team1: null,
-        team2: null,
+        matchNumber: matchNum,
+        team1: team1,
+        team2: team2,
         round: 3,
         roundName: 'Quarterfinals',
-        winnerFrom: `Match ${i * 2 + 1} vs Match ${i * 2 + 2}`
+        winnerFrom: `Match ${match1Num} vs Match ${match2Num}`,
+        winnerId: winnerId
       });
     }
     rounds.push(round3);
 
-    // Round 4: Semifinals (2 matches)
+    // Round 4: Semifinals (2 matches) - Advance winners from Round 3
     const round4 = [];
     for (let i = 0; i < 2; i++) {
+      const matchNum = i + 1;
+      const match1Num = i * 2 + 1;
+      const match2Num = i * 2 + 2;
+      const winner1Id = getMatchWinner(3, match1Num);
+      const winner2Id = getMatchWinner(3, match2Num);
+      const winnerId = getMatchWinner(4, matchNum);
+      
+      const team1 = winner1Id ? findTeamById(winner1Id, sortedTeams) : null;
+      const team2 = winner2Id ? findTeamById(winner2Id, sortedTeams) : null;
+      
       round4.push({
-        matchNumber: i + 1,
-        team1: null,
-        team2: null,
+        matchNumber: matchNum,
+        team1: team1,
+        team2: team2,
         round: 4,
         roundName: 'Semifinals',
-        winnerFrom: `Match ${i * 2 + 1} vs Match ${i * 2 + 2}`
+        winnerFrom: `Match ${match1Num} vs Match ${match2Num}`,
+        winnerId: winnerId
       });
     }
     rounds.push(round4);
 
-    // Final: 1 match
+    // Final: 1 match - Advance winners from Round 4
+    const finalMatch1Winner = getMatchWinner(4, 1);
+    const finalMatch2Winner = getMatchWinner(4, 2);
+    const finalWinner = getMatchWinner(5, 1);
+    
+    const finalTeam1 = finalMatch1Winner ? findTeamById(finalMatch1Winner, sortedTeams) : null;
+    const finalTeam2 = finalMatch2Winner ? findTeamById(finalMatch2Winner, sortedTeams) : null;
+    
     rounds.push([{
       matchNumber: 1,
-      team1: null,
-      team2: null,
+      team1: finalTeam1,
+      team2: finalTeam2,
       round: 5,
       roundName: 'Final',
-      winnerFrom: 'Match 1 vs Match 2'
+      winnerFrom: 'Match 1 vs Match 2',
+      winnerId: finalWinner
     }]);
 
     return { rounds, teamCount, totalSlots: maxTeams };
@@ -307,6 +396,19 @@ const AdminRegistrations = () => {
               <button className="btn btn-success" onClick={handlePrintBracket}>
                 <i className="fas fa-print"></i> Print Bracket
               </button>
+              {Object.keys(matchResults).length > 0 && (
+                <button 
+                  className="btn btn-danger" 
+                  onClick={() => {
+                    if (window.confirm('Are you sure you want to clear all match results? This cannot be undone.')) {
+                      setMatchResults({});
+                      localStorage.removeItem('tournament_match_results');
+                    }
+                  }}
+                >
+                  <i className="fas fa-trash"></i> Clear All Results
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -431,13 +533,18 @@ const AdminRegistrations = () => {
                           )}
                         </div>
                         <div className="match-teams">
-                          <div className={`team-slot ${match.team1 ? 'filled' : 'empty'} ${match.bye && matchIndex === round.length - 1 ? 'bye' : ''}`}>
+                          <div className={`team-slot ${match.team1 ? 'filled' : 'empty'} ${match.bye && matchIndex === round.length - 1 ? 'bye' : ''} ${match.winnerId === match.team1?.id ? 'winner' : ''}`}>
                             {match.team1 ? (
                               <>
                                 <strong>{match.team1.team_name}</strong>
                                 <span className="team-players">
                                   {match.team1.player1_name} & {match.team1.player2_name}
                                 </span>
+                                {match.winnerId === match.team1.id && (
+                                  <span className="winner-badge">
+                                    <i className="fas fa-trophy"></i> Winner
+                                  </span>
+                                )}
                               </>
                             ) : match.bye ? (
                               <span className="bye-text">BYE</span>
@@ -446,19 +553,61 @@ const AdminRegistrations = () => {
                             )}
                           </div>
                           <div className="vs-divider">VS</div>
-                          <div className={`team-slot ${match.team2 ? 'filled' : 'empty'}`}>
+                          <div className={`team-slot ${match.team2 ? 'filled' : 'empty'} ${match.winnerId === match.team2?.id ? 'winner' : ''}`}>
                             {match.team2 ? (
                               <>
                                 <strong>{match.team2.team_name}</strong>
                                 <span className="team-players">
                                   {match.team2.player1_name} & {match.team2.player2_name}
                                 </span>
+                                {match.winnerId === match.team2.id && (
+                                  <span className="winner-badge">
+                                    <i className="fas fa-trophy"></i> Winner
+                                  </span>
+                                )}
                               </>
                             ) : (
                               <span className="empty-text">TBD</span>
                             )}
                           </div>
                         </div>
+                        {/* Winner Selection Buttons */}
+                        {match.team1 && (match.team2 || match.bye) && !match.winnerId && (
+                          <div className="match-actions">
+                            <button
+                              className="btn-winner btn-winner-team1"
+                              onClick={() => saveMatchResult(match.round, match.matchNumber, match.team1.id)}
+                              disabled={!match.team1}
+                            >
+                              <i className="fas fa-check"></i> {match.team1.team_name} Wins
+                            </button>
+                            {match.team2 && (
+                              <button
+                                className="btn-winner btn-winner-team2"
+                                onClick={() => saveMatchResult(match.round, match.matchNumber, match.team2.id)}
+                                disabled={!match.team2}
+                              >
+                                <i className="fas fa-check"></i> {match.team2.team_name} Wins
+                              </button>
+                            )}
+                          </div>
+                        )}
+                        {match.winnerId && (
+                          <div className="match-actions">
+                            <button
+                              className="btn-undo"
+                              onClick={() => {
+                                const key = `round-${match.round}-match-${match.matchNumber}`;
+                                const newResults = { ...matchResults };
+                                delete newResults[key];
+                                setMatchResults(newResults);
+                                localStorage.setItem('tournament_match_results', JSON.stringify(newResults));
+                              }}
+                            >
+                              <i className="fas fa-undo"></i> Undo Result
+                            </button>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
