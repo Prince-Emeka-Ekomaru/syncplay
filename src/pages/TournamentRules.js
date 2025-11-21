@@ -21,7 +21,7 @@ const TournamentRules = () => {
               <li><strong>Platform:</strong> PlayStation only</li>
               <li><strong>Format:</strong> 2v2 Team Competition</li>
               <li><strong>Teams:</strong> 32 teams (64 players total)</li>
-              <li><strong>{t.prizePoolLabel}:</strong> {t.exclusivePrizePoolDesc}</li>
+              <li><strong>Prize Pool:</strong> Exclusive prize pool reserved for registered teams</li>
               <li><strong>Entry Fee:</strong> ₦100,000 per team</li>
               <li><strong>Date:</strong> December 20, 2025</li>
               <li><strong>Start Time:</strong> 15:00 UTC</li>
