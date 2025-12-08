@@ -246,7 +246,7 @@ const Home = () => {
             <h3 className="partners-title">{t.mediaPartner}</h3>
             <div className="partner-logos">
               <div className="partner-logo partner-logo-featured">
-                <img src="/the twelfth man.jpg" alt="The Twelfth Man" />
+                <img src="/the-twelfth-man.jpg" alt="The Twelfth Man" />
               </div>
             </div>
             <p className="partner-description">{t.mediaPartnerDesc}</p>
