@@ -323,7 +323,7 @@ const AdminRegistrations = () => {
               <div className="stat-label">Slots Remaining</div>
             </div>
             <div className="stat-card">
-              <div className="stat-value">₦{(totalCount * 100000).toLocaleString()}</div>
+              <div className="stat-value">₦{(totalCount * 50000).toLocaleString()}</div>
               <div className="stat-label">Total Revenue</div>
             </div>
           </div>

@@ -476,6 +476,37 @@
   font-size: 1.5rem;
 }
 
+.subsidized-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #E63946 0%, #C1121F 100%);
+  color: var(--color-white);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  margin-left: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(230, 57, 70, 0.3);
+  animation: pulse-subside 2s ease-in-out infinite;
+}
+
+@keyframes pulse-subside {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+.tournament-details-hero .subsidized-badge {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+}
+
 .payment-note {
   color: var(--color-gray);
   font-size: 0.9rem;

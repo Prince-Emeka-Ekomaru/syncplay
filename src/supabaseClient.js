@@ -47,7 +47,7 @@ export async function saveRegistration(paymentReference, formData, paymentGatewa
         {
           payment_reference: paymentReference,
           payment_status: 'completed',
-          payment_amount: 10000000, // 100,000 Naira in kobo
+          payment_amount: 5000000, // 50,000 Naira in kobo (subsidized rate)
           payment_gateway: paymentGateway,
           team_name: formData.teamName,
           player1_name: formData.player1Name,

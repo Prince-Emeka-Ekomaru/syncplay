@@ -201,23 +201,27 @@ const Register = () => {
       console.log('Selected Gateway:', selectedPaymentGateway);
       
       // Get the appropriate public key based on selected gateway
+      // Note: Kora Pay uses backend API, so public key is optional
       let publicKey;
       if (selectedPaymentGateway === PAYMENT_GATEWAYS.KORA) {
         publicKey = process.env.REACT_APP_KORA_PUBLIC_KEY;
+        // Kora Pay uses backend API, so we don't need public key check
+        // But we'll still pass it if available for future use
       }
 
-      if (!publicKey) {
-        alert(`Payment gateway not configured. Please contact support.`);
-        setPaymentLoading(false);
-        return;
-      }
+      // Only check for public key if gateway requires it (not needed for Kora Pay backend API)
+      // if (!publicKey && selectedPaymentGateway !== PAYMENT_GATEWAYS.KORA) {
+      //   alert(`Payment gateway not configured. Please contact support.`);
+      //   setPaymentLoading(false);
+      //   return;
+      // }
 
       // Create payment configuration
       const paymentConfig = {
         reference: `SP-${Date.now()}`,
         email: formData.player1Email,
-        amount: 10000000, // 100,000 Naira in kobo
-        publicKey: publicKey,
+        amount: 5000000, // 50,000 Naira in kobo (subsidized rate)
+        publicKey: publicKey || '', // Optional for Kora Pay
         metadata: {
           teamName: formData.teamName,
           player1Name: formData.player1Name,
@@ -579,7 +583,7 @@ const Register = () => {
         <div className="payment-details">
           <div className="payment-item">
             <span className="payment-label">{t.entryFee}:</span>
-            <span className="payment-value">₦100,000</span>
+            <span className="payment-value">₦50,000 <span className="subsidized-badge">(Subsidized)</span></span>
           </div>
           
           {/* Payment Gateway Selection */}
@@ -696,7 +700,7 @@ const Register = () => {
           <i className="fas fa-check-circle"></i>
           <div>
             <strong>{t.paymentCompleted}</strong>
-            <span>₦100,000</span>
+            <span>₦50,000 <span className="subsidized-badge">(Subsidized)</span></span>
           </div>
         </div>
         <div className="detail-card">
@@ -793,7 +797,7 @@ const Register = () => {
           <div className="tournament-details-hero">
             <span><i className="fas fa-calendar"></i> December 20, 2025</span>
             <span><i className="fas fa-trophy"></i> {t.exclusivePrizePoolShort}</span>
-            <span><i className="fas fa-money-bill-wave"></i> ₦100,000 {t.entryFee}</span>
+            <span><i className="fas fa-money-bill-wave"></i> ₦50,000 {t.entryFee} <span className="subsidized-badge">(Subsidized)</span></span>
             <span className={slotsRemaining <= 5 ? 'slots-warning' : ''}>
               <i className="fas fa-users"></i> {slotsRemaining}/{totalSlots} {t.teams} Available
             </span>

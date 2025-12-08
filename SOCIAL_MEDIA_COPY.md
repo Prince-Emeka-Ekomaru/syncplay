@@ -49,7 +49,7 @@ syncplay eSports is officially LIVE! We're bringing professional eFootball tourn
 💰 ₦1.5 Million Prize Pool
 👥 32 Teams Only
 
-Entry Fee: ₦100,000 per team
+Entry Fee: ₦50,000 per team (Subsidized Rate)
 Platform: PlayStation
 
 Think you and your partner have what it takes? 💪
@@ -213,7 +213,7 @@ We're excited to announce the official launch of syncplay eSports - Nigeria's fi
 Date: December 20, 2025
 Prize Pool: ₦1,500,000 (One point five million Naira!)
 Format: 32 Teams (2 players per team)
-Entry Fee: ₦100,000 per team
+Entry Fee: ₦50,000 per team (Subsidized Rate)
 Platform: PlayStation
 
 WHY JOIN SYNCPLAY?
@@ -254,7 +254,7 @@ syncplay eSports proudly presents our inaugural 2v2 EA Sports FC 26 Tournament w
 🥈 2nd Place: ₦400,000  
 🥉 3rd Place: ₦300,000
 
-💵 ENTRY FEE: ₦100,000 per team
+💵 ENTRY FEE: ₦50,000 per team (Subsidized Rate)
 
 🎯 TOURNAMENT FORMAT:
 • Group Stage: 8 groups of 4 teams
@@ -332,7 +332,7 @@ What we're bringing to Nigerian gaming:
 📅 December 20, 2025
 💰 ₦1,500,000 Prize Pool
 👥 32 Teams (64 Players)
-💵 ₦100,000 Entry Fee
+💵 ₦50,000 Entry Fee (Subsidized)
 
 Registration: https://syncplay.co/register
 
@@ -1099,7 +1099,7 @@ GROUP [X]
 
 ### Registration Question
 ```
-"Hi! Registration is open at syncplay.co/register. Entry fee is ₦100,000 per team. Any other questions? 😊"
+"Hi! Registration is open at syncplay.co/register. Entry fee is ₦50,000 per team (subsidized rate). Any other questions? 😊"
 ```
 
 ### Technical Question

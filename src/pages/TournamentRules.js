@@ -22,7 +22,7 @@ const TournamentRules = () => {
               <li><strong>Format:</strong> 2v2 Team Competition</li>
               <li><strong>Teams:</strong> 32 teams (64 players total)</li>
               <li><strong>Prize Pool:</strong> Exclusive prize pool reserved for registered teams</li>
-              <li><strong>Entry Fee:</strong> ₦100,000 per team</li>
+              <li><strong>Entry Fee:</strong> ₦50,000 per team <span style={{color: '#E63946', fontWeight: 'bold'}}>(Subsidized Rate)</span></li>
               <li><strong>Date:</strong> December 20, 2025</li>
               <li><strong>Start Time:</strong> 15:00 UTC</li>
             </ul>
@@ -58,7 +58,7 @@ const TournamentRules = () => {
             <ol>
               <li>Complete the online registration form</li>
               <li>Provide accurate information for both players</li>
-              <li>Pay the entry fee (₦100,000) via Paystack</li>
+              <li>Pay the entry fee (₦50,000 - subsidized rate) via Kora Pay</li>
               <li>Receive confirmation email with tournament details</li>
             </ol>
 
