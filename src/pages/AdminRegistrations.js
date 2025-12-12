@@ -1,6 +1,86 @@
 import React, { useState, useEffect } from 'react';
 import { getAllRegistrations, getRegistrationCount } from '../supabaseClient';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragOverlay,
+  useDroppable,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import './AdminRegistrations.css';
+
+// Draggable Team Slot Component
+const DraggableTeamSlot = ({ team, match, slotPosition, isWinner, isBye }) => {
+  // Only make it draggable if there's a team
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useSortable({
+    id: team ? `team-${team.id}` : `empty-${match.round}-${match.matchNumber}-${slotPosition}`,
+    data: { team, match, slotPosition },
+    disabled: !team // Disable dragging if no team
+  });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...(team ? { ...attributes, ...listeners } : {})}
+      className={`team-slot ${team ? 'filled draggable' : 'empty'} ${isWinner ? 'winner' : ''} ${isBye ? 'bye' : ''}`}
+    >
+      {team ? (
+        <>
+          <strong>{team.team_name}</strong>
+          <span className="team-players">
+            {team.player1_name} & {team.player2_name}
+          </span>
+          {isWinner && (
+            <span className="winner-badge">
+              <i className="fas fa-trophy"></i> Winner
+            </span>
+          )}
+          <span className="drag-handle">
+            <i className="fas fa-grip-vertical"></i> Drag to move
+          </span>
+        </>
+      ) : isBye ? (
+        <span className="bye-text">BYE</span>
+      ) : (
+        <span className="empty-text">Drop team here</span>
+      )}
+    </div>
+  );
+};
+
+// Droppable Match Slot Component
+const DroppableMatchSlot = ({ match, slotPosition, children }) => {
+  const { setNodeRef, isOver } = useDroppable({
+    id: `match-${match.round}-${match.matchNumber}-${slotPosition}`,
+    data: { match, slotPosition }
+  });
+
+  return (
+    <div
+      ref={setNodeRef}
+      className={`droppable-slot ${isOver ? 'drag-over' : ''}`}
+      style={{ minHeight: '80px' }}
+    >
+      {children}
+    </div>
+  );
+};
 
 const AdminRegistrations = () => {
   const [registrations, setRegistrations] = useState([]);
@@ -10,10 +90,20 @@ const AdminRegistrations = () => {
   const [sortBy, setSortBy] = useState('created_at');
   const [activeTab, setActiveTab] = useState('registrations'); // 'registrations' or 'bracket'
   const [matchResults, setMatchResults] = useState({}); // Store match winners: { "round-1-match-1": teamId, ... }
+  const [bracketPositions, setBracketPositions] = useState({}); // Store custom bracket positions: { "round-1-match-1-team1": teamId, ... }
+  const [activeId, setActiveId] = useState(null); // Currently dragging item
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   useEffect(() => {
     fetchRegistrations();
     loadMatchResults();
+    loadBracketPositions();
   }, []);
 
   // Load match results from localStorage
@@ -25,6 +115,28 @@ const AdminRegistrations = () => {
       }
     } catch (error) {
       console.error('Error loading match results:', error);
+    }
+  };
+
+  // Load bracket positions from localStorage
+  const loadBracketPositions = () => {
+    try {
+      const saved = localStorage.getItem('tournament_bracket_positions');
+      if (saved) {
+        setBracketPositions(JSON.parse(saved));
+      }
+    } catch (error) {
+      console.error('Error loading bracket positions:', error);
+    }
+  };
+
+  // Save bracket positions to localStorage
+  const saveBracketPositions = (positions) => {
+    setBracketPositions(positions);
+    try {
+      localStorage.setItem('tournament_bracket_positions', JSON.stringify(positions));
+    } catch (error) {
+      console.error('Error saving bracket positions:', error);
     }
   };
 
@@ -143,42 +255,42 @@ const AdminRegistrations = () => {
 
     // Round 1: Round of 32 (16 matches)
     const round1 = [];
-    for (let i = 0; i < teamCount; i += 2) {
-      if (i + 1 < teamCount) {
-        const matchNum = Math.floor(i / 2) + 1;
-        const winnerId = getMatchWinner(1, matchNum);
-        round1.push({
-          matchNumber: matchNum,
-          team1: sortedTeams[i],
-          team2: sortedTeams[i + 1],
-          round: 1,
-          roundName: 'Round of 32',
-          winnerId: winnerId
-        });
-      } else {
-        // Odd number of teams - bye for last team
-        const matchNum = Math.floor(i / 2) + 1;
-        const winnerId = getMatchWinner(1, matchNum);
-        // Bye automatically advances (winner defaults to team1 if not set)
-        round1.push({
-          matchNumber: matchNum,
-          team1: sortedTeams[i],
-          team2: null,
-          round: 1,
-          roundName: 'Round of 32',
-          bye: true,
-          winnerId: winnerId || sortedTeams[i]?.id // Bye automatically advances
-        });
-      }
-    }
-    // Fill remaining slots with empty matches
-    while (round1.length < 16) {
-      const matchNum = round1.length + 1;
+    for (let matchNum = 1; matchNum <= 16; matchNum++) {
+      const team1Key = `round-1-match-${matchNum}-team1`;
+      const team2Key = `round-1-match-${matchNum}-team2`;
       const winnerId = getMatchWinner(1, matchNum);
+      
+      // Use custom bracket positions if available, otherwise use default pairing
+      let team1 = bracketPositions[team1Key] ? findTeamById(bracketPositions[team1Key], sortedTeams) : null;
+      let team2 = bracketPositions[team2Key] ? findTeamById(bracketPositions[team2Key], sortedTeams) : null;
+      
+      // If no custom positions, use default pairing
+      if (!team1 && !team2 && matchNum <= Math.ceil(teamCount / 2)) {
+        const i = (matchNum - 1) * 2;
+        if (i < teamCount) {
+          team1 = sortedTeams[i];
+        }
+        if (i + 1 < teamCount) {
+          team2 = sortedTeams[i + 1];
+        } else if (i < teamCount) {
+          // Odd number - bye
+          round1.push({
+            matchNumber: matchNum,
+            team1: team1,
+            team2: null,
+            round: 1,
+            roundName: 'Round of 32',
+            bye: true,
+            winnerId: winnerId || team1?.id
+          });
+          continue;
+        }
+      }
+      
       round1.push({
         matchNumber: matchNum,
-        team1: null,
-        team2: null,
+        team1: team1,
+        team2: team2,
         round: 1,
         roundName: 'Round of 32',
         winnerId: winnerId
@@ -285,6 +397,39 @@ const AdminRegistrations = () => {
 
   const handlePrintBracket = () => {
     window.print();
+  };
+
+  // Handle drag end
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    setActiveId(null);
+
+    if (!over) return;
+
+    const activeData = active.data.current;
+    const overData = over.data.current;
+
+    // If dragging a team to a match slot
+    if (activeData?.team && overData?.match && overData?.slotPosition) {
+      const teamId = activeData.team.id;
+      const positionKey = `round-${overData.match.round}-match-${overData.match.matchNumber}-${overData.slotPosition}`;
+      
+      // Remove team from old position
+      const newPositions = { ...bracketPositions };
+      Object.keys(newPositions).forEach(key => {
+        if (newPositions[key] === teamId) {
+          delete newPositions[key];
+        }
+      });
+      
+      // Add team to new position
+      newPositions[positionKey] = teamId;
+      saveBracketPositions(newPositions);
+    }
+  };
+
+  const handleDragStart = (event) => {
+    setActiveId(event.active.id);
   };
 
   const bracket = generateBracket();
@@ -502,58 +647,45 @@ const AdminRegistrations = () => {
               </div>
             </div>
 
-            <div className="bracket-wrapper">
-              {bracket.rounds.map((round, roundIndex) => (
-                <div key={roundIndex} className="bracket-round">
-                  <h3 className="round-title">{round[0]?.roundName || `Round ${roundIndex + 1}`}</h3>
-                  <div className="round-matches">
-                    {round.map((match, matchIndex) => (
-                      <div key={matchIndex} className="bracket-match">
-                        <div className="match-header">
-                          <span className="match-number">Match {match.matchNumber}</span>
-                          {match.winnerFrom && (
-                            <span className="winner-from">Winner: {match.winnerFrom}</span>
-                          )}
-                        </div>
-                        <div className="match-teams">
-                          <div className={`team-slot ${match.team1 ? 'filled' : 'empty'} ${match.bye && matchIndex === round.length - 1 ? 'bye' : ''} ${match.winnerId === match.team1?.id ? 'winner' : ''}`}>
-                            {match.team1 ? (
-                              <>
-                                <strong>{match.team1.team_name}</strong>
-                                <span className="team-players">
-                                  {match.team1.player1_name} & {match.team1.player2_name}
-                                </span>
-                                {match.winnerId === match.team1.id && (
-                                  <span className="winner-badge">
-                                    <i className="fas fa-trophy"></i> Winner
-                                  </span>
-                                )}
-                              </>
-                            ) : match.bye ? (
-                              <span className="bye-text">BYE</span>
-                            ) : (
-                              <span className="empty-text">TBD</span>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+            >
+              <div className="bracket-wrapper">
+                {bracket.rounds.map((round, roundIndex) => (
+                  <div key={roundIndex} className="bracket-round">
+                    <h3 className="round-title">{round[0]?.roundName || `Round ${roundIndex + 1}`}</h3>
+                    <div className="round-matches">
+                      {round.map((match, matchIndex) => (
+                        <div key={matchIndex} className="bracket-match">
+                          <div className="match-header">
+                            <span className="match-number">Match {match.matchNumber}</span>
+                            {match.winnerFrom && (
+                              <span className="winner-from">Winner: {match.winnerFrom}</span>
                             )}
                           </div>
-                          <div className="vs-divider">VS</div>
-                          <div className={`team-slot ${match.team2 ? 'filled' : 'empty'} ${match.winnerId === match.team2?.id ? 'winner' : ''}`}>
-                            {match.team2 ? (
-                              <>
-                                <strong>{match.team2.team_name}</strong>
-                                <span className="team-players">
-                                  {match.team2.player1_name} & {match.team2.player2_name}
-                                </span>
-                                {match.winnerId === match.team2.id && (
-                                  <span className="winner-badge">
-                                    <i className="fas fa-trophy"></i> Winner
-                                  </span>
-                                )}
-                              </>
-                            ) : (
-                              <span className="empty-text">TBD</span>
-                            )}
+                          <div className="match-teams">
+                            <DroppableMatchSlot match={match} slotPosition="team1">
+                              <DraggableTeamSlot
+                                team={match.team1}
+                                match={match}
+                                slotPosition="team1"
+                                isWinner={match.winnerId === match.team1?.id}
+                                isBye={match.bye && matchIndex === round.length - 1}
+                              />
+                            </DroppableMatchSlot>
+                            <div className="vs-divider">VS</div>
+                            <DroppableMatchSlot match={match} slotPosition="team2">
+                              <DraggableTeamSlot
+                                team={match.team2}
+                                match={match}
+                                slotPosition="team2"
+                                isWinner={match.winnerId === match.team2?.id}
+                              />
+                            </DroppableMatchSlot>
                           </div>
-                        </div>
                         {/* Winner Selection Buttons */}
                         {match.team1 && (match.team2 || match.bye) && !match.winnerId && (
                           <div className="match-actions">
@@ -596,7 +728,15 @@ const AdminRegistrations = () => {
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+              <DragOverlay>
+                {activeId ? (
+                  <div className="team-slot filled draggable" style={{ opacity: 0.8 }}>
+                    <i className="fas fa-grip-vertical"></i> Dragging...
+                  </div>
+                ) : null}
+              </DragOverlay>
+            </DndContext>
 
             {bracket.teamCount === 0 && (
               <div className="no-results">
