@@ -799,12 +799,12 @@ const Register = () => {
             <span><i className="fas fa-trophy"></i> {t.exclusivePrizePoolShort}</span>
             <span><i className="fas fa-money-bill-wave"></i> ₦50,000 {t.entryFee} <span className="subsidized-badge">(Subsidized)</span></span>
             <span className={slotsRemaining <= 5 ? 'slots-warning' : ''}>
-              <i className="fas fa-users"></i> {slotsRemaining}/{totalSlots} {t.teams} Available
+              <i className="fas fa-users"></i> {slotsRemaining === 0 ? t.slotsUrgencyFull : t.slotsUrgencyMessage}
             </span>
           </div>
-          {slotsRemaining <= 10 && slotsRemaining > 0 && (
+          {slotsRemaining > 0 && (
             <div className="slots-alert">
-              <i className="fas fa-exclamation-triangle"></i> Only {slotsRemaining} slots remaining! Register now!
+              <i className="fas fa-exclamation-triangle"></i> {t.slotsUrgencyAlert}
             </div>
           )}
         </div>

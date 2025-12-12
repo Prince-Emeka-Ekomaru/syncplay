@@ -17,7 +17,7 @@ const Tournaments = () => {
       description: t.tournament2v2Desc,
       frequency: t.launchingNov30,
       prizePool: t.exclusivePrizePoolShort,
-      participants: loading ? '32 Teams' : `${totalSlots} Teams (${slotsRemaining} Slots Left)`,
+      participants: `${totalSlots} Teams • ${slotsRemaining === 0 ? t.slotsUrgencyFull : t.slotsUrgency}`,
       icon: 'fa-users-cog',
       color: '#E63946',
       status: 'active'
@@ -176,10 +176,7 @@ const Tournaments = () => {
               <i className="fas fa-gamepad"></i> {t.registerYourTeam}
             </Link>
             <p className="cta-note">
-              {loading 
-                ? 'Limited to 32 teams • First come, first served'
-                : `${slotsRemaining} of ${totalSlots} slots remaining • First come, first served`
-              }
+              {t.slotsUrgencyNote}
             </p>
           </div>
         </div>

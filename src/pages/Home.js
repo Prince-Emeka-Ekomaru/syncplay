@@ -41,9 +41,7 @@ const Home = () => {
     {
       id: 2,
       title: 'Registration Now Open - 2v2 EA Sports FC 26 Tournament',
-      excerpt: loading 
-        ? 'Registration is officially open for our first tournament! Limited slots available for exclusive prize pool...'
-        : `Registration is officially open! ${slotsRemaining} of ${totalSlots} team slots remaining. Exclusive prize pool. Entry fee is ₦50,000 per team (subsidized rate)...`,
+      excerpt: 'Registration is officially open for our first tournament! Limited spots available for exclusive prize pool. Entry fee is ₦50,000 per team (subsidized rate)...',
       image: '/fc-26-1024x639.jpg',
       date: 'October 23, 2025'
     },
@@ -180,8 +178,8 @@ const Home = () => {
                 <p>{t.exclusivePrizePoolShort}</p>
               </div>
               <div className="stat-item">
-                <h3>{loading ? '32' : slotsRemaining}</h3>
-                <p>{loading ? t.teamSlots : (slotsRemaining === 0 ? 'FULL!' : 'Slots Left')}</p>
+                <h3>{slotsRemaining === 0 ? '!' : '⚡'}</h3>
+                <p>{slotsRemaining === 0 ? t.slotsUrgencyFull : t.slotsUrgency}</p>
               </div>
               <div className="stat-item">
                 <h3>2025</h3>

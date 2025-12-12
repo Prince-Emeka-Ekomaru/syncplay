@@ -30,11 +30,11 @@ export default async function handler(req, res) {
   // Get request body
   const { amount, email, reference, callback_url, metadata } = req.body;
 
-  // Validate required fields (callback_url is optional - not sent to Kora Pay)
-  if (!amount || !email || !reference) {
+  // Validate required fields
+  if (!amount || !email || !reference || !callback_url) {
     return res.status(400).json({
       success: false,
-      message: 'Missing required fields: amount, email, reference'
+      message: 'Missing required fields: amount, email, reference, callback_url'
     });
   }
 
@@ -51,19 +51,11 @@ export default async function handler(req, res) {
 
   try {
     // Kora Pay API format - try different amount formats
-    // Amount comes in as Naira from frontend (50000 for 50k Naira)
-    // Kora Pay expects: number in Naira
+    // Amount comes in as Naira from frontend (100000 for 100k Naira)
+    // Kora Pay might expect: number in Naira, or string in Naira, or kobo
     
-    // Validate and parse amount
+    // Try format 1: Number in Naira (most likely)
     const amountValue = parseFloat(amount);
-    
-    if (isNaN(amountValue) || amountValue <= 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid amount. Amount must be a positive number.',
-        receivedAmount: amount
-      });
-    }
     
     // Use Kora Pay charges/initialize API
     // Error shows: "callback_url is not allowed" - Kora Pay doesn't accept it in request
@@ -187,16 +179,10 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Kora Pay API Request Error:', error);
-    console.error('Error stack:', error.stack);
-    console.error('Request body received:', { amount, email, reference, callback_url: callback_url ? 'provided' : 'missing' });
-    
     return res.status(500).json({
       success: false,
       message: 'Failed to create payment link',
       error: error.message,
-      errorType: error.name || 'UnknownError',
-      // Don't expose full stack in production, but helpful for debugging
-      ...(process.env.NODE_ENV === 'development' && { stack: error.stack }),
     });
   }
 }
