@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllRegistrations, getRegistrationCount } from '../supabaseClient';
+import { getEntryFee, setEntryFee, getEntryFeeInNaira, formatPrice } from '../utils/priceManager';
 import {
   DndContext,
   closestCenter,
@@ -92,6 +93,9 @@ const AdminRegistrations = () => {
   const [matchResults, setMatchResults] = useState({}); // Store match winners: { "round-1-match-1": teamId, ... }
   const [bracketPositions, setBracketPositions] = useState({}); // Store custom bracket positions: { "round-1-match-1-team1": teamId, ... }
   const [activeId, setActiveId] = useState(null); // Currently dragging item
+  const [entryFee, setEntryFeeState] = useState(getEntryFeeInNaira()); // Current entry fee in Naira
+  const [priceEditMode, setPriceEditMode] = useState(false);
+  const [newPrice, setNewPrice] = useState('');
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -104,6 +108,8 @@ const AdminRegistrations = () => {
     fetchRegistrations();
     loadMatchResults();
     loadBracketPositions();
+    // Refresh price on mount
+    setEntryFeeState(getEntryFeeInNaira());
   }, []);
 
   // Load match results from localStorage
@@ -468,8 +474,66 @@ const AdminRegistrations = () => {
               <div className="stat-label">Slots Remaining</div>
             </div>
             <div className="stat-card">
-              <div className="stat-value">₦{(totalCount * 50000).toLocaleString()}</div>
+              <div className="stat-value">₦{(totalCount * getEntryFeeInNaira()).toLocaleString()}</div>
               <div className="stat-label">Total Revenue</div>
+            </div>
+            <div className="stat-card price-management-card">
+              <div className="stat-value">{formatPrice()}</div>
+              <div className="stat-label">Entry Fee</div>
+              {priceEditMode ? (
+                <div className="price-edit-form">
+                  <input
+                    type="number"
+                    value={newPrice}
+                    onChange={(e) => setNewPrice(e.target.value)}
+                    placeholder="Enter new price"
+                    min="1"
+                    step="1000"
+                    className="price-input"
+                  />
+                  <div className="price-actions">
+                    <button
+                      className="btn btn-success btn-sm"
+                      onClick={() => {
+                        const price = parseFloat(newPrice);
+                        if (price > 0) {
+                          if (setEntryFee(price)) {
+                            setEntryFeeState(price);
+                            setPriceEditMode(false);
+                            setNewPrice('');
+                            alert(`Entry fee updated to ₦${price.toLocaleString()}`);
+                          } else {
+                            alert('Failed to update price');
+                          }
+                        } else {
+                          alert('Please enter a valid price');
+                        }
+                      }}
+                    >
+                      <i className="fas fa-check"></i> Save
+                    </button>
+                    <button
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => {
+                        setPriceEditMode(false);
+                        setNewPrice('');
+                      }}
+                    >
+                      <i className="fas fa-times"></i> Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    setNewPrice(entryFee.toString());
+                    setPriceEditMode(true);
+                  }}
+                >
+                  <i className="fas fa-edit"></i> Change Price
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -521,6 +585,9 @@ const AdminRegistrations = () => {
               <button className="btn btn-primary" onClick={fetchRegistrations}>
                 <i className="fas fa-sync-alt"></i> Refresh
               </button>
+              <a href="/admin/manual-registration" className="btn btn-warning">
+                <i className="fas fa-user-plus"></i> Manual Registration
+              </a>
               <button className="btn btn-success" onClick={handlePrintBracket}>
                 <i className="fas fa-print"></i> Print Bracket
               </button>

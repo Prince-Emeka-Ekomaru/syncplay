@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { getEntryFee } from './utils/priceManager';
 
 // Supabase configuration
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
@@ -39,15 +40,17 @@ export async function isRegistrationFull() {
 }
 
 // Helper function to save registration
-export async function saveRegistration(paymentReference, formData, paymentGateway = 'paystack') {
+export async function saveRegistration(paymentReference, formData, paymentGateway = 'paystack', paymentAmount = null) {
   try {
+    const amount = paymentAmount || getEntryFee();
+    
     const { data, error } = await supabase
       .from('registrations')
       .insert([
         {
           payment_reference: paymentReference,
           payment_status: 'completed',
-          payment_amount: 5000000, // 50,000 Naira in kobo (subsidized rate)
+          payment_amount: amount,
           payment_gateway: paymentGateway,
           team_name: formData.teamName,
           player1_name: formData.player1Name,
@@ -68,6 +71,13 @@ export async function saveRegistration(paymentReference, formData, paymentGatewa
 
     if (error) {
       console.error('Error saving registration:', error);
+      console.error('Error details:', {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint,
+        paymentReference: paymentReference
+      });
       throw error;
     }
 
@@ -75,6 +85,7 @@ export async function saveRegistration(paymentReference, formData, paymentGatewa
     return data;
   } catch (error) {
     console.error('Save registration error:', error);
+    console.error('Full error object:', error);
     throw error;
   }
 }

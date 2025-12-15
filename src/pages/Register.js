@@ -4,6 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
 import { saveRegistration, supabase } from '../supabaseClient';
 import { useRegistrationCount } from '../hooks/useRegistrationCount';
+import { getEntryFee, formatPrice } from '../utils/priceManager';
 import {
   initializePayment,
   initializePaymentGateways,
@@ -69,21 +70,31 @@ const Register = () => {
     const paymentGateway = urlParams.get('payment');
 
     if (paymentGateway === 'kora' && paymentRef) {
+      console.log('Kora Pay callback detected:', { paymentRef, paymentGateway });
+      
       // Check if we have pending registration data
       const pendingData = sessionStorage.getItem('pending_registration');
       const storedRef = sessionStorage.getItem('kora_payment_reference');
 
+      console.log('SessionStorage check:', {
+        hasPendingData: !!pendingData,
+        storedRef,
+        paymentRef,
+        match: storedRef === paymentRef
+      });
+
       if (pendingData && storedRef === paymentRef) {
         try {
           const formData = JSON.parse(pendingData);
+          console.log('Processing registration save for:', formData.teamName);
           
           // Verify payment with Kora (you should verify on backend)
           // For now, we'll assume payment was successful if we got redirected back
           // In production, verify payment status via Kora API
           
-          saveRegistration(paymentRef, formData, PAYMENT_GATEWAYS.KORA)
-            .then(() => {
-              console.log('Registration saved to database!');
+          saveRegistration(paymentRef, formData, PAYMENT_GATEWAYS.KORA, getEntryFee())
+            .then((result) => {
+              console.log('Registration saved successfully to database!', result);
               refresh();
               setCurrentStep(5);
               
@@ -97,11 +108,31 @@ const Register = () => {
             })
             .catch((error) => {
               console.error('Error saving registration:', error);
-              alert('Payment successful but registration save failed. Please contact support with reference: ' + paymentRef);
+              console.error('Error details:', {
+                message: error.message,
+                code: error.code,
+                details: error.details,
+                hint: error.hint
+              });
+              
+              // Show detailed error to user
+              const errorMsg = error.message || 'Unknown error occurred';
+              alert(`Payment successful but registration save failed.\n\nError: ${errorMsg}\n\nPlease contact support with reference: ${paymentRef}\n\nTeam: ${formData.teamName}`);
             });
         } catch (error) {
           console.error('Error processing Kora callback:', error);
+          alert('Error processing payment callback. Please contact support with reference: ' + paymentRef);
         }
+      } else {
+        // SessionStorage was cleared or reference mismatch
+        console.warn('SessionStorage mismatch or missing data:', {
+          hasPendingData: !!pendingData,
+          storedRef,
+          paymentRef
+        });
+        
+        // Show warning to user
+        alert(`Payment callback detected but registration data not found.\n\nThis can happen if:\n- Browser session was cleared\n- Payment was completed in a different tab\n\nPayment Reference: ${paymentRef}\n\nPlease contact support with this reference to manually complete your registration.`);
       }
     }
   }, []);
@@ -220,7 +251,7 @@ const Register = () => {
       const paymentConfig = {
         reference: `SP-${Date.now()}`,
         email: formData.player1Email,
-        amount: 5000000, // 50,000 Naira in kobo (subsidized rate)
+        amount: getEntryFee(), // Dynamic entry fee in kobo
         publicKey: publicKey || '', // Optional for Kora Pay
         metadata: {
           teamName: formData.teamName,
@@ -583,7 +614,7 @@ const Register = () => {
         <div className="payment-details">
           <div className="payment-item">
             <span className="payment-label">{t.entryFee}:</span>
-            <span className="payment-value">₦50,000 <span className="subsidized-badge">(Subsidized)</span></span>
+            <span className="payment-value">{formatPrice()} <span className="subsidized-badge">(Subsidized)</span></span>
           </div>
           
           {/* Payment Gateway Selection */}
@@ -700,7 +731,7 @@ const Register = () => {
           <i className="fas fa-check-circle"></i>
           <div>
             <strong>{t.paymentCompleted}</strong>
-            <span>₦50,000 <span className="subsidized-badge">(Subsidized)</span></span>
+            <span>{formatPrice()} <span className="subsidized-badge">(Subsidized)</span></span>
           </div>
         </div>
         <div className="detail-card">
@@ -797,7 +828,7 @@ const Register = () => {
           <div className="tournament-details-hero">
             <span><i className="fas fa-calendar"></i> December 20, 2025</span>
             <span><i className="fas fa-trophy"></i> {t.exclusivePrizePoolShort}</span>
-            <span><i className="fas fa-money-bill-wave"></i> ₦50,000 {t.entryFee} <span className="subsidized-badge">(Subsidized)</span></span>
+            <span><i className="fas fa-money-bill-wave"></i> {formatPrice()} {t.entryFee} <span className="subsidized-badge">(Subsidized)</span></span>
             <span className={slotsRemaining <= 5 ? 'slots-warning' : ''}>
               <i className="fas fa-users"></i> {slotsRemaining === 0 ? t.slotsUrgencyFull : t.slotsUrgencyMessage}
             </span>

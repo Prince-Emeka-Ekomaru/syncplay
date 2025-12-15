@@ -63,6 +63,48 @@
   letter-spacing: 1px;
 }
 
+.price-management-card {
+  position: relative;
+}
+
+.price-edit-form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price-input {
+  padding: 0.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.price-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.price-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.price-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+}
+
 /* Controls */
 .admin-controls {
   background: var(--color-white);
