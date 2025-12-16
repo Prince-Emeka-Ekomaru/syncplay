@@ -4,7 +4,7 @@
 import { supabase } from '../supabaseClient';
 
 const PRICE_STORAGE_KEY = 'syncplay_entry_fee';
-const DEFAULT_PRICE = 5000000; // 50,000 Naira in kobo
+const DEFAULT_PRICE = 2000000; // 20,000 Naira in kobo
 let cachedPrice = null;
 let priceLoadPromise = null;
 

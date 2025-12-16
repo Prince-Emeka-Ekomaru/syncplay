@@ -41,7 +41,7 @@ const Home = () => {
     {
       id: 2,
       title: 'Registration Now Open - 2v2 EA Sports FC 26 Tournament',
-      excerpt: 'Registration is officially open for our first tournament! Limited spots available for exclusive prize pool. Entry fee is ₦50,000 per team (subsidized rate)...',
+      excerpt: 'Registration is officially open for our first tournament! Limited spots available for exclusive prize pool. Entry fee is ₦20,000 per team (subsidized rate)...',
       image: '/fc-26-1024x639.jpg',
       date: 'October 23, 2025'
     },

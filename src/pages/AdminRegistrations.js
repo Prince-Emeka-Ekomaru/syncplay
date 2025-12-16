@@ -93,7 +93,7 @@ const AdminRegistrations = () => {
   const [matchResults, setMatchResults] = useState({}); // Store match winners: { "round-1-match-1": teamId, ... }
   const [bracketPositions, setBracketPositions] = useState({}); // Store custom bracket positions: { "round-1-match-1-team1": teamId, ... }
   const [activeId, setActiveId] = useState(null); // Currently dragging item
-  const [entryFee, setEntryFeeState] = useState(50000); // Current entry fee in Naira (default, will be updated)
+  const [entryFee, setEntryFeeState] = useState(20000); // Current entry fee in Naira (default, will be updated)
   const [priceEditMode, setPriceEditMode] = useState(false);
   const [newPrice, setNewPrice] = useState('');
 

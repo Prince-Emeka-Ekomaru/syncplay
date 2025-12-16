@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS registrations (
   -- Payment Information
   payment_reference TEXT UNIQUE NOT NULL,
   payment_status TEXT DEFAULT 'completed' CHECK (payment_status IN ('pending', 'completed', 'failed', 'refunded')),
-  payment_amount INTEGER DEFAULT 5000000, -- 50,000 Naira in kobo (subsidized rate)
+  payment_amount INTEGER DEFAULT 2000000, -- 20,000 Naira in kobo (subsidized rate)
   payment_date TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   
   -- Team Information
