@@ -65,34 +65,36 @@ const Register = () => {
 
   // Handle Kora Pay callback after redirect
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const paymentRef = urlParams.get('ref');
-    const paymentGateway = urlParams.get('payment');
+    const handleCallback = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paymentRef = urlParams.get('ref');
+      const paymentGateway = urlParams.get('payment');
 
-    if (paymentGateway === 'kora' && paymentRef) {
-      console.log('Kora Pay callback detected:', { paymentRef, paymentGateway });
-      
-      // Check if we have pending registration data
-      const pendingData = sessionStorage.getItem('pending_registration');
-      const storedRef = sessionStorage.getItem('kora_payment_reference');
+      if (paymentGateway === 'kora' && paymentRef) {
+        console.log('Kora Pay callback detected:', { paymentRef, paymentGateway });
+        
+        // Check if we have pending registration data
+        const pendingData = sessionStorage.getItem('pending_registration');
+        const storedRef = sessionStorage.getItem('kora_payment_reference');
 
-      console.log('SessionStorage check:', {
-        hasPendingData: !!pendingData,
-        storedRef,
-        paymentRef,
-        match: storedRef === paymentRef
-      });
+        console.log('SessionStorage check:', {
+          hasPendingData: !!pendingData,
+          storedRef,
+          paymentRef,
+          match: storedRef === paymentRef
+        });
 
-      if (pendingData && storedRef === paymentRef) {
-        try {
-          const formData = JSON.parse(pendingData);
-          console.log('Processing registration save for:', formData.teamName);
-          
-          // Verify payment with Kora (you should verify on backend)
-          // For now, we'll assume payment was successful if we got redirected back
-          // In production, verify payment status via Kora API
-          
-          saveRegistration(paymentRef, formData, PAYMENT_GATEWAYS.KORA, getEntryFee())
+        if (pendingData && storedRef === paymentRef) {
+          try {
+            const formData = JSON.parse(pendingData);
+            console.log('Processing registration save for:', formData.teamName);
+            
+            // Verify payment with Kora (you should verify on backend)
+            // For now, we'll assume payment was successful if we got redirected back
+            // In production, verify payment status via Kora API
+            
+            const entryFee = await getEntryFee();
+            saveRegistration(paymentRef, formData, PAYMENT_GATEWAYS.KORA, entryFee)
             .then((result) => {
               console.log('Registration saved successfully to database!', result);
               refresh();
@@ -119,22 +121,25 @@ const Register = () => {
               const errorMsg = error.message || 'Unknown error occurred';
               alert(`Payment successful but registration save failed.\n\nError: ${errorMsg}\n\nPlease contact support with reference: ${paymentRef}\n\nTeam: ${formData.teamName}`);
             });
-        } catch (error) {
-          console.error('Error processing Kora callback:', error);
-          alert('Error processing payment callback. Please contact support with reference: ' + paymentRef);
+          } catch (error) {
+            console.error('Error processing Kora callback:', error);
+            alert('Error processing payment callback. Please contact support with reference: ' + paymentRef);
+          }
+        } else {
+          // SessionStorage was cleared or reference mismatch
+          console.warn('SessionStorage mismatch or missing data:', {
+            hasPendingData: !!pendingData,
+            storedRef,
+            paymentRef
+          });
+          
+          // Show warning to user
+          alert(`Payment callback detected but registration data not found.\n\nThis can happen if:\n- Browser session was cleared\n- Payment was completed in a different tab\n\nPayment Reference: ${paymentRef}\n\nPlease contact support with this reference to manually complete your registration.`);
         }
-      } else {
-        // SessionStorage was cleared or reference mismatch
-        console.warn('SessionStorage mismatch or missing data:', {
-          hasPendingData: !!pendingData,
-          storedRef,
-          paymentRef
-        });
-        
-        // Show warning to user
-        alert(`Payment callback detected but registration data not found.\n\nThis can happen if:\n- Browser session was cleared\n- Payment was completed in a different tab\n\nPayment Reference: ${paymentRef}\n\nPlease contact support with this reference to manually complete your registration.`);
       }
-    }
+    };
+
+    handleCallback();
   }, []);
 
   const handleChange = (e) => {
@@ -248,10 +253,12 @@ const Register = () => {
       // }
 
       // Create payment configuration
+      // Get entry fee asynchronously
+      const entryFee = await getEntryFee();
       const paymentConfig = {
         reference: `SP-${Date.now()}`,
         email: formData.player1Email,
-        amount: getEntryFee(), // Dynamic entry fee in kobo
+        amount: entryFee, // Dynamic entry fee in kobo
         publicKey: publicKey || '', // Optional for Kora Pay
         metadata: {
           teamName: formData.teamName,

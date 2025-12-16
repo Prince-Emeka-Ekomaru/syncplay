@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllRegistrations, getRegistrationCount } from '../supabaseClient';
-import { getEntryFee, setEntryFee, getEntryFeeInNaira, formatPrice } from '../utils/priceManager';
+import { getEntryFee, setEntryFee, getEntryFeeInNaira, formatPrice, clearPriceCache } from '../utils/priceManager';
 import {
   DndContext,
   closestCenter,
@@ -93,7 +93,7 @@ const AdminRegistrations = () => {
   const [matchResults, setMatchResults] = useState({}); // Store match winners: { "round-1-match-1": teamId, ... }
   const [bracketPositions, setBracketPositions] = useState({}); // Store custom bracket positions: { "round-1-match-1-team1": teamId, ... }
   const [activeId, setActiveId] = useState(null); // Currently dragging item
-  const [entryFee, setEntryFeeState] = useState(getEntryFeeInNaira()); // Current entry fee in Naira
+  const [entryFee, setEntryFeeState] = useState(50000); // Current entry fee in Naira (default, will be updated)
   const [priceEditMode, setPriceEditMode] = useState(false);
   const [newPrice, setNewPrice] = useState('');
 
@@ -108,8 +108,10 @@ const AdminRegistrations = () => {
     fetchRegistrations();
     loadMatchResults();
     loadBracketPositions();
-    // Refresh price on mount
-    setEntryFeeState(getEntryFeeInNaira());
+    // Refresh price on mount (async)
+    getEntryFee().then(price => {
+      setEntryFeeState(price / 100);
+    });
   }, []);
 
   // Load match results from localStorage
@@ -494,10 +496,12 @@ const AdminRegistrations = () => {
                   <div className="price-actions">
                     <button
                       className="btn btn-success btn-sm"
-                      onClick={() => {
+                      onClick={async () => {
                         const price = parseFloat(newPrice);
                         if (price > 0) {
-                          if (setEntryFee(price)) {
+                          const success = await setEntryFee(price);
+                          if (success) {
+                            clearPriceCache(); // Clear cache to force reload
                             setEntryFeeState(price);
                             setPriceEditMode(false);
                             setNewPrice('');

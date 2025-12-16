@@ -42,7 +42,7 @@ export async function isRegistrationFull() {
 // Helper function to save registration
 export async function saveRegistration(paymentReference, formData, paymentGateway = 'paystack', paymentAmount = null) {
   try {
-    const amount = paymentAmount || getEntryFee();
+    const amount = paymentAmount || await getEntryFee();
     
     const { data, error } = await supabase
       .from('registrations')
