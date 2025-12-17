@@ -35,8 +35,15 @@ export async function getEntryFee() {
 
       if (error && error.code !== 'PGRST116') {
         console.warn('Error loading entry fee from Supabase:', error);
-        // Fallback to localStorage
-        return getEntryFeeFromLocalStorage();
+        // If Supabase error, check localStorage but prefer default if localStorage has old value
+        const localPrice = getEntryFeeFromLocalStorage();
+        // If localStorage has old price (50k), use default instead
+        if (localPrice === 5000000) {
+          cachedPrice = DEFAULT_PRICE;
+          localStorage.setItem(PRICE_STORAGE_KEY, DEFAULT_PRICE.toString());
+          return DEFAULT_PRICE;
+        }
+        return localPrice;
       }
 
       if (data && data.entry_fee) {
@@ -49,8 +56,11 @@ export async function getEntryFee() {
         }
       }
 
-      // Fallback to localStorage
-      return getEntryFeeFromLocalStorage();
+      // If Supabase doesn't have entry_fee set, use default and update localStorage
+      // Don't fallback to localStorage if it might have old value
+      cachedPrice = DEFAULT_PRICE;
+      localStorage.setItem(PRICE_STORAGE_KEY, DEFAULT_PRICE.toString());
+      return DEFAULT_PRICE;
     } catch (error) {
       console.error('Error loading entry fee:', error);
       return getEntryFeeFromLocalStorage();
@@ -135,6 +145,17 @@ export async function setEntryFee(priceInNaira) {
 export function clearPriceCache() {
   cachedPrice = null;
   priceLoadPromise = null;
+}
+
+/**
+ * Reset price to default and clear all caches
+ * Use this if you need to force reset to default price
+ */
+export function resetPriceToDefault() {
+  cachedPrice = DEFAULT_PRICE;
+  priceLoadPromise = null;
+  localStorage.setItem(PRICE_STORAGE_KEY, DEFAULT_PRICE.toString());
+  return DEFAULT_PRICE;
 }
 
 /**

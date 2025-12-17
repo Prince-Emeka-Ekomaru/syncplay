@@ -4,7 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
 import { saveRegistration, supabase } from '../supabaseClient';
 import { useRegistrationCount } from '../hooks/useRegistrationCount';
-import { getEntryFee, formatPrice } from '../utils/priceManager';
+import { getEntryFee, formatPrice, resetPriceToDefault } from '../utils/priceManager';
 import {
   initializePayment,
   initializePaymentGateways,
@@ -59,6 +59,14 @@ const Register = () => {
       const gateways = getAvailableGateways();
       setAvailableGateways(gateways);
       setSelectedPaymentGateway(gateways[0] || PAYMENT_GATEWAYS.KORA);
+      
+      // Check and reset price if old value detected
+      const currentPrice = await getEntryFee();
+      // If somehow we got the old price (50k), reset to default (20k)
+      if (currentPrice === 5000000) {
+        console.log('Detected old price (₦50,000), resetting to default (₦20,000)');
+        resetPriceToDefault();
+      }
     };
     loadPaymentGateways();
   }, []);
