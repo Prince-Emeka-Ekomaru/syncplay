@@ -126,11 +126,10 @@ export async function getAllRegistrations() {
 // Helper to get public URL for media assets (photos/videos)
 export function getMediaUrl(localPath) {
   if (!localPath) return '';
-  if (process.env.NODE_ENV === 'production') {
-    if (localPath.startsWith('/tournament-media/')) {
-      const cleanPath = localPath.replace('/tournament-media/', '');
-      return `https://yzoqnqubnwoijrwtdroj.supabase.co/storage/v1/object/public/tournament-assets/${cleanPath}`;
-    }
+  if (localPath.startsWith('/tournament-media/')) {
+    // Extract the filename from the path since files are uploaded directly to the bucket root
+    const filename = localPath.substring(localPath.lastIndexOf('/') + 1);
+    return `https://yzoqnqubnwoijrwtdroj.supabase.co/storage/v1/object/public/tournament-assets/${filename}`;
   }
   return localPath;
 }
