@@ -33,7 +33,7 @@ export async function uploadPlayerPhoto(file, teamName, playerNumber) {
     const filePath = `player-photos/${sanitizedTeamName}/${fileName}`;
 
     // Upload to Supabase Storage
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('tournament-assets') // Make sure this bucket exists in Supabase
       .upload(filePath, file, {
         cacheControl: '3600',

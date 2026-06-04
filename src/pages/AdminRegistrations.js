@@ -756,7 +756,6 @@ const AdminRegistrations = () => {
       if (overData.match.groupNumber !== undefined) {
         // Find which team slot in the group this is
         const groupNum = overData.match.groupNumber;
-        const slotNum = overData.slotPosition === 'team1' ? 1 : 2;
         // Determine which team position in group based on match and slot
         // This is complex - for now, use match-slot based key
         positionKey = `group-${groupNum}-match-${overData.match.matchNumber}-${overData.slotPosition}`;

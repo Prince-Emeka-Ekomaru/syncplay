@@ -50,7 +50,7 @@ const Events = () => {
   //     description: t.championshipSeriesDesc
   //   }
   // ];
-  const comingSoonEvents = [];
+
 
   const pastEvents = [
     {
