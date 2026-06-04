@@ -8,7 +8,7 @@ import './Comparison.css';
 const Comparison = () => {
   const { currentLanguage } = useLanguage();
   const t = translations[currentLanguage];
-  const { count, totalSlots, loading } = useRegistrationCount();
+  const { totalSlots, loading } = useRegistrationCount();
 
   return (
     <div className="comparison-page">

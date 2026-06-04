@@ -1,22 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getRegistrationCount } from '../supabaseClient';
 
 /**
  * Custom hook to fetch and track registration count
  * @param {boolean} realtime - Whether to poll for updates (default: false)
  * @param {number} interval - Polling interval in ms (default: 30000 = 30 seconds)
+ * @param {string} tournamentId - Tournament ID to filter by (default: '2v2-may-2026')
  */
-export const useRegistrationCount = (realtime = false, interval = 30000) => {
+export const useRegistrationCount = (realtime = false, interval = 30000, tournamentId = '2v2-may-2026') => {
   const [count, setCount] = useState(0);
-  const [slotsRemaining, setSlotsRemaining] = useState(32);
+  const [slotsRemaining, setSlotsRemaining] = useState(12);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const MAX_SLOTS = 32;
+  const MAX_SLOTS = 12;
 
-  const fetchCount = async () => {
+  const fetchCount = useCallback(async () => {
     try {
-      const currentCount = await getRegistrationCount();
+      const currentCount = await getRegistrationCount(tournamentId);
       setCount(currentCount);
       setSlotsRemaining(Math.max(0, MAX_SLOTS - currentCount));
       setError(null);
@@ -26,7 +27,7 @@ export const useRegistrationCount = (realtime = false, interval = 30000) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [tournamentId]);
 
   useEffect(() => {
     // Initial fetch
@@ -37,7 +38,7 @@ export const useRegistrationCount = (realtime = false, interval = 30000) => {
       const intervalId = setInterval(fetchCount, interval);
       return () => clearInterval(intervalId);
     }
-  }, [realtime, interval]);
+  }, [realtime, interval, fetchCount]);
 
   return {
     count,

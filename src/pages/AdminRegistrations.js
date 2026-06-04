@@ -12,8 +12,6 @@ import {
   useDroppable,
 } from '@dnd-kit/core';
 import {
-  arrayMove,
-  SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
 } from '@dnd-kit/sortable';
@@ -83,6 +81,187 @@ const DroppableMatchSlot = ({ match, slotPosition, children }) => {
   );
 };
 
+// Two-Legged Match Component
+const TwoLeggedMatch = ({ match, getKnockoutLegResult, saveKnockoutLegResult, matchResults, setMatchResults }) => {
+  const leg1Result = getKnockoutLegResult(match.round, match.matchNumber, 1);
+  const leg2Result = getKnockoutLegResult(match.round, match.matchNumber, 2);
+  const [leg1Team1Score, setLeg1Team1Score] = useState(leg1Result?.team1Score?.toString() || '');
+  const [leg1Team2Score, setLeg1Team2Score] = useState(leg1Result?.team2Score?.toString() || '');
+  const [leg2Team1Score, setLeg2Team1Score] = useState(leg2Result?.team1Score?.toString() || '');
+  const [leg2Team2Score, setLeg2Team2Score] = useState(leg2Result?.team2Score?.toString() || '');
+
+  useEffect(() => {
+    if (leg1Result) {
+      setLeg1Team1Score(leg1Result.team1Score?.toString() || '');
+      setLeg1Team2Score(leg1Result.team2Score?.toString() || '');
+    }
+    if (leg2Result) {
+      setLeg2Team1Score(leg2Result.team1Score?.toString() || '');
+      setLeg2Team2Score(leg2Result.team2Score?.toString() || '');
+    }
+  }, [leg1Result, leg2Result]);
+
+  // Calculate aggregate
+  // Leg 1: Team1 (Home) vs Team2 (Away)
+  // Leg 2: Team2 (Home) vs Team1 (Away)
+  // Team1 aggregate = leg1 home + leg2 away
+  // Team2 aggregate = leg1 away + leg2 home
+  const team1Aggregate = leg1Result && leg2Result 
+    ? leg1Result.team1Score + leg2Result.team1Score 
+    : null;
+  const team2Aggregate = leg1Result && leg2Result 
+    ? leg1Result.team2Score + leg2Result.team2Score 
+    : null;
+
+  const handleClearResults = () => {
+    const leg1Key = `round-${match.round}-match-${match.matchNumber}-leg-1`;
+    const leg2Key = `round-${match.round}-match-${match.matchNumber}-leg-2`;
+    const newResults = { ...matchResults };
+    delete newResults[leg1Key];
+    delete newResults[leg2Key];
+    setMatchResults(newResults);
+    localStorage.setItem('tournament_match_results', JSON.stringify(newResults));
+    setLeg1Team1Score('');
+    setLeg1Team2Score('');
+    setLeg2Team1Score('');
+    setLeg2Team2Score('');
+  };
+
+  return (
+    <div className="bracket-match two-legged-match">
+      <div className="match-header">
+        <span className="match-number">Match {match.matchNumber}</span>
+        {match.winnerFrom && (
+          <span className="winner-from">Winner: {match.winnerFrom}</span>
+        )}
+        {match.winnerId && (
+          <span className="aggregate-winner">
+            Winner: {match.team1?.id === match.winnerId ? match.team1.team_name : match.team2.team_name}
+          </span>
+        )}
+      </div>
+      
+      {/* Leg 1: Team1 Home vs Team2 Away */}
+      <div className="match-leg">
+        <div className="leg-header">
+          <span className="leg-label">Leg 1</span>
+          <span className="leg-venue">{match.team1.team_name} (Home) vs {match.team2.team_name} (Away)</span>
+        </div>
+        <div className="leg-scores">
+          <div className="score-input-group">
+            <label>{match.team1.team_name}</label>
+            <input
+              type="number"
+              min="0"
+              value={leg1Team1Score}
+              onChange={(e) => setLeg1Team1Score(e.target.value)}
+              placeholder="0"
+              className="score-input"
+            />
+          </div>
+          <span className="score-separator">-</span>
+          <div className="score-input-group">
+            <label>{match.team2.team_name}</label>
+            <input
+              type="number"
+              min="0"
+              value={leg1Team2Score}
+              onChange={(e) => setLeg1Team2Score(e.target.value)}
+              placeholder="0"
+              className="score-input"
+            />
+          </div>
+          <button
+            className="btn-save-score"
+            onClick={() => {
+              const t1Score = parseInt(leg1Team1Score) || 0;
+              const t2Score = parseInt(leg1Team2Score) || 0;
+              saveKnockoutLegResult(match.round, match.matchNumber, 1, t1Score, t2Score);
+            }}
+          >
+            Save
+          </button>
+        </div>
+        {leg1Result && (
+          <div className="leg-result">
+            Result: {leg1Result.team1Score} - {leg1Result.team2Score}
+          </div>
+        )}
+      </div>
+      
+      {/* Leg 2: Team1 Away vs Team2 Home */}
+      <div className="match-leg">
+        <div className="leg-header">
+          <span className="leg-label">Leg 2</span>
+          <span className="leg-venue">{match.team2.team_name} (Home) vs {match.team1.team_name} (Away)</span>
+        </div>
+        <div className="leg-scores">
+          <div className="score-input-group">
+            <label>{match.team2.team_name}</label>
+            <input
+              type="number"
+              min="0"
+              value={leg2Team2Score}
+              onChange={(e) => setLeg2Team2Score(e.target.value)}
+              placeholder="0"
+              className="score-input"
+            />
+          </div>
+          <span className="score-separator">-</span>
+          <div className="score-input-group">
+            <label>{match.team1.team_name}</label>
+            <input
+              type="number"
+              min="0"
+              value={leg2Team1Score}
+              onChange={(e) => setLeg2Team1Score(e.target.value)}
+              placeholder="0"
+              className="score-input"
+            />
+          </div>
+          <button
+            className="btn-save-score"
+            onClick={() => {
+              const t1Score = parseInt(leg2Team1Score) || 0;
+              const t2Score = parseInt(leg2Team2Score) || 0;
+              saveKnockoutLegResult(match.round, match.matchNumber, 2, t1Score, t2Score);
+            }}
+          >
+            Save
+          </button>
+        </div>
+        {leg2Result && (
+          <div className="leg-result">
+            Result: {leg2Result.team2Score} - {leg2Result.team1Score}
+          </div>
+        )}
+      </div>
+      
+      {/* Aggregate Score Display */}
+      {team1Aggregate !== null && team2Aggregate !== null && (
+        <div className="aggregate-score">
+          <strong>Aggregate: {match.team1.team_name} {team1Aggregate} - {team2Aggregate} {match.team2.team_name}</strong>
+          {team1Aggregate === team2Aggregate && (
+            <span className="tie-note"> (Tied - Away goals rule applies)</span>
+          )}
+        </div>
+      )}
+      
+      {/* Undo Button */}
+      {(leg1Result || leg2Result) && (
+        <div className="match-actions">
+          <button
+            className="btn-undo"
+            onClick={handleClearResults}
+          >
+            <i className="fas fa-undo"></i> Clear Results
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const AdminRegistrations = () => {
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -148,9 +327,14 @@ const AdminRegistrations = () => {
     }
   };
 
-  // Save match result
-  const saveMatchResult = (round, matchNumber, winnerTeamId) => {
-    const key = `round-${round}-match-${matchNumber}`;
+  // Save match result (for group stage - single match)
+  const saveMatchResult = (round, matchNumber, winnerTeamId, groupNumber = null) => {
+    let key;
+    if (groupNumber !== null) {
+      key = `group-${groupNumber}-match-${matchNumber}`;
+    } else {
+      key = `round-${round}-match-${matchNumber}`;
+    }
     const newResults = { ...matchResults, [key]: winnerTeamId };
     setMatchResults(newResults);
     try {
@@ -160,10 +344,115 @@ const AdminRegistrations = () => {
     }
   };
 
-  // Get match winner
-  const getMatchWinner = (round, matchNumber) => {
+  // Save knockout leg result (for two-legged matches)
+  const saveKnockoutLegResult = (round, matchNumber, leg, team1Score, team2Score) => {
+    const key = `round-${round}-match-${matchNumber}-leg-${leg}`;
+    const newResults = { 
+      ...matchResults, 
+      [key]: { team1Score, team2Score }
+    };
+    setMatchResults(newResults);
+    try {
+      localStorage.setItem('tournament_match_results', JSON.stringify(newResults));
+    } catch (error) {
+      console.error('Error saving knockout leg result:', error);
+    }
+  };
+
+  // Get match winner (for group stage)
+  const getMatchWinner = (round, matchNumber, groupNumber = null) => {
+    if (groupNumber !== null) {
+      const key = `group-${groupNumber}-match-${matchNumber}`;
+      return matchResults[key] || null;
+    }
     const key = `round-${round}-match-${matchNumber}`;
     return matchResults[key] || null;
+  };
+
+  // Get knockout leg result
+  const getKnockoutLegResult = (round, matchNumber, leg) => {
+    const key = `round-${round}-match-${matchNumber}-leg-${leg}`;
+    return matchResults[key] || null;
+  };
+
+  // Calculate aggregate winner for two-legged match
+  const getKnockoutAggregateWinner = (round, matchNumber, team1Id, team2Id) => {
+    const leg1 = getKnockoutLegResult(round, matchNumber, 1);
+    const leg2 = getKnockoutLegResult(round, matchNumber, 2);
+    
+    if (!leg1 || !leg2) return null;
+    
+    // Leg 1: Team1 (Home) vs Team2 (Away)
+    // Leg 2: Team2 (Home) vs Team1 (Away)
+    // Team1 aggregate = leg1 home goals + leg2 away goals
+    // Team2 aggregate = leg1 away goals + leg2 home goals
+    const team1Aggregate = leg1.team1Score + leg2.team1Score;
+    const team2Aggregate = leg1.team2Score + leg2.team2Score;
+    
+    if (team1Aggregate > team2Aggregate) return team1Id;
+    if (team2Aggregate > team1Aggregate) return team2Id;
+    
+    // If aggregate is tied, check away goals
+    // Team1 away goals = leg2.team1Score (they're away in leg2)
+    // Team2 away goals = leg1.team2Score (they're away in leg1)
+    const team1AwayGoals = leg2.team1Score;
+    const team2AwayGoals = leg1.team2Score;
+    
+    if (team1AwayGoals > team2AwayGoals) return team1Id;
+    if (team2AwayGoals > team1AwayGoals) return team2Id;
+    
+    // Still tied - return null (would need penalties or other tiebreaker)
+    return null;
+  };
+
+  // Get group stage match winner
+  const getGroupMatchWinner = (groupNumber, matchNumber) => {
+    const key = `group-${groupNumber}-match-${matchNumber}`;
+    return matchResults[key] || null;
+  };
+
+  // Calculate group standings
+  const calculateGroupStandings = (groupTeams, groupNumber) => {
+    const standings = groupTeams.map(team => ({
+      team,
+      wins: 0,
+      losses: 0,
+      points: 0
+    }));
+
+    // Calculate matches: 6 matches per group (round-robin)
+    // Match 1: Team 1 vs Team 2
+    // Match 2: Team 1 vs Team 3
+    // Match 3: Team 1 vs Team 4
+    // Match 4: Team 2 vs Team 3
+    // Match 5: Team 2 vs Team 4
+    // Match 6: Team 3 vs Team 4
+    const matchPairs = [
+      [0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]
+    ];
+
+    matchPairs.forEach(([team1Idx, team2Idx], matchIdx) => {
+      const winnerId = getGroupMatchWinner(groupNumber, matchIdx + 1);
+      if (winnerId) {
+        if (standings[team1Idx].team?.id === winnerId) {
+          standings[team1Idx].wins++;
+          standings[team1Idx].points += 3;
+          standings[team2Idx].losses++;
+        } else if (standings[team2Idx].team?.id === winnerId) {
+          standings[team2Idx].wins++;
+          standings[team2Idx].points += 3;
+          standings[team1Idx].losses++;
+        }
+      }
+    });
+
+    // Sort by points (desc), then wins (desc)
+    standings.sort((a, b) => {
+      if (b.points !== a.points) return b.points - a.points;
+      return b.wins - a.wins;
+    });
+
+    return standings;
   };
 
   const fetchRegistrations = async () => {
@@ -258,149 +547,190 @@ const AdminRegistrations = () => {
       .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
     const rounds = [];
-    const maxTeams = 32;
+    const groups = [];
+    const maxTeams = 12;
     const teamCount = Math.min(sortedTeams.length, maxTeams);
+    const teamsToUse = sortedTeams.slice(0, teamCount);
 
-    // Round 1: Round of 32 (16 matches)
-    const round1 = [];
-    for (let matchNum = 1; matchNum <= 16; matchNum++) {
-      const team1Key = `round-1-match-${matchNum}-team1`;
-      const team2Key = `round-1-match-${matchNum}-team2`;
-      const winnerId = getMatchWinner(1, matchNum);
-      
-      // Use custom bracket positions if available, otherwise use default pairing
-      let team1 = bracketPositions[team1Key] ? findTeamById(bracketPositions[team1Key], sortedTeams) : null;
-      let team2 = bracketPositions[team2Key] ? findTeamById(bracketPositions[team2Key], sortedTeams) : null;
-      
-      // If no custom positions, use default pairing
-      if (!team1 && !team2 && matchNum <= Math.ceil(teamCount / 2)) {
-        const i = (matchNum - 1) * 2;
-        if (i < teamCount) {
-          team1 = sortedTeams[i];
-        }
-        if (i + 1 < teamCount) {
-          team2 = sortedTeams[i + 1];
-        } else if (i < teamCount) {
-          // Odd number - bye
-          round1.push({
-            matchNumber: matchNum,
-            team1: team1,
-            team2: null,
-            round: 1,
-            roundName: 'Round of 32',
-            bye: true,
-            winnerId: winnerId || team1?.id
-          });
-          continue;
+    // GROUP STAGE: 3 groups, 4 teams each
+    const numGroups = 3;
+    const teamsPerGroup = 4;
+    
+    for (let groupNum = 1; groupNum <= numGroups; groupNum++) {
+      const groupTeams = [];
+      for (let i = 0; i < teamsPerGroup; i++) {
+        const teamIndex = (groupNum - 1) * teamsPerGroup + i;
+        if (teamIndex < teamsToUse.length) {
+          const team1Key = `group-${groupNum}-team-${i + 1}`;
+          const team = bracketPositions[team1Key] 
+            ? findTeamById(bracketPositions[team1Key], teamsToUse)
+            : teamsToUse[teamIndex] || null;
+          groupTeams.push(team);
         }
       }
-      
-      round1.push({
+
+      // Group matches (round-robin: 6 matches per group)
+      // Match 1: Team 1 vs Team 2
+      // Match 2: Team 1 vs Team 3
+      // Match 3: Team 1 vs Team 4
+      // Match 4: Team 2 vs Team 3
+      // Match 5: Team 2 vs Team 4
+      // Match 6: Team 3 vs Team 4
+      const groupMatches = [];
+      const matchPairs = [
+        [0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]
+      ];
+
+      matchPairs.forEach(([team1Idx, team2Idx], matchIdx) => {
+        const matchNum = matchIdx + 1;
+        const team1 = groupTeams[team1Idx] || null;
+        const team2 = groupTeams[team2Idx] || null;
+        const winnerId = getGroupMatchWinner(groupNum, matchNum);
+
+        groupMatches.push({
+          matchNumber: matchNum,
+          team1: team1,
+          team2: team2,
+          round: 0,
+          groupNumber: groupNum,
+          roundName: `Group ${String.fromCharCode(64 + groupNum)}`,
+          winnerId: winnerId
+        });
+      });
+
+      groups.push({
+        groupNumber: groupNum,
+        groupName: `Group ${String.fromCharCode(64 + groupNum)}`,
+        teams: groupTeams,
+        matches: groupMatches,
+        standings: calculateGroupStandings(groupTeams, groupNum)
+      });
+    }
+
+    // Get top 2 from each group for knockout stage
+    // Structure: [Group A 1st, Group A 2nd, Group B 1st, Group B 2nd, Group C 1st, Group C 2nd]
+    const getQualifiedTeams = () => {
+      const qualified = [];
+      groups.forEach(group => {
+        const top2 = group.standings.slice(0, 2).map(s => s.team).filter(Boolean);
+        qualified.push(...top2);
+      });
+      return qualified;
+    };
+
+    const qualifiedTeams = getQualifiedTeams();
+
+    // QUARTERFINALS: 6 teams (2 from each group) - TWO-LEGGED
+    // Qualified teams array: [A1, A2, B1, B2, C1, C2]
+    // Top 2 teams (A1 and B1) get byes to semifinals
+    // Other 4 teams play quarterfinals (2 matches)
+    const quarterfinals = [];
+    // Pairing: 
+    // QF1: Group A 2nd (idx 1) vs Group B 2nd (idx 3)
+    // QF2: Group C 1st (idx 4) vs Group C 2nd (idx 5)
+    const quarterfinalPairings = [
+      [1, 3], // Group A 2nd vs Group B 2nd
+      [4, 5]  // Group C 1st vs Group C 2nd
+    ];
+
+    quarterfinalPairings.forEach(([team1Idx, team2Idx], matchIdx) => {
+      const matchNum = matchIdx + 1;
+      const team1 = qualifiedTeams[team1Idx] || null;
+      const team2 = qualifiedTeams[team2Idx] || null;
+      const winnerId = team1 && team2 ? getKnockoutAggregateWinner(1, matchNum, team1.id, team2.id) : null;
+
+      quarterfinals.push({
         matchNumber: matchNum,
         team1: team1,
         team2: team2,
         round: 1,
-        roundName: 'Round of 32',
-        winnerId: winnerId
-      });
-    }
-    rounds.push(round1);
-
-    // Round 2: Round of 16 (8 matches) - Advance winners from Round 1
-    const round2 = [];
-    for (let i = 0; i < 8; i++) {
-      const matchNum = i + 1;
-      const match1Num = i * 2 + 1;
-      const match2Num = i * 2 + 2;
-      const winner1Id = getMatchWinner(1, match1Num);
-      const winner2Id = getMatchWinner(1, match2Num);
-      const winnerId = getMatchWinner(2, matchNum);
-      
-      // Get teams from previous round winners
-      const team1 = winner1Id ? findTeamById(winner1Id, sortedTeams) : null;
-      const team2 = winner2Id ? findTeamById(winner2Id, sortedTeams) : null;
-      
-      round2.push({
-        matchNumber: matchNum,
-        team1: team1,
-        team2: team2,
-        round: 2,
-        roundName: 'Round of 16',
-        winnerFrom: `Match ${match1Num} vs Match ${match2Num}`,
-        winnerId: winnerId
-      });
-    }
-    rounds.push(round2);
-
-    // Round 3: Quarterfinals (4 matches) - Advance winners from Round 2
-    const round3 = [];
-    for (let i = 0; i < 4; i++) {
-      const matchNum = i + 1;
-      const match1Num = i * 2 + 1;
-      const match2Num = i * 2 + 2;
-      const winner1Id = getMatchWinner(2, match1Num);
-      const winner2Id = getMatchWinner(2, match2Num);
-      const winnerId = getMatchWinner(3, matchNum);
-      
-      const team1 = winner1Id ? findTeamById(winner1Id, sortedTeams) : null;
-      const team2 = winner2Id ? findTeamById(winner2Id, sortedTeams) : null;
-      
-      round3.push({
-        matchNumber: matchNum,
-        team1: team1,
-        team2: team2,
-        round: 3,
         roundName: 'Quarterfinals',
-        winnerFrom: `Match ${match1Num} vs Match ${match2Num}`,
-        winnerId: winnerId
+        winnerId: winnerId,
+        isTwoLegged: true
       });
-    }
-    rounds.push(round3);
+    });
+    rounds.push(quarterfinals);
 
-    // Round 4: Semifinals (2 matches) - Advance winners from Round 3
-    const round4 = [];
-    for (let i = 0; i < 2; i++) {
-      const matchNum = i + 1;
-      const match1Num = i * 2 + 1;
-      const match2Num = i * 2 + 2;
-      const winner1Id = getMatchWinner(3, match1Num);
-      const winner2Id = getMatchWinner(3, match2Num);
-      const winnerId = getMatchWinner(4, matchNum);
-      
-      const team1 = winner1Id ? findTeamById(winner1Id, sortedTeams) : null;
-      const team2 = winner2Id ? findTeamById(winner2Id, sortedTeams) : null;
-      
-      round4.push({
-        matchNumber: matchNum,
-        team1: team1,
-        team2: team2,
-        round: 4,
-        roundName: 'Semifinals',
-        winnerFrom: `Match ${match1Num} vs Match ${match2Num}`,
-        winnerId: winnerId
-      });
-    }
-    rounds.push(round4);
+    // SEMIFINALS: 4 teams - TWO-LEGGED
+    // SF1: Group A 1st (bye) vs QF1 winner
+    // SF2: Group B 1st (bye) vs QF2 winner
+    const semifinals = [];
+    const groupA1st = qualifiedTeams[0] || null; // Group A 1st (bye)
+    const groupB1st = qualifiedTeams[2] || null; // Group B 1st (bye)
+    const qf1WinnerId = quarterfinals[0]?.winnerId || null;
+    const qf2WinnerId = quarterfinals[1]?.winnerId || null;
+    
+    // Semifinal 1: Group A 1st vs QF1 winner
+    const semi1Team1 = groupA1st;
+    const semi1Team2 = qf1WinnerId ? findTeamById(qf1WinnerId, teamsToUse) : null;
+    const semi1WinnerId = semi1Team1 && semi1Team2 ? getKnockoutAggregateWinner(2, 1, semi1Team1.id, semi1Team2.id) : null;
+    
+    semifinals.push({
+      matchNumber: 1,
+      team1: semi1Team1,
+      team2: semi1Team2,
+      round: 2,
+      roundName: 'Semifinals',
+      winnerFrom: 'Group A 1st vs QF1 Winner',
+      winnerId: semi1WinnerId,
+      isTwoLegged: true
+    });
 
-    // Final: 1 match - Advance winners from Round 4
-    const finalMatch1Winner = getMatchWinner(4, 1);
-    const finalMatch2Winner = getMatchWinner(4, 2);
-    const finalWinner = getMatchWinner(5, 1);
+    // Semifinal 2: Group B 1st vs QF2 winner
+    const semi2Team1 = groupB1st;
+    const semi2Team2 = qf2WinnerId ? findTeamById(qf2WinnerId, teamsToUse) : null;
+    const semi2WinnerId = semi2Team1 && semi2Team2 ? getKnockoutAggregateWinner(2, 2, semi2Team1.id, semi2Team2.id) : null;
     
-    const finalTeam1 = finalMatch1Winner ? findTeamById(finalMatch1Winner, sortedTeams) : null;
-    const finalTeam2 = finalMatch2Winner ? findTeamById(finalMatch2Winner, sortedTeams) : null;
+    semifinals.push({
+      matchNumber: 2,
+      team1: semi2Team1,
+      team2: semi2Team2,
+      round: 2,
+      roundName: 'Semifinals',
+      winnerFrom: 'Group B 1st vs QF2 Winner',
+      winnerId: semi2WinnerId,
+      isTwoLegged: true
+    });
     
+    rounds.push(semifinals);
+
+    // THIRD PLACE: Losers of semifinals - SINGLE-LEGGED
+    const semi1Winner = semifinals[0]?.winnerId || null;
+    const semi2Winner = semifinals[1]?.winnerId || null;
+    const semi1Loser = semifinals[0]?.team1?.id === semi1Winner 
+      ? semifinals[0].team2 
+      : semifinals[0].team1;
+    const semi2Loser = semifinals[1]?.team1?.id === semi2Winner 
+      ? semifinals[1].team2 
+      : semifinals[1].team1;
+    const thirdPlaceWinner = getMatchWinner(3, 1);
+
+    rounds.push([{
+      matchNumber: 1,
+      team1: semi1Loser,
+      team2: semi2Loser,
+      round: 3,
+      roundName: 'Third Place',
+      winnerId: thirdPlaceWinner,
+      isTwoLegged: false
+    }]);
+
+    // FINALS: Winners of semifinals - SINGLE-LEGGED
+    const finalTeam1 = semi1Winner ? findTeamById(semi1Winner, teamsToUse) : null;
+    const finalTeam2 = semi2Winner ? findTeamById(semi2Winner, teamsToUse) : null;
+    const finalWinner = getMatchWinner(4, 1);
+
     rounds.push([{
       matchNumber: 1,
       team1: finalTeam1,
       team2: finalTeam2,
-      round: 5,
-      roundName: 'Final',
-      winnerFrom: 'Match 1 vs Match 2',
-      winnerId: finalWinner
+      round: 4,
+      roundName: 'Finals',
+      winnerId: finalWinner,
+      isTwoLegged: false
     }]);
 
-    return { rounds, teamCount, totalSlots: maxTeams };
+    return { groups, rounds, teamCount, totalSlots: maxTeams };
   };
 
   const handlePrintBracket = () => {
@@ -420,7 +750,20 @@ const AdminRegistrations = () => {
     // If dragging a team to a match slot
     if (activeData?.team && overData?.match && overData?.slotPosition) {
       const teamId = activeData.team.id;
-      const positionKey = `round-${overData.match.round}-match-${overData.match.matchNumber}-${overData.slotPosition}`;
+      let positionKey;
+      
+      // Handle group stage positioning
+      if (overData.match.groupNumber !== undefined) {
+        // Find which team slot in the group this is
+        const groupNum = overData.match.groupNumber;
+        const slotNum = overData.slotPosition === 'team1' ? 1 : 2;
+        // Determine which team position in group based on match and slot
+        // This is complex - for now, use match-slot based key
+        positionKey = `group-${groupNum}-match-${overData.match.matchNumber}-${overData.slotPosition}`;
+      } else {
+        // Knockout stage positioning
+        positionKey = `round-${overData.match.round}-match-${overData.match.matchNumber}-${overData.slotPosition}`;
+      }
       
       // Remove team from old position
       const newPositions = { ...bracketPositions };
@@ -472,7 +815,7 @@ const AdminRegistrations = () => {
               <div className="stat-label">Total Players</div>
             </div>
             <div className="stat-card">
-              <div className="stat-value">{32 - totalCount}</div>
+              <div className="stat-value">{12 - totalCount}</div>
               <div className="stat-label">Slots Remaining</div>
             </div>
             <div className="stat-card">
@@ -724,81 +1067,211 @@ const AdminRegistrations = () => {
               onDragStart={handleDragStart}
               onDragEnd={handleDragEnd}
             >
-              <div className="bracket-wrapper">
-                {bracket.rounds.map((round, roundIndex) => (
-                  <div key={roundIndex} className="bracket-round">
-                    <h3 className="round-title">{round[0]?.roundName || `Round ${roundIndex + 1}`}</h3>
-                    <div className="round-matches">
-                      {round.map((match, matchIndex) => (
-                        <div key={matchIndex} className="bracket-match">
-                          <div className="match-header">
-                            <span className="match-number">Match {match.matchNumber}</span>
-                            {match.winnerFrom && (
-                              <span className="winner-from">Winner: {match.winnerFrom}</span>
-                            )}
-                          </div>
-                          <div className="match-teams">
-                            <DroppableMatchSlot match={match} slotPosition="team1">
-                              <DraggableTeamSlot
-                                team={match.team1}
-                                match={match}
-                                slotPosition="team1"
-                                isWinner={match.winnerId === match.team1?.id}
-                                isBye={match.bye && matchIndex === round.length - 1}
-                              />
-                            </DroppableMatchSlot>
-                            <div className="vs-divider">VS</div>
-                            <DroppableMatchSlot match={match} slotPosition="team2">
-                              <DraggableTeamSlot
-                                team={match.team2}
-                                match={match}
-                                slotPosition="team2"
-                                isWinner={match.winnerId === match.team2?.id}
-                              />
-                            </DroppableMatchSlot>
-                          </div>
-                        {/* Winner Selection Buttons */}
-                        {match.team1 && (match.team2 || match.bye) && !match.winnerId && (
-                          <div className="match-actions">
-                            <button
-                              className="btn-winner btn-winner-team1"
-                              onClick={() => saveMatchResult(match.round, match.matchNumber, match.team1.id)}
-                              disabled={!match.team1}
-                            >
-                              <i className="fas fa-check"></i> {match.team1.team_name} Wins
-                            </button>
-                            {match.team2 && (
-                              <button
-                                className="btn-winner btn-winner-team2"
-                                onClick={() => saveMatchResult(match.round, match.matchNumber, match.team2.id)}
-                                disabled={!match.team2}
-                              >
-                                <i className="fas fa-check"></i> {match.team2.team_name} Wins
-                              </button>
-                            )}
-                          </div>
-                        )}
-                        {match.winnerId && (
-                          <div className="match-actions">
-                            <button
-                              className="btn-undo"
-                              onClick={() => {
-                                const key = `round-${match.round}-match-${match.matchNumber}`;
-                                const newResults = { ...matchResults };
-                                delete newResults[key];
-                                setMatchResults(newResults);
-                                localStorage.setItem('tournament_match_results', JSON.stringify(newResults));
-                              }}
-                            >
-                              <i className="fas fa-undo"></i> Undo Result
-                            </button>
-                          </div>
-                        )}
+              {/* GROUP STAGE */}
+              {bracket.groups && bracket.groups.length > 0 && (
+                <div className="group-stage-section">
+                  <h2 className="section-title">Group Stage</h2>
+                  <div className="groups-wrapper">
+                    {bracket.groups.map((group) => (
+                      <div key={group.groupNumber} className="group-container">
+                        <h3 className="group-title">{group.groupName}</h3>
+                        
+                        {/* Group Standings */}
+                        <div className="group-standings">
+                          <h4>Standings</h4>
+                          <table className="standings-table">
+                            <thead>
+                              <tr>
+                                <th>Pos</th>
+                                <th>Team</th>
+                                <th>W</th>
+                                <th>L</th>
+                                <th>Pts</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {group.standings.map((standing, idx) => (
+                                <tr 
+                                  key={idx} 
+                                  className={idx < 2 ? 'qualified' : ''}
+                                >
+                                  <td>{idx + 1}</td>
+                                  <td>
+                                    <strong>{standing.team?.team_name || 'TBD'}</strong>
+                                  </td>
+                                  <td>{standing.wins}</td>
+                                  <td>{standing.losses}</td>
+                                  <td><strong>{standing.points}</strong></td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+
+                        {/* Group Matches */}
+                        <div className="group-matches">
+                          <h4>Matches</h4>
+                          {group.matches.map((match, matchIndex) => (
+                            <div key={matchIndex} className="bracket-match">
+                              <div className="match-header">
+                                <span className="match-number">Match {match.matchNumber}</span>
+                              </div>
+                              <div className="match-teams">
+                                <DroppableMatchSlot match={match} slotPosition="team1">
+                                  <DraggableTeamSlot
+                                    team={match.team1}
+                                    match={match}
+                                    slotPosition="team1"
+                                    isWinner={match.winnerId === match.team1?.id}
+                                  />
+                                </DroppableMatchSlot>
+                                <div className="vs-divider">VS</div>
+                                <DroppableMatchSlot match={match} slotPosition="team2">
+                                  <DraggableTeamSlot
+                                    team={match.team2}
+                                    match={match}
+                                    slotPosition="team2"
+                                    isWinner={match.winnerId === match.team2?.id}
+                                  />
+                                </DroppableMatchSlot>
+                              </div>
+                              {/* Winner Selection Buttons */}
+                              {match.team1 && match.team2 && !match.winnerId && (
+                                <div className="match-actions">
+                                  <button
+                                    className="btn-winner btn-winner-team1"
+                                    onClick={() => saveMatchResult(match.round, match.matchNumber, match.team1.id, match.groupNumber)}
+                                    disabled={!match.team1}
+                                  >
+                                    <i className="fas fa-check"></i> {match.team1.team_name} Wins
+                                  </button>
+                                  <button
+                                    className="btn-winner btn-winner-team2"
+                                    onClick={() => saveMatchResult(match.round, match.matchNumber, match.team2.id, match.groupNumber)}
+                                    disabled={!match.team2}
+                                  >
+                                    <i className="fas fa-check"></i> {match.team2.team_name} Wins
+                                  </button>
+                                </div>
+                              )}
+                              {match.winnerId && (
+                                <div className="match-actions">
+                                  <button
+                                    className="btn-undo"
+                                    onClick={() => {
+                                      const key = `group-${match.groupNumber}-match-${match.matchNumber}`;
+                                      const newResults = { ...matchResults };
+                                      delete newResults[key];
+                                      setMatchResults(newResults);
+                                      localStorage.setItem('tournament_match_results', JSON.stringify(newResults));
+                                    }}
+                                  >
+                                    <i className="fas fa-undo"></i> Undo Result
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
-              ))}
+              )}
+
+              {/* KNOCKOUT STAGE */}
+              <div className="knockout-stage-section">
+                <h2 className="section-title">Knockout Stage</h2>
+                <div className="bracket-wrapper">
+                  {bracket.rounds.map((round, roundIndex) => (
+                    <div key={roundIndex} className="bracket-round">
+                      <h3 className="round-title">{round[0]?.roundName || `Round ${roundIndex + 1}`}</h3>
+                      <div className="round-matches">
+                        {round.map((match, matchIndex) => {
+                          // Check if this is a two-legged match (only Quarterfinals and Semifinals)
+                          if (match.isTwoLegged && match.team1 && match.team2) {
+                            return (
+                              <TwoLeggedMatch
+                                key={matchIndex}
+                                match={match}
+                                getKnockoutLegResult={getKnockoutLegResult}
+                                saveKnockoutLegResult={saveKnockoutLegResult}
+                                matchResults={matchResults}
+                                setMatchResults={setMatchResults}
+                              />
+                            );
+                          }
+                          
+                          // Single-legged match (Third Place and Finals)
+                          return (
+                            <div key={matchIndex} className="bracket-match">
+                              <div className="match-header">
+                                <span className="match-number">Match {match.matchNumber}</span>
+                                {match.winnerFrom && (
+                                  <span className="winner-from">Winner: {match.winnerFrom}</span>
+                                )}
+                              </div>
+                              <div className="match-teams">
+                                <DroppableMatchSlot match={match} slotPosition="team1">
+                                  <DraggableTeamSlot
+                                    team={match.team1}
+                                    match={match}
+                                    slotPosition="team1"
+                                    isWinner={match.winnerId === match.team1?.id}
+                                  />
+                                </DroppableMatchSlot>
+                                <div className="vs-divider">VS</div>
+                                <DroppableMatchSlot match={match} slotPosition="team2">
+                                  <DraggableTeamSlot
+                                    team={match.team2}
+                                    match={match}
+                                    slotPosition="team2"
+                                    isWinner={match.winnerId === match.team2?.id}
+                                  />
+                                </DroppableMatchSlot>
+                              </div>
+                              {/* Winner Selection Buttons */}
+                              {match.team1 && match.team2 && !match.winnerId && (
+                                <div className="match-actions">
+                                  <button
+                                    className="btn-winner btn-winner-team1"
+                                    onClick={() => saveMatchResult(match.round, match.matchNumber, match.team1.id)}
+                                    disabled={!match.team1}
+                                  >
+                                    <i className="fas fa-check"></i> {match.team1.team_name} Wins
+                                  </button>
+                                  <button
+                                    className="btn-winner btn-winner-team2"
+                                    onClick={() => saveMatchResult(match.round, match.matchNumber, match.team2.id)}
+                                    disabled={!match.team2}
+                                  >
+                                    <i className="fas fa-check"></i> {match.team2.team_name} Wins
+                                  </button>
+                                </div>
+                              )}
+                              {match.winnerId && (
+                                <div className="match-actions">
+                                  <button
+                                    className="btn-undo"
+                                    onClick={() => {
+                                      const key = `round-${match.round}-match-${match.matchNumber}`;
+                                      const newResults = { ...matchResults };
+                                      delete newResults[key];
+                                      setMatchResults(newResults);
+                                      localStorage.setItem('tournament_match_results', JSON.stringify(newResults));
+                                    }}
+                                  >
+                                    <i className="fas fa-undo"></i> Undo Result
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
               <DragOverlay>
                 {activeId ? (

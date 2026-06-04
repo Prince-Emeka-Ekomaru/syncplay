@@ -20,7 +20,7 @@ const TournamentRules = () => {
               <li><strong>Game:</strong> EA Sports FC 26</li>
               <li><strong>Platform:</strong> PlayStation only</li>
               <li><strong>Format:</strong> 2v2 Team Competition</li>
-              <li><strong>Teams:</strong> 32 teams (64 players total)</li>
+              <li><strong>Teams:</strong> 12 teams (24 players total)</li>
               <li><strong>Prize Pool:</strong> Exclusive prize pool reserved for registered teams</li>
               <li><strong>Entry Fee:</strong> ₦20,000 per team <span style={{color: '#E63946', fontWeight: 'bold'}}>(Subsidized Rate)</span></li>
               <li><strong>Date:</strong> December 20, 2025</li>
@@ -29,8 +29,9 @@ const TournamentRules = () => {
 
             <h3>1.2 Tournament Structure</h3>
             <ul>
-              <li>Single-elimination bracket</li>
-              <li>Best-of-one matches (Round of 32 through Quarter-finals)</li>
+              <li>Group stage: 3 groups of 4 teams each (round-robin)</li>
+              <li>Top 2 teams from each group advance to Quarter-finals</li>
+              <li>Best-of-one matches (Group stage through Quarter-finals)</li>
               <li>Best-of-three Semi-finals</li>
               <li>Best-of-five Grand Final</li>
             </ul>
@@ -64,7 +65,7 @@ const TournamentRules = () => {
 
             <h3>3.2 Registration Deadline</h3>
             <p>
-              Registration closes when all 32 team slots are filled or 24 hours before tournament start time, 
+              Registration closes when all 12 team slots are filled or 24 hours before tournament start time, 
               whichever comes first. Register early to secure your spot!
             </p>
 

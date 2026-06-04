@@ -62,8 +62,10 @@
 
 .tournament-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2.5rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .tournament-card {
@@ -208,6 +210,33 @@
 
 .tournament-card.coming-soon:hover {
   transform: none;
+}
+
+.tournament-card.completed {
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
+  border: 2px solid rgba(40, 167, 69, 0.3);
+  position: relative;
+}
+
+.tournament-card.completed::before {
+  content: "✓ COMPLETED";
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: var(--color-white);
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  z-index: 2;
+}
+
+.tournament-card.completed:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(40, 167, 69, 0.2);
 }
 
 .coming-soon-badge {
@@ -463,6 +492,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2.5rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .game-card {

@@ -5,11 +5,11 @@ import { translations } from '../translations/translations';
 import { saveRegistration, supabase } from '../supabaseClient';
 import { useRegistrationCount } from '../hooks/useRegistrationCount';
 import { getEntryFee, formatPrice, resetPriceToDefault } from '../utils/priceManager';
+import { uploadPlayerPhoto, createImagePreview } from '../utils/imageUpload';
 import {
   initializePayment,
   initializePaymentGateways,
   getAvailableGateways,
-  getActiveGateway,
   PAYMENT_GATEWAYS,
   getGatewayDisplayName,
   getGatewayIcon,
@@ -33,6 +33,8 @@ const Register = () => {
     player1Phone: '',
     player1GamerTag: '',
     player1Platform: 'PlayStation',
+    player1Photo: null,
+    player1PhotoUrl: '',
     
     // Player 2 Information
     player2Name: '',
@@ -40,6 +42,8 @@ const Register = () => {
     player2Phone: '',
     player2GamerTag: '',
     player2Platform: 'PlayStation',
+    player2Photo: null,
+    player2PhotoUrl: '',
     
     // Additional Information
     experience: 'beginner',
@@ -51,6 +55,11 @@ const Register = () => {
   const [selectedPaymentGateway, setSelectedPaymentGateway] = useState(null);
   const [availableGateways, setAvailableGateways] = useState([]);
   const [paymentLoading, setPaymentLoading] = useState(false);
+  const [photoPreviews, setPhotoPreviews] = useState({
+    player1: null,
+    player2: null
+  });
+  const [uploadingPhotos, setUploadingPhotos] = useState(false);
 
   // Initialize payment gateways on mount
   useEffect(() => {
@@ -73,92 +82,134 @@ const Register = () => {
 
   // Handle Kora Pay callback after redirect
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentRef = urlParams.get('ref');
+    const paymentGateway = urlParams.get('payment');
+
+    // Only process if this is a Kora callback
+    if (paymentGateway !== 'kora' || !paymentRef) {
+      return;
+    }
+
+    // Prevent duplicate processing (React.StrictMode runs effects twice in dev)
+    const processedKey = `kora_callback_processed_${paymentRef}`;
+    if (sessionStorage.getItem(processedKey)) {
+      console.log('Callback already processed, skipping:', paymentRef);
+      return;
+    }
+
     const handleCallback = async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const paymentRef = urlParams.get('ref');
-      const paymentGateway = urlParams.get('payment');
+      console.log('Kora Pay callback detected:', { paymentRef, paymentGateway });
+      
+      // Mark as processing immediately to prevent duplicate calls
+      sessionStorage.setItem(processedKey, 'true');
+      
+      // Check if we have pending registration data
+      const pendingData = sessionStorage.getItem('pending_registration');
+      const storedRef = sessionStorage.getItem('kora_payment_reference');
 
-      if (paymentGateway === 'kora' && paymentRef) {
-        console.log('Kora Pay callback detected:', { paymentRef, paymentGateway });
-        
-        // Check if we have pending registration data
-        const pendingData = sessionStorage.getItem('pending_registration');
-        const storedRef = sessionStorage.getItem('kora_payment_reference');
+      console.log('SessionStorage check:', {
+        hasPendingData: !!pendingData,
+        storedRef,
+        paymentRef,
+        match: storedRef === paymentRef
+      });
 
-        console.log('SessionStorage check:', {
+      if (pendingData && storedRef === paymentRef) {
+        let parsedFormData = null;
+        try {
+          parsedFormData = JSON.parse(pendingData);
+          console.log('Processing registration save for:', parsedFormData.teamName);
+          
+          // Verify payment with Kora (you should verify on backend)
+          // For now, we'll assume payment was successful if we got redirected back
+          // In production, verify payment status via Kora API
+          
+          const entryFee = await getEntryFee();
+          await saveRegistration(paymentRef, parsedFormData, PAYMENT_GATEWAYS.KORA, entryFee);
+          
+          console.log('Registration saved successfully to database!');
+          refresh();
+          setCurrentStep(5);
+          
+          // Clean up session storage
+          sessionStorage.removeItem('pending_registration');
+          sessionStorage.removeItem('kora_payment_reference');
+          sessionStorage.removeItem('kora_payment_redirect');
+          sessionStorage.removeItem(processedKey);
+          
+          // Clean URL
+          window.history.replaceState({}, document.title, window.location.pathname);
+        } catch (error) {
+          // Remove processed flag on error so it can be retried if needed
+          sessionStorage.removeItem(processedKey);
+          
+          // Log error once with structured data
+          const errorInfo = {
+            message: error.message,
+            code: error.code,
+            details: error.details,
+            hint: error.hint,
+            paymentRef,
+            teamName: parsedFormData?.teamName
+          };
+          console.error('Error saving registration:', errorInfo);
+          
+          // Show detailed error to user
+          const errorMsg = error.message || 'Unknown error occurred';
+          alert(`Payment successful but registration save failed.\n\nError: ${errorMsg}\n\nPlease contact support with reference: ${paymentRef}\n\nTeam: ${parsedFormData?.teamName || 'Unknown'}`);
+        }
+      } else {
+        // SessionStorage was cleared or reference mismatch
+        sessionStorage.removeItem(processedKey);
+        console.warn('SessionStorage mismatch or missing data:', {
           hasPendingData: !!pendingData,
           storedRef,
-          paymentRef,
-          match: storedRef === paymentRef
+          paymentRef
         });
-
-        if (pendingData && storedRef === paymentRef) {
-          try {
-            const formData = JSON.parse(pendingData);
-            console.log('Processing registration save for:', formData.teamName);
-            
-            // Verify payment with Kora (you should verify on backend)
-            // For now, we'll assume payment was successful if we got redirected back
-            // In production, verify payment status via Kora API
-            
-            const entryFee = await getEntryFee();
-            saveRegistration(paymentRef, formData, PAYMENT_GATEWAYS.KORA, entryFee)
-            .then((result) => {
-              console.log('Registration saved successfully to database!', result);
-              refresh();
-              setCurrentStep(5);
-              
-              // Clean up session storage
-              sessionStorage.removeItem('pending_registration');
-              sessionStorage.removeItem('kora_payment_reference');
-              sessionStorage.removeItem('kora_payment_redirect');
-              
-              // Clean URL
-              window.history.replaceState({}, document.title, window.location.pathname);
-            })
-            .catch((error) => {
-              console.error('Error saving registration:', error);
-              console.error('Error details:', {
-                message: error.message,
-                code: error.code,
-                details: error.details,
-                hint: error.hint
-              });
-              
-              // Show detailed error to user
-              const errorMsg = error.message || 'Unknown error occurred';
-              alert(`Payment successful but registration save failed.\n\nError: ${errorMsg}\n\nPlease contact support with reference: ${paymentRef}\n\nTeam: ${formData.teamName}`);
-            });
-          } catch (error) {
-            console.error('Error processing Kora callback:', error);
-            alert('Error processing payment callback. Please contact support with reference: ' + paymentRef);
-          }
-        } else {
-          // SessionStorage was cleared or reference mismatch
-          console.warn('SessionStorage mismatch or missing data:', {
-            hasPendingData: !!pendingData,
-            storedRef,
-            paymentRef
-          });
-          
-          // Show warning to user
-          alert(`Payment callback detected but registration data not found.\n\nThis can happen if:\n- Browser session was cleared\n- Payment was completed in a different tab\n\nPayment Reference: ${paymentRef}\n\nPlease contact support with this reference to manually complete your registration.`);
-        }
+        
+        // Show warning to user
+        alert(`Payment callback detected but registration data not found.\n\nThis can happen if:\n- Browser session was cleared\n- Payment was completed in a different tab\n\nPayment Reference: ${paymentRef}\n\nPlease contact support with this reference to manually complete your registration.`);
       }
     };
 
     handleCallback();
-  }, []);
+  }, [refresh]);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value
-    });
-    // Clear error for this field
-    if (errors[name]) {
-      setErrors({ ...errors, [name]: '' });
+    const { name, value, type, checked, files } = e.target;
+    
+    if (type === 'file' && files && files[0]) {
+      const file = files[0];
+      const playerNum = name.includes('player1') ? 'player1' : 'player2';
+      
+      // Create preview
+      createImagePreview(file).then(preview => {
+        setPhotoPreviews(prev => ({
+          ...prev,
+          [playerNum]: preview
+        }));
+      });
+      
+      setFormData({
+        ...formData,
+        [name]: file,
+        [`${playerNum}PhotoUrl`]: '' // Will be set after upload
+      });
+      
+      // Clear error for this field
+      if (errors[name]) {
+        setErrors({ ...errors, [name]: '' });
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: type === 'checkbox' ? checked : value
+      });
+      // Clear error for this field
+      if (errors[name]) {
+        setErrors({ ...errors, [name]: '' });
+      }
     }
   };
 
@@ -186,6 +237,9 @@ const Register = () => {
       if (!formData.player1GamerTag.trim()) {
         newErrors.player1GamerTag = 'Gamer tag is required';
       }
+      if (!formData.player1Photo && !formData.player1PhotoUrl) {
+        newErrors.player1Photo = 'Professional photo is required for player profile';
+      }
     }
 
     if (step === 3) {
@@ -202,6 +256,9 @@ const Register = () => {
       }
       if (!formData.player2GamerTag.trim()) {
         newErrors.player2GamerTag = 'Gamer tag is required';
+      }
+      if (!formData.player2Photo && !formData.player2PhotoUrl) {
+        newErrors.player2Photo = 'Professional photo is required for player profile';
       }
     }
 
@@ -239,6 +296,41 @@ const Register = () => {
       }
 
       setPaymentLoading(true);
+      setUploadingPhotos(true);
+      
+      try {
+        // Upload photos before payment
+        let player1PhotoUrl = formData.player1PhotoUrl;
+        let player2PhotoUrl = formData.player2PhotoUrl;
+        
+        if (formData.player1Photo && !player1PhotoUrl) {
+          console.log('Uploading Player 1 photo...');
+          player1PhotoUrl = await uploadPlayerPhoto(
+            formData.player1Photo,
+            formData.teamName,
+            'player1'
+          );
+          setFormData(prev => ({ ...prev, player1PhotoUrl: player1PhotoUrl }));
+        }
+        
+        if (formData.player2Photo && !player2PhotoUrl) {
+          console.log('Uploading Player 2 photo...');
+          player2PhotoUrl = await uploadPlayerPhoto(
+            formData.player2Photo,
+            formData.teamName,
+            'player2'
+          );
+          setFormData(prev => ({ ...prev, player2PhotoUrl: player2PhotoUrl }));
+        }
+        
+        setUploadingPhotos(false);
+      } catch (error) {
+        setUploadingPhotos(false);
+        setPaymentLoading(false);
+        alert(`Failed to upload photos: ${error.message}. Please try again.`);
+        return;
+      }
+      
       console.log('Form validated, initializing payment...');
       console.log('Player 1 Email:', formData.player1Email);
       console.log('Team Name:', formData.teamName);
@@ -452,6 +544,42 @@ const Register = () => {
         />
       </div>
 
+      <div className="form-group">
+        <label htmlFor="player1Photo">
+          Professional Photo <span className="required">*</span>
+        </label>
+        <p className="field-description">
+          Upload a professional photo for your player profile. This will be used in tournament materials and player profiles.
+        </p>
+        <div className="photo-upload-wrapper">
+          <input
+            type="file"
+            id="player1Photo"
+            name="player1Photo"
+            accept="image/*"
+            onChange={handleChange}
+            className={errors.player1Photo ? 'error' : ''}
+          />
+          {photoPreviews.player1 && (
+            <div className="photo-preview">
+              <img src={photoPreviews.player1} alt="Player 1 preview" />
+              <button
+                type="button"
+                className="remove-photo"
+                onClick={() => {
+                  setPhotoPreviews(prev => ({ ...prev, player1: null }));
+                  setFormData(prev => ({ ...prev, player1Photo: null, player1PhotoUrl: '' }));
+                }}
+              >
+                <i className="fas fa-times"></i> Remove
+              </button>
+            </div>
+          )}
+        </div>
+        {errors.player1Photo && <span className="error-message">{errors.player1Photo}</span>}
+        <small>Accepted formats: JPG, PNG. Max size: 5MB</small>
+      </div>
+
       <div className="form-actions">
         <button type="button" className="btn btn-secondary" onClick={prevStep}>
           <i className="fas fa-arrow-left"></i> {t.back}
@@ -552,6 +680,42 @@ const Register = () => {
         />
       </div>
 
+      <div className="form-group">
+        <label htmlFor="player2Photo">
+          Professional Photo <span className="required">*</span>
+        </label>
+        <p className="field-description">
+          Upload a professional photo for your player profile. This will be used in tournament materials and player profiles.
+        </p>
+        <div className="photo-upload-wrapper">
+          <input
+            type="file"
+            id="player2Photo"
+            name="player2Photo"
+            accept="image/*"
+            onChange={handleChange}
+            className={errors.player2Photo ? 'error' : ''}
+          />
+          {photoPreviews.player2 && (
+            <div className="photo-preview">
+              <img src={photoPreviews.player2} alt="Player 2 preview" />
+              <button
+                type="button"
+                className="remove-photo"
+                onClick={() => {
+                  setPhotoPreviews(prev => ({ ...prev, player2: null }));
+                  setFormData(prev => ({ ...prev, player2Photo: null, player2PhotoUrl: '' }));
+                }}
+              >
+                <i className="fas fa-times"></i> Remove
+              </button>
+            </div>
+          )}
+        </div>
+        {errors.player2Photo && <span className="error-message">{errors.player2Photo}</span>}
+        <small>Accepted formats: JPG, PNG. Max size: 5MB</small>
+      </div>
+
       <div className="form-actions">
         <button type="button" className="btn btn-secondary" onClick={prevStep}>
           <i className="fas fa-arrow-left"></i> {t.back}
@@ -578,6 +742,14 @@ const Register = () => {
 
       <div className="review-section">
         <h3><i className="fas fa-user"></i> {t.player1Details}</h3>
+        {(photoPreviews.player1 || formData.player1PhotoUrl) && (
+          <div className="review-photo">
+            <img 
+              src={photoPreviews.player1 || formData.player1PhotoUrl} 
+              alt="Player 1" 
+            />
+          </div>
+        )}
         <div className="review-item">
           <span className="review-label">{t.fullName}:</span>
           <span className="review-value">{formData.player1Name}</span>
@@ -602,6 +774,14 @@ const Register = () => {
 
       <div className="review-section">
         <h3><i className="fas fa-user"></i> {t.player2Details}</h3>
+        {(photoPreviews.player2 || formData.player2PhotoUrl) && (
+          <div className="review-photo">
+            <img 
+              src={photoPreviews.player2 || formData.player2PhotoUrl} 
+              alt="Player 2" 
+            />
+          </div>
+        )}
         <div className="review-item">
           <span className="review-label">{t.fullName}:</span>
           <span className="review-value">{formData.player2Name}</span>
@@ -705,7 +885,15 @@ const Register = () => {
         >
           {paymentLoading ? (
             <>
-              <i className="fas fa-spinner fa-spin"></i> Processing Payment...
+              {uploadingPhotos ? (
+                <>
+                  <i className="fas fa-spinner fa-spin"></i> Uploading Photos...
+                </>
+              ) : (
+                <>
+                  <i className="fas fa-spinner fa-spin"></i> Processing Payment...
+                </>
+              )}
             </>
           ) : (
             <>
@@ -732,7 +920,7 @@ const Register = () => {
           <i className="fas fa-calendar"></i>
           <div>
             <strong>Tournament Date</strong>
-            <span>December 20, 2025</span>
+            <span>Saturday, May 23, 2026</span>
           </div>
         </div>
         <div className="detail-card">
@@ -802,7 +990,7 @@ const Register = () => {
           <div className="register-hero-overlay"></div>
           <div className="container">
             <h1>{t.tournamentRegistration}</h1>
-            <p>EA Sports FC 26 - 2v2 {t.tournaments}</p>
+            <p>EA Sports FC 26 - 2v2 {t.tournaments} - Second Edition</p>
           </div>
         </section>
         
@@ -813,9 +1001,9 @@ const Register = () => {
                 <i className="fas fa-users-slash"></i>
               </div>
               <h2>Registration Full!</h2>
-              <p>All {totalSlots} team slots have been filled for our inaugural tournament.</p>
+              <p>All {totalSlots} team slots have been filled for our Second Edition tournament on Saturday, May 23, 2026.</p>
               <p className="full-subtitle">
-                Thank you for your interest! Join our waiting list to be notified about future tournaments.
+                Thank you for your interest! Join our waiting list to be notified about future tournaments and upcoming editions.
               </p>
               <div className="full-actions">
                 <button className="btn btn-primary" onClick={() => navigate('/events')}>
@@ -839,9 +1027,9 @@ const Register = () => {
         <div className="register-hero-overlay"></div>
         <div className="container">
           <h1>{t.tournamentRegistration}</h1>
-          <p>EA Sports FC 26 - 2v2 {t.tournaments}</p>
+          <p>EA Sports FC 26 - 2v2 {t.tournaments} - Second Edition</p>
           <div className="tournament-details-hero">
-            <span><i className="fas fa-calendar"></i> December 20, 2025</span>
+            <span><i className="fas fa-calendar"></i> Saturday, May 23, 2026</span>
             <span><i className="fas fa-trophy"></i> {t.exclusivePrizePoolShort}</span>
             <span><i className="fas fa-money-bill-wave"></i> {formatPrice()} {t.entryFee} <span className="subsidized-badge">(Subsidized)</span></span>
             <span className={slotsRemaining <= 5 ? 'slots-warning' : ''}>

@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
-import { useRegistrationCount } from '../hooks/useRegistrationCount';
+// Registration count hook removed as tournament is completed
 import './Home.css';
 
 const Home = () => {
   const { currentLanguage } = useLanguage();
   const t = translations[currentLanguage];
-  const { slotsRemaining, totalSlots, loading } = useRegistrationCount();
+  // Registration count hook removed as tournament is completed
   
   useEffect(() => {
     // Scroll animation observer
@@ -32,25 +32,26 @@ const Home = () => {
 
   const newsArticles = [
     {
+      id: 7,
+      title: t.tournamentChampionsCrowned || 'Tournament Champions Crowned - Full Results & Highlights',
+      excerpt: t.tournamentChampionsExcerpt || 'Our inaugural tournament is complete! View the champions, final standings, prize distribution, and relive the best moments...',
+      image: '/tournament-media/photos/winners ss.png',
+      date: 'December 20, 2025',
+      category: 'tournament-results'
+    },
+    {
       id: 1,
       title: 'syncplay eSports Launches - Historic 2v2 Tournament December 20th',
-      excerpt: 'syncplay eSports officially launches with our inaugural 2v2 EA Sports FC 26 Tournament. Be part of history with our exclusive prize pool reserved for registered teams...',
+      excerpt: 'syncplay eSports officially launched with our inaugural 2v2 EA Sports FC 26 Tournament on December 20, 2025. The tournament has been completed successfully...',
       image: '/ea-sports-fc-26-xbox-one-xbox-series-x-s-microsoft-store-cover.jpg',
       date: 'October 23, 2025'
     },
     {
       id: 2,
       title: 'Registration Now Open - 2v2 EA Sports FC 26 Tournament',
-      excerpt: 'Registration is officially open for our first tournament! Limited spots available for exclusive prize pool. Entry fee is ₦20,000 per team (subsidized rate)...',
+      excerpt: 'Registration was open for our first tournament! 12 teams competed for exclusive prizes. Entry fee was ₦20,000 per team (subsidized rate)...',
       image: '/fc-26-1024x639.jpg',
       date: 'October 23, 2025'
-    },
-    {
-      id: 3,
-      title: 'Meet syncplay - Nigeria\'s New eSports Platform',
-      excerpt: 'Introducing syncplay eSports, a dedicated platform for competitive eFootball and eBasketball tournaments in Nigeria...',
-      image: '/1acc9234056000389336228dc9f195d0570f25a5.png',
-      date: 'October 22, 2025'
     }
   ];
 
@@ -65,13 +66,17 @@ const Home = () => {
           <div className="hero-logo animate-on-scroll">
             <img src="/syncplay text nobg 1.png" alt="syncplay Logo" />
           </div>
-          <h1 className="hero-title animate-on-scroll" data-title={t.heroTitle}></h1>
+          <h1 className="hero-title animate-on-scroll" data-title={t.heroTitle}>
+            <span style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
+              {t.heroTitle}
+            </span>
+          </h1>
           <p className="hero-subtitle animate-on-scroll">
             {t.heroSubtitle}
           </p>
           <div className="hero-cta animate-on-scroll">
-            <Link to="/tournaments" className="btn btn-primary">{t.joinTournaments}</Link>
-            <Link to="/events" className="btn btn-secondary">{t.viewEvents}</Link>
+            <Link to="/tournament-results" className="btn btn-primary">{t.viewResults}</Link>
+            <Link to="/gallery" className="btn btn-secondary">{t.watchHighlights}</Link>
           </div>
           <div className="hero-social animate-on-scroll">
             <a href="https://www.instagram.com/syncplay_esports/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
@@ -121,7 +126,8 @@ const Home = () => {
               </Link>
             </div>
 
-            <div className="feature-card animate-on-scroll">
+            {/* Commented out - Weekend Cup removed */}
+            {/* <div className="feature-card animate-on-scroll">
               <div className="feature-icon">
                 <i className="fas fa-calendar-week"></i>
               </div>
@@ -132,7 +138,7 @@ const Home = () => {
               <Link to="/events" className="feature-link">
                 {t.learnMore} <i className="fas fa-arrow-right"></i>
               </Link>
-            </div>
+            </div> */}
 
             <div className="feature-card animate-on-scroll">
               <div className="feature-icon">
@@ -146,13 +152,27 @@ const Home = () => {
                 {t.learnMore} <i className="fas fa-arrow-right"></i>
               </Link>
             </div>
+
+            <div className="feature-card animate-on-scroll">
+              <div className="feature-icon">
+                <i className="fas fa-images"></i>
+              </div>
+              <h3>{t.gallery || 'Gallery'}</h3>
+              <p>
+                Browse photos and videos from our tournaments and events
+              </p>
+              <Link to="/gallery" className="feature-link">
+                {t.learnMore} <i className="fas fa-arrow-right"></i>
+              </Link>
+            </div>
           </div>
 
-          <div className="coming-soon-banner animate-on-scroll">
+          {/* Commented out - eBasketball banner removed */}
+          {/* <div className="coming-soon-banner animate-on-scroll">
             <i className="fas fa-basketball-ball"></i>
             <h3>{t.comingSoon}</h3>
             <p>{t.comingSoonDesc}</p>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -170,16 +190,16 @@ const Home = () => {
             </p>
             <div className="stats-grid">
               <div className="stat-item stat-item-highlight">
-                <h3>DEC 20</h3>
-                <p>{t.firstTournament}</p>
+                <h3>1</h3>
+                <p>{t.tournamentCompleted}</p>
               </div>
               <div className="stat-item stat-item-highlight">
                 <h3>{t.exclusivePrizePoolAbbrev}</h3>
                 <p>{t.exclusivePrizePoolShort}</p>
               </div>
               <div className="stat-item">
-                <h3>{slotsRemaining === 0 ? '!' : '⚡'}</h3>
-                <p>{slotsRemaining === 0 ? t.slotsUrgencyFull : t.slotsUrgency}</p>
+                <h3>🏆</h3>
+                <p>{t.championsCrowned}</p>
               </div>
               <div className="stat-item">
                 <h3>2025</h3>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { saveRegistration } from '../supabaseClient';
-import { getEntryFee, formatPrice } from '../utils/priceManager';
+import { getEntryFee } from '../utils/priceManager';
 import { PAYMENT_GATEWAYS } from '../services/paymentService';
 import './AdminManualRegistration.css';
 
@@ -43,11 +43,12 @@ const AdminManualRegistration = () => {
         throw new Error('Please fill in all required fields');
       }
 
+      const entryFee = await getEntryFee();
       await saveRegistration(
         formData.paymentReference,
         formData,
         PAYMENT_GATEWAYS.KORA,
-        getEntryFee()
+        entryFee
       );
 
       setSuccess(true);
@@ -71,7 +72,14 @@ const AdminManualRegistration = () => {
         setSuccess(false);
       }, 5000);
     } catch (err) {
-      console.error('Manual registration error:', err);
+      // Log error with structured data to avoid duplicate logging
+      const errorInfo = {
+        message: err.message,
+        code: err.code,
+        details: err.details,
+        hint: err.hint
+      };
+      console.error('Manual registration error:', errorInfo);
       setError(err.message || 'Failed to save registration. Please check console for details.');
     } finally {
       setLoading(false);

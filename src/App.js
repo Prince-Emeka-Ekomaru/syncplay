@@ -18,6 +18,9 @@ import TournamentRules from './pages/TournamentRules';
 import AdminRegistrations from './pages/AdminRegistrations';
 import AdminPaymentSettings from './pages/AdminPaymentSettings';
 import AdminManualRegistration from './pages/AdminManualRegistration';
+import Gallery from './pages/Gallery';
+import Videos from './pages/Videos';
+import TournamentResults from './pages/TournamentResults';
 import './App.css';
 
 function App() {
@@ -42,6 +45,9 @@ function App() {
             <Route path="/admin/registrations" element={<AdminRegistrations />} />
             <Route path="/admin/payment-settings" element={<AdminPaymentSettings />} />
             <Route path="/admin/manual-registration" element={<AdminManualRegistration />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/videos" element={<Videos />} />
+            <Route path="/tournament-results" element={<TournamentResults />} />
           </Routes>
           <Footer />
         </div>

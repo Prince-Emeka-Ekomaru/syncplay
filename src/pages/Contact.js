@@ -229,7 +229,7 @@ const Contact = () => {
 
             <div className="faq-item">
               <h4>What games do you support?</h4>
-              <p>Currently, we host eFootball tournaments. eBasketball competitions will be launching soon. Stay tuned for updates!</p>
+              <p>Currently, we host eFootball tournaments. {/* eBasketball competitions will be launching soon. Stay tuned for updates! */}</p>
             </div>
 
             <div className="faq-item">

@@ -9,9 +9,27 @@ const News = () => {
   const t = translations[currentLanguage];
   const newsArticles = [
     {
+      id: 7,
+      title: t.tournamentChampionsCrowned || 'Tournament Champions Crowned - Full Results & Highlights',
+      excerpt: t.tournamentChampionsExcerpt || 'Our inaugural tournament is complete! View the champions, final standings, prize distribution, and relive the best moments from December 20, 2025.',
+      image: '/tournament-media/photos/winners ss.png',
+      date: 'December 20, 2025',
+      category: 'tournament-results',
+      author: t.syncplayTeam
+    },
+    {
+      id: 8,
+      title: t.tournamentHighlightsArticle || 'Tournament Highlights & Best Moments',
+      excerpt: t.tournamentHighlightsExcerpt || 'Relive the most exciting moments, best plays, and memorable highlights from our inaugural 2v2 tournament. Watch interviews, see photos, and celebrate the champions.',
+      image: '/tournament-media/photos/IMG_4596.JPEG',
+      date: 'December 21, 2025',
+      category: 'tournament-results',
+      author: t.syncplayTeam
+    },
+    {
       id: 1,
       title: t.newsArticle1Title,
-      excerpt: t.newsArticle1Excerpt,
+      excerpt: 'syncplay eSports officially launched with our inaugural 2v2 EA Sports FC 26 Tournament on December 20, 2025. The tournament has been completed successfully...',
       image: '/ea-sports-fc-26-xbox-one-xbox-series-x-s-microsoft-store-cover.jpg',
       date: 'October 23, 2025',
       category: 'announcements',
@@ -20,7 +38,7 @@ const News = () => {
     {
       id: 2,
       title: t.newsArticle2Title,
-      excerpt: t.newsArticle2Excerpt,
+      excerpt: 'Registration was open for our first tournament! 12 teams competed for exclusive prizes. Entry fee was ₦20,000 per team (subsidized rate)...',
       image: '/fc-26-1024x639.jpg',
       date: 'October 23, 2025',
       category: 'announcements',

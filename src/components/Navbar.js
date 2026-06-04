@@ -124,12 +124,13 @@ const Navbar = () => {
                   {t.tournaments}
                 </div>
                 <div className="nav-dropdown-mobile">
-                  <Link to="/tournaments#classic" className="dropdown-item" onClick={closeMobileMenu}>
+                  {/* Commented out - Classic League and Weekend Tournaments removed */}
+                  {/* <Link to="/tournaments#classic" className="dropdown-item" onClick={closeMobileMenu}>
                     {t.classicLeague}
                   </Link>
                   <Link to="/tournaments#weekend" className="dropdown-item" onClick={closeMobileMenu}>
                     {t.weekendTournaments}
-                  </Link>
+                  </Link> */}
                   <Link to="/news" className="dropdown-item" onClick={closeMobileMenu}>
                     {t.archives}
                   </Link>
@@ -167,6 +168,16 @@ const Navbar = () => {
               <li className="nav-item">
                 <Link to="/news" className="nav-link" onClick={closeMobileMenu}>
                   {t.news}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/gallery" className="nav-link" onClick={closeMobileMenu}>
+                  {t.gallery}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/tournament-results" className="nav-link" onClick={closeMobileMenu}>
+                  {t.tournamentResults}
                 </Link>
               </li>
             </ul>

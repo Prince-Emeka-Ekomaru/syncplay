@@ -2,48 +2,49 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
-import { useRegistrationCount } from '../hooks/useRegistrationCount';
+// Registration count hook removed as tournament is completed
 import './Tournaments.css';
 
 const Tournaments = () => {
   const { currentLanguage } = useLanguage();
   const t = translations[currentLanguage];
-  const { slotsRemaining, totalSlots, loading } = useRegistrationCount();
+  // Registration count hook removed as tournament is completed
   
   const tournamentTypes = [
     {
       id: 1,
       title: t.tournament2v2,
       description: t.tournament2v2Desc,
-      frequency: t.launchingNov30,
+      frequency: 'December 20, 2025',
       prizePool: t.exclusivePrizePoolShort,
-      participants: `${totalSlots} Teams • ${slotsRemaining === 0 ? t.slotsUrgencyFull : t.slotsUrgency}`,
+      participants: '12 Teams • Completed',
       icon: 'fa-users-cog',
       color: '#E63946',
-      status: 'active'
-    },
-    {
-      id: 2,
-      title: t.weekendCupTitle,
-      description: t.weekendCupDescription,
-      frequency: t.weekly,
-      prizePool: t.exclusivePrizePoolShort,
-      participants: '64 Players',
-      icon: 'fa-calendar-week',
-      color: '#FFB300',
-      status: 'coming-soon'
-    },
-    {
-      id: 3,
-      title: t.championshipSeriesTitle,
-      description: t.championshipSeriesDescription,
-      frequency: t.monthly,
-      prizePool: t.exclusivePrizePoolShort,
-      participants: '32 Players',
-      icon: 'fa-trophy',
-      color: '#FFD700',
-      status: 'coming-soon'
+      status: 'completed'
     }
+    // Commented out - Classic League and Weekend Cup tournaments
+    // {
+    //   id: 2,
+    //   title: t.weekendCupTitle,
+    //   description: t.weekendCupDescription,
+    //   frequency: t.weekly,
+    //   prizePool: t.exclusivePrizePoolShort,
+    //   participants: '64 Players',
+    //   icon: 'fa-calendar-week',
+    //   color: '#FFB300',
+    //   status: 'coming-soon'
+    // },
+    // {
+    //   id: 3,
+    //   title: t.championshipSeriesTitle,
+    //   description: t.championshipSeriesDescription,
+    //   frequency: t.monthly,
+    //   prizePool: t.exclusivePrizePoolShort,
+    //   participants: '12 Teams (24 Players)',
+    //   icon: 'fa-trophy',
+    //   color: '#FFD700',
+    //   status: 'coming-soon'
+    // }
   ];
 
   return (
@@ -71,7 +72,7 @@ const Tournaments = () => {
 
           <div className="tournament-grid">
             {tournamentTypes.map(tournament => (
-              <div key={tournament.id} className={`tournament-card ${tournament.status === 'coming-soon' ? 'coming-soon' : ''}`}>
+              <div key={tournament.id} className={`tournament-card ${tournament.status === 'coming-soon' ? 'coming-soon' : ''} ${tournament.status === 'completed' ? 'completed' : ''}`}>
                 <div className="tournament-icon" style={{ backgroundColor: tournament.color }}>
                   <i className={`fas ${tournament.icon}`}></i>
                 </div>
@@ -79,7 +80,7 @@ const Tournaments = () => {
                 <p>{tournament.description}</p>
                 <div className="tournament-specs">
                   <div className="spec-item">
-                    <span className="spec-label">{tournament.status === 'active' ? `${t.dateLabel}:` : `${t.frequency}:`}</span>
+                    <span className="spec-label">{tournament.status === 'active' ? `${t.dateLabel}:` : tournament.status === 'completed' ? `${t.dateLabel}:` : `${t.frequency}:`}</span>
                     <span className="spec-value">{tournament.frequency}</span>
                   </div>
                   <div className="spec-item">
@@ -87,13 +88,17 @@ const Tournaments = () => {
                     <span className="spec-value">{tournament.prizePool}</span>
                   </div>
                   <div className="spec-item">
-                    <span className="spec-label">{tournament.status === 'active' ? `${t.teamsLabel}:` : `${t.maxPlayers}:`}</span>
+                    <span className="spec-label">{tournament.status === 'active' || tournament.status === 'completed' ? `${t.teamsLabel}:` : `${t.maxPlayers}:`}</span>
                     <span className="spec-value">{tournament.participants}</span>
                   </div>
                 </div>
                 {tournament.status === 'active' ? (
                   <Link to="/register" className="tournament-link">
                     {t.registerNow} <i className="fas fa-arrow-right"></i>
+                  </Link>
+                ) : tournament.status === 'completed' ? (
+                  <Link to="/tournament-results" className="tournament-link">
+                    {t.viewResults} <i className="fas fa-arrow-right"></i>
                   </Link>
                 ) : (
                   <button className="tournament-link disabled" disabled>
@@ -210,7 +215,8 @@ const Tournaments = () => {
               </div>
             </div>
 
-            <div className="game-card coming-soon">
+            {/* Commented out - eBasketball removed */}
+            {/* <div className="game-card coming-soon">
               <div className="game-badge">{t.comingSoon.toUpperCase()}</div>
               <i className="fas fa-basketball-ball"></i>
               <h3>eBasketball</h3>
@@ -218,7 +224,7 @@ const Tournaments = () => {
               <Link to="/contact" className="notify-btn">
                 {t.notifyMe}
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

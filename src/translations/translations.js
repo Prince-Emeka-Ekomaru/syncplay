@@ -77,6 +77,52 @@ export const translations = {
     announcements: 'ANNOUNCEMENTS',
     playerProfiles: 'PLAYER PROFILES',
     
+    // Tournament Completion & Results
+    tournamentCompleted: 'TOURNAMENT COMPLETED',
+    tournamentResultsDesc: 'View the complete results from our inaugural tournament',
+    champions: 'CHAMPIONS',
+    championsCrowned: 'Champions Crowned',
+    finalStandings: 'FINAL STANDINGS',
+    prizeDistribution: 'PRIZE DISTRIBUTION',
+    tournamentHighlights: 'TOURNAMENT HIGHLIGHTS',
+    finalMatch: 'Final Match',
+    tournamentMoments: 'Tournament Moments',
+    viewResults: 'VIEW RESULTS',
+    watchHighlights: 'WATCH HIGHLIGHTS',
+    viewGallery: 'VIEW GALLERY',
+    watchVideos: 'WATCH VIDEOS',
+    nextTournament: 'NEXT TOURNAMENT',
+    nextTournamentDate: 'May 2026',
+    inauguralTournament: 'Inaugural 2v2 Tournament',
+    winnerTeamName: 'Champions',
+    winnerPlayers: 'Player 1 & Player 2',
+    winnerPrize: '₦800,000',
+    runnerUpTeamName: 'Runner-Up',
+    runnerUpPlayers: 'Player 1 & Player 2',
+    runnerUpPrize: '₦400,000',
+    thirdPlaceTeamName: 'Third Place',
+    thirdPlacePlayers: 'Player 1 & Player 2',
+    thirdPlacePrize: '₦300,000',
+    tournamentChampionsCrowned: 'Tournament Champions Crowned - Full Results & Highlights',
+    tournamentChampionsExcerpt: 'Our inaugural tournament is complete! View the champions, final standings, prize distribution, and relive the best moments from December 20, 2025.',
+    tournamentHighlightsArticle: 'Tournament Highlights & Best Moments',
+    tournamentHighlightsExcerpt: 'Relive the most exciting moments, best plays, and memorable highlights from our inaugural 2v2 tournament. Watch interviews, see photos, and celebrate the champions.',
+    
+    // Gallery Page
+    gallery: 'GALLERY',
+    galleryDesc: 'Browse photos from our tournaments and events',
+    winners: 'WINNERS',
+    matches: 'MATCHES',
+    highlights: 'HIGHLIGHTS',
+    photos: 'PHOTOS',
+    
+    // Videos Page
+    videos: 'VIDEOS',
+    videosDesc: 'Watch highlights, interviews, and full match recordings',
+    interviews: 'INTERVIEWS',
+    eventHighlights: 'Event Highlights',
+    eventHighlightsDesc: 'Best moments from the tournament',
+    
     // Register Page
     tournamentRegistration: 'Tournament Registration',
     teamInfo: 'Team Info',
@@ -136,7 +182,7 @@ export const translations = {
     badgesTitlesVictories: 'Badges, titles, and tournament victories',
     beFirstOnLeaderboard: 'Be the first name on the leaderboard! Register now for our inaugural tournament.',
     registerForTournament: 'REGISTER FOR TOURNAMENT',
-    learnMore: 'LEARN MORE',
+    
     first2v2Tournament: 'First 2v2 Tournament',
     afterTournament: 'After Tournament',
     leaderboardGoesLive: 'Leaderboard goes live with initial rankings',
@@ -173,7 +219,7 @@ export const translations = {
       <p><strong>Date:</strong> December 20, 2025<br/>
       <strong>Time:</strong> 15:00 UTC<br/>
       <strong>Format:</strong> 2v2 Team Competition<br/>
-      <strong>Teams:</strong> 32 Teams (64 Players)<br/>
+      <strong>Teams:</strong> 12 Teams (24 Players)<br/>
       <strong>Prize Pool:</strong> Exclusive rewards for registered teams<br/>
       <strong>Entry Fee:</strong> ₦20,000 per team <span style="color: #E63946; font-weight: bold;">(Subsidized Rate)</span><br/>
       <strong>Platform:</strong> PlayStation</p>
@@ -188,7 +234,7 @@ export const translations = {
       
       <p>Registration is now open! Teams can register through our official registration portal. Each team consists of two players, and both players must provide their full details including gamer tags, contact information, and platform preference.</p>
       
-      <p>Spaces are limited to 32 teams, and with the massive prize pool on offer, we expect spots to fill up quickly. Don't miss your chance to be part of syncplay eSports history!</p>
+      <p>Spaces are limited to 12 teams, and with the massive prize pool on offer, we expect spots to fill up quickly. Don't miss your chance to be part of syncplay eSports history!</p>
       
       <h3>What Comes After</h3>
       
@@ -207,14 +253,14 @@ export const translations = {
       
       <p>The future of competitive eFootball in Nigeria starts here. Will you be part of it? Register your team today and make history with syncplay eSports!</p>
       
-      <p><strong>Registration closes when all 32 team spots are filled. Don't wait—secure your spot now!</strong></p>
+      <p><strong>Registration closes when all 12 team spots are filled. Don't wait—secure your spot now!</strong></p>
     `,
     
     // News Articles (Listing)
     newsArticle1Title: 'syncplay eSports Launches - Historic 2v2 Tournament December 20th',
     newsArticle1Excerpt: 'syncplay eSports officially launches with our inaugural 2v2 EA Sports FC 26 Tournament on December 20, 2025. Be part of history with our exclusive prize pool for registered teams...',
     newsArticle2Title: 'Registration Now Open - 2v2 EA Sports FC 26 Tournament',
-    newsArticle2Excerpt: 'Registration is officially open for our first tournament! 32 teams will compete for exclusive prizes. Entry fee is ₦20,000 per team (subsidized rate). Secure your spot now...',
+    newsArticle2Excerpt: 'Registration is officially open for our first tournament! 12 teams will compete for exclusive prizes. Entry fee is ₦20,000 per team (subsidized rate). Secure your spot now...',
     newsArticle3Title: 'Meet syncplay - Nigeria\'s New eSports Platform',
     newsArticle3Excerpt: 'Introducing syncplay eSports, a dedicated platform for competitive eFootball and eBasketball tournaments in Nigeria. We\'re building the future of gaming...',
     newsArticle4Title: 'Tournament Rules & Regulations Released',
@@ -325,7 +371,7 @@ export const translations = {
     subject: 'Subject',
     message: 'Message',
     enterFullName: 'Enter your full name',
-    enterEmail: 'Enter your email',
+    
     whatIsThisRegarding: 'What is this regarding?',
     typeMessage: 'Type your message here...',
     sendMessage: 'SEND MESSAGE',
@@ -550,7 +596,7 @@ export const translations = {
     subject: 'Subject',
     message: 'Message',
     enterFullName: 'Enter your full name',
-    enterEmail: 'Enter your email',
+    
     whatIsThisRegarding: 'Wetin you wan talk about?',
     typeMessage: 'Type your message here...',
     sendMessage: 'SEND MESSAGE',
@@ -602,7 +648,7 @@ export const translations = {
     badgesTitlesVictories: 'Badges, titles, and tournament victories',
     beFirstOnLeaderboard: 'Be the first name for leaderboard! Register now for our inaugural tournament.',
     registerForTournament: 'REGISTER FOR TOURNAMENT',
-    learnMore: 'LEARN MORE',
+    
     first2v2Tournament: 'First 2v2 Tournament',
     afterTournament: 'After Tournament',
     leaderboardGoesLive: 'Leaderboard go start with initial rankings',
@@ -639,7 +685,7 @@ export const translations = {
       <p><strong>Date:</strong> December 20, 2025<br/>
       <strong>Time:</strong> 15:00 UTC<br/>
       <strong>Format:</strong> 2v2 Team Competition<br/>
-      <strong>Teams:</strong> 32 Teams (64 Players)<br/>
+      <strong>Teams:</strong> 12 Teams (24 Players)<br/>
       <strong>Prize Pool:</strong> Exclusive rewards for registered teams<br/>
       <strong>Entry Fee:</strong> ₦20,000 per team <span style="color: #E63946; font-weight: bold;">(Subsidized Rate)</span><br/>
       <strong>Platform:</strong> PlayStation</p>
@@ -654,7 +700,7 @@ export const translations = {
       
       <p>Registration don open! Teams fit register through our official registration portal. Each team get two players, and both players must provide their full details including gamer tags, contact information, and platform preference.</p>
       
-      <p>Spaces limited to 32 teams, and with the massive prize pool wey we offer, we expect spots to fill up quick-quick. No miss your chance to be part of syncplay eSports history!</p>
+      <p>Spaces limited to 16 teams, and with the massive prize pool wey we offer, we expect spots to fill up quick-quick. No miss your chance to be part of syncplay eSports history!</p>
       
       <h3>Wetin Come After</h3>
       
@@ -673,14 +719,14 @@ export const translations = {
       
       <p>The future of competitive eFootball for Nigeria start here. You go be part of am? Register your team today and make history with syncplay eSports!</p>
       
-      <p><strong>Registration go close when all 32 team spots don full. No wait—secure your spot now!</strong></p>
+      <p><strong>Registration go close when all 16 team spots don full. No wait—secure your spot now!</strong></p>
     `,
     
     // News Articles (Listing)
     newsArticle1Title: 'syncplay eSports Don Launch - Historic 2v2 Tournament December 20th',
     newsArticle1Excerpt: 'syncplay eSports officially launch with our first 2v2 EA Sports FC 26 Tournament for December 20, 2025. Be part of history with our exclusive prize pool for registered teams...',
     newsArticle2Title: 'Registration Don Open - 2v2 EA Sports FC 26 Tournament',
-    newsArticle2Excerpt: 'Registration don officially open for our first tournament! 32 teams go compete for exclusive prizes. Entry fee na ₦20,000 per team (subsidized rate). Secure your spot now...',
+    newsArticle2Excerpt: 'Registration don officially open for our first tournament! 16 teams go compete for exclusive prizes. Entry fee na ₦20,000 per team (subsidized rate). Secure your spot now...',
     newsArticle3Title: 'Meet syncplay - Nigeria New eSports Platform',
     newsArticle3Excerpt: 'We dey introduce syncplay eSports, dedicated platform for competitive eFootball and eBasketball tournaments for Nigeria. We dey build the future of gaming...',
     newsArticle4Title: 'Tournament Rules & Regulations Don Release',
@@ -830,7 +876,7 @@ export const translations = {
     moreRegularEvents: 'Lẹhin idije ifilọlẹ wa, a yoo ṣe igbalejo awọn idije deede, awọn ajumọṣe, awọn aṣaju-wiwi, ati awọn iṣẹlẹ idije diẹ sii!', getInTouchSubtitle: 'Ṣe o ni awọn ibeere? A fẹ gbọ lati ọdọ rẹ.',
     sendUsMessage: 'FI IFIRANṢẸ SI WA', sendUsMessageDesc: 'Kun fọọmu yii ki ẹgbẹ wa yoo pada si ọ laarin wakati 24.',
     fullName: 'Orukọ Ni Kikun', emailAddress: 'Adirẹsi Imeeli', subject: 'Koko-ọrọ', message: 'Ifiranṣẹ', enterFullName: 'Tẹ orukọ rẹ ni kikun sii',
-    enterEmail: 'Tẹ imeeli rẹ sii', whatIsThisRegarding: 'Kini eyi jẹ nipa?', typeMessage: 'Tẹ ifiranṣẹ rẹ nibi...', reachOutChannels: 'De ọdọ wa nipasẹ eyikeyi ninu awọn ikanni wọnyi',
+    whatIsThisRegarding: 'Kini eyi jẹ nipa?', typeMessage: 'Tẹ ifiranṣẹ rẹ nibi...', reachOutChannels: 'De ọdọ wa nipasẹ eyikeyi ninu awọn ikanni wọnyi',
     emailUs: 'Fi Imeeli Si Wa', discord: 'Discord', joinCommunity: 'Darapọ mọ agbegbe wa', location: 'Ipo', globalPlatform: 'Agbaye - Pẹpẹ Ori ayelujara',
     followUs: 'TẸLE WA', stayConnected: 'Jẹ ki o wa ni asopọ lori media awujọ', responseTime: 'AKOKO IDAHUN', generalInquiries: 'Awọn Ibeere Gbogbogbo',
     tournamentSupport: 'Atilẹyin Idije', urgentIssues: 'Awọn Ọran Alaiṣe', hours24_48: 'Wakati 24-48', hours12_24: 'Wakati 12-24', within12Hours: 'Laarin wakati 12',
@@ -861,7 +907,7 @@ export const translations = {
     badgesTitlesVictories: 'Awọn baaji, awọn akọle, ati awọn ibori idije',
     beFirstOnLeaderboard: 'Jẹ orukọ akọkọ lori tabili! Forukọsilẹ bayi fun idije ifilọlẹ wa.',
     registerForTournament: 'FORUKỌSILẸ FUN IDIJE',
-    learnMore: 'KỌ ẸKỌ DIẸ SII',
+    
     first2v2Tournament: 'Idije 2v2 Akọkọ',
     afterTournament: 'Lẹhin Idije',
     leaderboardGoesLive: 'Tabili bẹrẹ pẹlu awọn ipo akọkọ',
@@ -1075,7 +1121,7 @@ export const translations = {
     moreRegularEvents: 'Bayan gasar mu ta farawa, za mu gudanar da gasar na yau da kullun, gasar ƙungiya, gasar gasar, da ƙarin abubuwa masu gasa!', getInTouchSubtitle: 'Kuna da tambayoyi? Muna son jin daga gare ku.',
     sendUsMessage: 'AIKA MANA SAKO', sendUsMessageDesc: 'Cika takardar kuma ƙungiyarmu za ta mayar muku a cikin sa\'o\'i 24.',
     fullName: 'Cikakken Suna', emailAddress: 'Adireshin Imel', subject: 'Batun', message: 'Sako', enterFullName: 'Shigar da cikakken sunan ku',
-    enterEmail: 'Shigar da imel ɗin ku', whatIsThisRegarding: 'Menene wannan game da?', typeMessage: 'Rubuta saƙon ku a nan...', reachOutChannels: 'Tuntuɓe mu ta ɗayan waɗannan hanyoyi',
+    whatIsThisRegarding: 'Menene wannan game da?', typeMessage: 'Rubuta saƙon ku a nan...', reachOutChannels: 'Tuntuɓe mu ta ɗayan waɗannan hanyoyi',
     emailUs: 'Aika Mana Imel', discord: 'Discord', joinCommunity: 'Ku shiga al\'ummarmu', location: 'Wurin', globalPlatform: 'Duniya - Dandalin Kan Layi',
     followUs: 'KU BI MU', stayConnected: 'Ku kasance a haɗe akan kafofin watsa labarun', responseTime: 'LOKACIN AMSA', generalInquiries: 'Tambayoyin Gaba Daya',
     tournamentSupport: 'Tallafin Gasar', urgentIssues: 'Batutuwan Gaggawa', hours24_48: 'Sa\'o\'i 24-48', hours12_24: 'Sa\'o\'i 12-24', within12Hours: 'A Cikin Sa\'o\'i 12',
@@ -1106,7 +1152,7 @@ export const translations = {
     badgesTitlesVictories: 'Bajoji, lakabi, da nasarorin gasar',
     beFirstOnLeaderboard: 'Ku zama suna na farko akan matsayi! Yi rajista yanzu don gasar mu ta farko.',
     registerForTournament: 'YI RAJISTA DON GASAR',
-    learnMore: 'ƘARA KOYO',
+    
     first2v2Tournament: 'Gasar 2v2 Ta Farko',
     afterTournament: 'Bayan Gasar',
     leaderboardGoesLive: 'Matsayi yana farawa da matsayi na farko',
@@ -1136,33 +1182,33 @@ export const translations = {
     newsArticleContent: `
       <p>syncplay eSports da alfahari tana sanar da gasar mu ta farko ta 2v2 EA Sports FC 26, wanda zai fara a ranar December 20th, 2025! Wannan taro na tarihi yana ɗauke da kudin kyauta na musamman da muke bayyana wa kungiyoyin da suka yi rijista kawai.</p>
       
-      <p>Wannan ya wuce gasar kawai—shine tushen wani abu na musamman. Muna tattara mafi kyawun \'yan wasan eFootball don yin takara a cikin tsarin ƙungiya mai daɗi wanda zai gwada dabaru, haɗin kai, da ƙwarewa kamar ba a taɓa yi ba.</p>
+      <p>Wannan ya wuce gasar kawai—shine tushen wani abu na musamman. Muna tattara mafi kyawun 'yan wasan eFootball don yin takara a cikin tsarin ƙungiya mai daɗi wanda zai gwada dabaru, haɗin kai, da ƙwarewa kamar ba a taɓa yi ba.</p>
       
       <h3>Cikakkun Bayanan Gasar</h3>
       
       <p><strong>Ranar:</strong> December 20, 2025<br/>
       <strong>Lokaci:</strong> 15:00 UTC<br/>
       <strong>Tsari:</strong> Gasar Ƙungiya 2v2<br/>
-      <strong>Ƙungiyoyi:</strong> Ƙungiyoyi 32 (\'Yan Wasa 64)<br/>
+      <strong>Ƙungiyoyi:</strong> Ƙungiyoyi 32 ('Yan Wasa 64)<br/>
       <strong>Kuɗin Kyauta:</strong> Kudin kyauta na musamman ga kungiyoyin da suka yi rijista<br/>
       <strong>Kuɗin Shiga:</strong> ₦20,000 ga kowace ƙungiya <span style="color: #E63946; font-weight: bold;">(Farashin Tallafi)</span><br/>
       <strong>Dandalin:</strong> PlayStation</p>
       
       <h3>Me Yasa Wannan Gasar Ta Bambanta</h3>
       
-      <p>Tsarin 2v2 yana kawo sabon yanayi ga gasar eFootball. Dole \'yan wasa su yi aiki tare da abokin wasansu, suna sadarwa game da dabarun, haɗa kai wajen kai hari, da goyan bayan salon wasan juna. Wannan ba game da ƙwarewar mutum ɗaya kawai ba—game da aikin ƙungiya, haɗin kai, da basirar dabaru ne.</p>
+      <p>Tsarin 2v2 yana kawo sabon yanayi ga gasar eFootball. Dole 'yan wasa su yi aiki tare da abokin wasansu, suna sadarwa game da dabarun, haɗa kai wajen kai hari, da goyan bayan salon wasan juna. Wannan ba game da ƙwarewar mutum ɗaya kawai ba—game da aikin ƙungiya, haɗin kai, da basirar dabaru ne.</p>
       
-      <p>Tare da ingantattun hanyoyin wasan EA Sports FC 26 da ingantattun fasalolin haɗin kan ƙungiya, tsarin 2v2 yana yi alkawarin bayar da wasanni masu ban sha\'awa da lokutan da ba za a manta ba. Ku sa ran ganin sabbin dabaru, wasanni masu ban mamaki, da gasa mai ƙarfi da ke tasowa a cikin gasar.</p>
+      <p>Tare da ingantattun hanyoyin wasan EA Sports FC 26 da ingantattun fasalolin haɗin kan ƙungiya, tsarin 2v2 yana yi alkawarin bayar da wasanni masu ban sha'awa da lokutan da ba za a manta ba. Ku sa ran ganin sabbin dabaru, wasanni masu ban mamaki, da gasa mai ƙarfi da ke tasowa a cikin gasar.</p>
       
       <h3>Yadda Ake Yin Rajista</h3>
       
-      <p>Rajista a buɗe yanzu! Ƙungiyoyi za su iya yin rajista ta hanyar wurin rajista na hukuma. Kowace ƙungiya tana da \'yan wasa biyu, kuma dole duka \'yan wasan su bayar da cikakken bayanansu ciki har da gamer tags, bayanan tuntuɓar, da zaɓin dandali.</p>
+      <p>Rajista a buɗe yanzu! Ƙungiyoyi za su iya yin rajista ta hanyar wurin rajista na hukuma. Kowace ƙungiya tana da 'yan wasa biyu, kuma dole duka 'yan wasan su bayar da cikakken bayanansu ciki har da gamer tags, bayanan tuntuɓar, da zaɓin dandali.</p>
       
       <p>Wuraren an iyakance su ga ƙungiyoyi 32, kuma tare da babban kuɗin kyauta da muke bayarwa, muna sa ran wuraren za su cika da sauri. Kada ku rasa damarku ta kasancewa a cikin tarihin syncplay eSports!</p>
       
       <h3>Abin Da Ke Gaba</h3>
       
-      <p>Wannan gasar 2v2 shine mafari kawai. Bayan nasarar taron mu na farko, syncplay eSports za ta gudanar da gasar na yau da kullun, gasar ƙungiya, da gasar gasar a cikin shekara. Mun himmatu wajen gina tsarin gasar mai bunƙasa ga \'yan wasan eFootball na kowane matakin ƙwarewa.</p>
+      <p>Wannan gasar 2v2 shine mafari kawai. Bayan nasarar taron mu na farko, syncplay eSports za ta gudanar da gasar na yau da kullun, gasar ƙungiya, da gasar gasar a cikin shekara. Mun himmatu wajen gina tsarin gasar mai bunƙasa ga 'yan wasan eFootball na kowane matakin ƙwarewa.</p>
       
       <p>Abubuwan gaba za su haɗa da:</p>
       <ul>
@@ -1171,9 +1217,9 @@ export const translations = {
         <li><strong>Abubuwan Musamman</strong> - Gasar gayyata da gasar lokaci</li>
       </ul>
       
-      <h3>Shiga Al\'ummar syncplay</h3>
+      <h3>Shiga Al'ummar syncplay</h3>
       
-      <p>Ko kuna takara a gasar ko kuna tallata daga gefe, muna gayyace ku ku shiga al\'ummarmu mai bunƙasa. Ku yi haɗuwa da \'yan wasa a Discord, ku bi hanyoyin sadarwar mu don samun sabuntawa, kuma ku kasance cikin farin ciki yayin da muke gina dandali na eSports na farko na Najeriya.</p>
+      <p>Ko kuna takara a gasar ko kuna tallata daga gefe, muna gayyace ku ku shiga al'ummarmu mai bunƙasa. Ku yi haɗuwa da 'yan wasa a Discord, ku bi hanyoyin sadarwar mu don samun sabuntawa, kuma ku kasance cikin farin ciki yayin da muke gina dandali na eSports na farko na Najeriya.</p>
       
       <p>Makomar gasar eFootball a Najeriya tana farawa a nan. Za ku kasance cikin shi? Yi rajistar ƙungiyar ku yau ku yi tarihi tare da syncplay eSports!</p>
       
@@ -1327,7 +1373,7 @@ export const translations = {
     badgesTitlesVictories: 'Baajị, aha, na mmeri asọmpi',
     beFirstOnLeaderboard: 'Bụrụ aha mbụ na ndepụta nduzi! Debanye aha ugbu a maka asọmpi mbụ anyị.',
     registerForTournament: 'DEBANYE AHA MAKA ASỌMPI',
-    learnMore: 'MỤTAKWUzIE',
+    
     first2v2Tournament: 'Asọmpi 2v2 Mbụ',
     afterTournament: 'Mgbe Asọmpi Gasịrị',
     leaderboardGoesLive: 'Ndepụta nduzi na-amalite na ọkwa mbụ',
@@ -1466,7 +1512,7 @@ export const translations = {
     moreRegularEvents: 'Mgbe asọmpi mmalite anyị gasịrị, anyị ga-enwe asọmpi mgbe niile, asọmpi njikọ, asọmpi iko, na ọtụtụ mmemme asọmpi!', getInTouchSubtitle: 'Ị nwere ajụjụ? Anyị ga-achọ ịnụ n\'aka gị.',
     sendUsMessage: 'ZIPU ANYỊ OZI', sendUsMessageDesc: 'Dejuo mpempe akwụkwọ ahụ na ndị otu anyị ga-alọghachikwute gị n\'ime awa 24.',
     fullName: 'Aha Zuru Ezu', emailAddress: 'Adreesị Ozi-e', subject: 'Isiokwu', message: 'Ozi', enterFullName: 'Tinye aha gị zuru ezu',
-    enterEmail: 'Tinye ozi-e gị', whatIsThisRegarding: 'Gịnị ka nke a bụ banyere?', typeMessage: 'Pịnye ozi gị ebe a...', reachOutChannels: 'Kpọtụrụ anyị site n\'otu n\'ime ụzọ ndị a',
+    whatIsThisRegarding: 'Gịnị ka nke a bụ banyere?', typeMessage: 'Pịnye ozi gị ebe a...', reachOutChannels: 'Kpọtụrụ anyị site n\'otu n\'ime ụzọ ndị a',
     emailUs: 'Zipụ Anyị Ozi-e', discord: 'Discord', joinCommunity: 'Sonye na obodo anyị', location: 'Ebe', globalPlatform: 'Ụwa Niile - Ikpo Okwu N\'ịntanetị',
     followUs: 'SOO ANYỊ', stayConnected: 'Nọrọ njikọ na mgbasa ozi mmekọrịta', responseTime: 'OGE NZAGHACHI', generalInquiries: 'Ajụjụ Izugbe',
     tournamentSupport: 'Nkwado Asọmpi', urgentIssues: 'Okwu Ngwa Ngwa', hours24_48: 'Awa 24-48', hours12_24: 'Awa 12-24', within12Hours: 'N\'ime Awa 12',
@@ -1607,7 +1653,7 @@ export const translations = {
     moreRegularEvents: 'Après notre tournoi de lancement, nous organiserons des tournois réguliers, des ligues, des championnats et d\'autres événements compétitifs!', getInTouchSubtitle: 'Vous avez des questions? Nous aimerions avoir de vos nouvelles.',
     sendUsMessage: 'ENVOYEZ-NOUS UN MESSAGE', sendUsMessageDesc: 'Remplissez le formulaire et notre équipe vous répondra dans les 24 heures.',
     fullName: 'Nom Complet', emailAddress: 'Adresse E-mail', subject: 'Sujet', message: 'Message', enterFullName: 'Entrez votre nom complet',
-    enterEmail: 'Entrez votre e-mail', whatIsThisRegarding: 'De quoi s\'agit-il?', typeMessage: 'Tapez votre message ici...', reachOutChannels: 'Contactez-nous via l\'un de ces canaux',
+    whatIsThisRegarding: 'De quoi s\'agit-il?', typeMessage: 'Tapez votre message ici...', reachOutChannels: 'Contactez-nous via l\'un de ces canaux',
     emailUs: 'Envoyez-nous un E-mail', discord: 'Discord', joinCommunity: 'Rejoignez notre communauté', location: 'Localisation', globalPlatform: 'Mondial - Plateforme En Ligne',
     followUs: 'SUIVEZ-NOUS', stayConnected: 'Restez connecté sur les réseaux sociaux', responseTime: 'TEMPS DE RÉPONSE', generalInquiries: 'Demandes Générales',
     tournamentSupport: 'Support Tournoi', urgentIssues: 'Problèmes Urgents', hours24_48: '24-48 heures', hours12_24: '12-24 heures', within12Hours: 'Dans les 12 heures',
@@ -1638,7 +1684,7 @@ export const translations = {
     badgesTitlesVictories: 'Badges, titres et victoires en tournoi',
     beFirstOnLeaderboard: 'Soyez le premier nom sur le classement ! Inscrivez-vous maintenant pour notre tournoi inaugural.',
     registerForTournament: 'S\'INSCRIRE AU TOURNOI',
-    learnMore: 'EN SAVOIR PLUS',
+    
     first2v2Tournament: 'Premier Tournoi 2v2',
     afterTournament: 'Après le Tournoi',
     leaderboardGoesLive: 'Le classement commence avec les classements initiaux',

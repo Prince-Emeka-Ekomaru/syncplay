@@ -33,7 +33,8 @@ const Footer = () => {
               <h4>{t.games}</h4>
               <ul>
                 <li>eFootball</li>
-                <li>eBasketball <span className="coming-soon">({t.comingSoon})</span></li>
+                {/* Commented out - eBasketball removed */}
+                {/* <li>eBasketball <span className="coming-soon">({t.comingSoon})</span></li> */}
               </ul>
             </div>
 

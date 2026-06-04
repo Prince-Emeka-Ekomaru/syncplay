@@ -13,13 +13,14 @@ if (!supabaseUrl || !supabaseAnonKey) {
 // Create Supabase client
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Helper function to get registration count
-export async function getRegistrationCount() {
+// Helper function to get registration count for current tournament
+export async function getRegistrationCount(tournamentId = '2v2-may-2026') {
   try {
     const { count, error } = await supabase
       .from('registrations')
       .select('*', { count: 'exact', head: true })
-      .eq('payment_status', 'completed');
+      .eq('payment_status', 'completed')
+      .eq('tournament_id', tournamentId);
 
     if (error) {
       console.error('Error getting count:', error);
@@ -34,9 +35,9 @@ export async function getRegistrationCount() {
 }
 
 // Helper function to check if registration is full
-export async function isRegistrationFull() {
-  const count = await getRegistrationCount();
-  return count >= 32;
+export async function isRegistrationFull(tournamentId = '2v2-may-2026') {
+  const count = await getRegistrationCount(tournamentId);
+  return count >= 12;
 }
 
 // Helper function to save registration
@@ -58,34 +59,45 @@ export async function saveRegistration(paymentReference, formData, paymentGatewa
           player1_phone: formData.player1Phone,
           player1_gamer_tag: formData.player1GamerTag,
           player1_platform: formData.player1Platform,
+          player1_photo_url: formData.player1PhotoUrl || null,
           player2_name: formData.player2Name,
           player2_email: formData.player2Email,
           player2_phone: formData.player2Phone,
           player2_gamer_tag: formData.player2GamerTag,
           player2_platform: formData.player2Platform,
-          tournament_id: '2v2-nov-2025',
+          player2_photo_url: formData.player2PhotoUrl || null,
+          tournament_id: '2v2-may-2026',
           registration_source: 'website'
         }
       ])
       .select();
 
     if (error) {
-      console.error('Error saving registration:', error);
-      console.error('Error details:', {
+      // Only log error details once, avoid duplicate logging
+      const errorInfo = {
         message: error.message,
         code: error.code,
         details: error.details,
         hint: error.hint,
         paymentReference: paymentReference
-      });
+      };
+      console.error('Error saving registration:', errorInfo);
       throw error;
     }
 
     console.log('Registration saved successfully:', data);
     return data;
   } catch (error) {
-    console.error('Save registration error:', error);
-    console.error('Full error object:', error);
+    // Avoid duplicate error logging - the error was already logged above
+    if (error.code) {
+      // This is a Supabase error, already logged above
+      throw error;
+    }
+    // This is a different error (network, etc.)
+    console.error('Save registration error:', {
+      message: error.message,
+      stack: error.stack
+    });
     throw error;
   }
 }
