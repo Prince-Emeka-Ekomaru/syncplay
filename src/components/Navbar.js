@@ -176,6 +176,11 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link to="/videos" className="nav-link" onClick={closeMobileMenu}>
+                  {t.videos}
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/tournament-results" className="nav-link" onClick={closeMobileMenu}>
                   {t.tournamentResults}
                 </Link>

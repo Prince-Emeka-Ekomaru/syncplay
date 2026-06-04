@@ -25,6 +25,8 @@ const Footer = () => {
                 <li><Link to="/tournaments">{t.tournaments}</Link></li>
                 <li><Link to="/players">{t.players}</Link></li>
                 <li><Link to="/news">{t.news}</Link></li>
+                <li><Link to="/gallery">{t.gallery}</Link></li>
+                <li><Link to="/videos">{t.videos}</Link></li>
                 <li><Link to="/contact">{t.contact}</Link></li>
               </ul>
             </div>

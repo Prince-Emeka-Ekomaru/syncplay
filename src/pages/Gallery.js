@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
 import { getMediaUrl } from '../supabaseClient';
@@ -8,7 +9,6 @@ const Gallery = () => {
   const { currentLanguage } = useLanguage();
   const t = translations[currentLanguage];
   const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedVideo, setSelectedVideo] = useState(null);
   const [filter, setFilter] = useState('all');
 
   // Organize photos by category
@@ -48,7 +48,13 @@ const Gallery = () => {
       { src: '/tournament-media/photos/l\'flames and century.png', category: 'matches', alt: 'L\'Flames vs Century' },
       { src: '/tournament-media/photos/titans and gameverxe.png', category: 'matches', alt: 'Titans vs Gameverxe' }
     ],
-    highlights: [],
+    highlights: [
+      { src: '/tournament-media/photos/IMG_4596.JPEG', category: 'highlights', alt: 'Tournament Highlights' },
+      { src: '/tournament-media/photos/winners ss.png', category: 'winners', alt: 'Tournament Winners' },
+      { src: '/tournament-media/photos/second place.png', category: 'winners', alt: 'Second Place' },
+      { src: '/tournament-media/photos/3RD PLACE.png', category: 'winners', alt: 'Third Place' },
+      { src: '/tournament-media/photos/final match.png', category: 'matches', alt: 'Final Match' }
+    ],
     players: [
       { src: '/tournament-media/photos/welcome baji jr.png', category: 'players', alt: 'Welcome Baji Jr' },
       { src: '/tournament-media/photos/welcome boyd.png', category: 'players', alt: 'Welcome Boyd' },
@@ -63,48 +69,7 @@ const Gallery = () => {
     ]
   };
 
-  // Video highlights
-  const highlightVideos = [
-    {
-      src: '/tournament-media/videos/event_highlight.mp4',
-      thumbnail: '/tournament-media/photos/IMG_4596.JPEG',
-      title: t.eventHighlights || 'Event Highlights',
-      alt: 'Event Highlights Video'
-    },
-    {
-      src: '/tournament-media/videos/interviews/Turnament_winner.MP4',
-      thumbnail: '/tournament-media/photos/winners ss.png',
-      title: 'Tournament Winner Interview',
-      alt: 'Winner Interview Video'
-    },
-    {
-      src: '/tournament-media/videos/interviews/Bukas_PostEvent.MP4',
-      thumbnail: '/tournament-media/photos/welcome boyd.png',
-      title: 'Bukas Post-Event Interview',
-      alt: 'Bukas Interview Video'
-    },
-    {
-      src: '/tournament-media/videos/interviews/Banter_FC.MP4',
-      thumbnail: '/tournament-media/photos/welcome baji jr.png',
-      title: 'Banter FC Interview',
-      alt: 'Banter FC Interview Video'
-    },
-    {
-      src: '/tournament-media/videos/interviews/orbyters_pre-event.MP4',
-      thumbnail: '/tournament-media/photos/orbyters and get psyched.png',
-      title: 'Orbyters Pre-Event Interview',
-      alt: 'Orbyters Interview Video'
-    },
-    {
-      src: '/tournament-media/videos/interviews/TempleBoys Pre interview.MP4',
-      thumbnail: '/tournament-media/photos/temple boys and d fantastic 2.png',
-      title: 'Temple Boys Pre-Interview',
-      alt: 'Temple Boys Interview Video'
-    }
-  ];
-
   const filteredPhotos = filter === 'all' ? photos.all : photos[filter] || [];
-  const showVideos = filter === 'highlights';
 
   const openLightbox = (photo) => {
     setSelectedImage(photo);
@@ -112,14 +77,6 @@ const Gallery = () => {
 
   const closeLightbox = () => {
     setSelectedImage(null);
-  };
-
-  const openVideo = (video) => {
-    setSelectedVideo(video);
-  };
-
-  const closeVideo = () => {
-    setSelectedVideo(null);
   };
 
   const navigateImage = (direction) => {
@@ -182,51 +139,53 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* Gallery Grid / Video Grid */}
+      {/* Videos Link Banner */}
+      <div className="videos-banner-container container" style={{ marginBottom: '2rem' }}>
+        <div className="videos-banner" style={{
+          background: 'rgba(255, 255, 255, 0.03)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: '12px',
+          padding: '1.5rem',
+          textAlign: 'center',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '1rem'
+        }}>
+          <div style={{ textAlign: 'left' }}>
+            <h3 style={{ margin: 0, fontSize: '1.2rem', color: '#fff' }}>🎥 {t.watchVideos || 'Watch All Videos'}</h3>
+            <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>
+              Check out tournament highlights, match recordings, and exclusive player interviews.
+            </p>
+          </div>
+          <Link to="/videos" className="btn btn-primary" style={{ padding: '0.75rem 1.5rem', textDecoration: 'none' }}>
+            {t.watchVideos || 'Go to Videos'}
+          </Link>
+        </div>
+      </div>
+
+      {/* Gallery Grid */}
       <section className="gallery-content">
         <div className="container">
-          {showVideos ? (
-            <div className="gallery-grid">
-              {highlightVideos.map((video, index) => (
-                <div 
-                  key={index} 
-                  className="gallery-item gallery-video-item"
-                  onClick={() => openVideo(video)}
-                >
-                  <div className="video-thumbnail-wrapper">
-                    <img 
-                      src={getMediaUrl(video.thumbnail)} 
-                      alt={video.alt}
-                      loading="lazy"
-                    />
-                    <div className="gallery-overlay video-overlay">
-                      <i className="fas fa-play"></i>
-                    </div>
-                  </div>
-                  <div className="video-title">{video.title}</div>
+          <div className="gallery-grid">
+            {filteredPhotos.map((photo, index) => (
+              <div 
+                key={index} 
+                className="gallery-item"
+                onClick={() => openLightbox(photo)}
+              >
+                <img 
+                  src={getMediaUrl(photo.src)} 
+                  alt={photo.alt}
+                  loading="lazy"
+                />
+                <div className="gallery-overlay">
+                  <i className="fas fa-search-plus"></i>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="gallery-grid">
-              {filteredPhotos.map((photo, index) => (
-                <div 
-                  key={index} 
-                  className="gallery-item"
-                  onClick={() => openLightbox(photo)}
-                >
-                  <img 
-                    src={getMediaUrl(photo.src)} 
-                    alt={photo.alt}
-                    loading="lazy"
-                  />
-                  <div className="gallery-overlay">
-                    <i className="fas fa-search-plus"></i>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -258,28 +217,6 @@ const Gallery = () => {
           >
             <i className="fas fa-chevron-right"></i>
           </button>
-        </div>
-      )}
-
-      {/* Video Modal */}
-      {selectedVideo && (
-        <div className="video-modal" onClick={closeVideo}>
-          <button className="video-modal-close" onClick={closeVideo}>
-            <i className="fas fa-times"></i>
-          </button>
-          <div className="video-modal-content" onClick={(e) => e.stopPropagation()}>
-            <video 
-              controls 
-              autoPlay
-              src={getMediaUrl(selectedVideo.src)}
-              className="video-player"
-            >
-              Your browser does not support the video tag.
-            </video>
-            <div className="video-modal-info">
-              <h3>{selectedVideo.title}</h3>
-            </div>
-          </div>
         </div>
       )}
     </div>
