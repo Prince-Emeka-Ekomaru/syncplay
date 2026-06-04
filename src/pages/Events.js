@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
 // Registration count hook removed as tournament is completed
+import { getMediaUrl } from '../supabaseClient';
 import './Events.css';
 
 const Events = () => {
@@ -147,7 +148,7 @@ const Events = () => {
                       </div>
                     </div>
                     <div className="featured-image">
-                      <img src={event.image} alt={event.title} />
+                      <img src={getMediaUrl(event.image)} alt={event.title} />
                     </div>
                   </div>
                 ))}

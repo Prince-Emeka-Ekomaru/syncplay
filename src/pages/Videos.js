@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
+import { getMediaUrl } from '../supabaseClient';
 import './Videos.css';
 
 const Videos = () => {
@@ -172,7 +173,7 @@ const Videos = () => {
                 onClick={() => openVideo(video)}
               >
                 <div className="video-thumbnail">
-                  <img src={video.thumbnail} alt={video.title} />
+                  <img src={getMediaUrl(video.thumbnail)} alt={video.title} />
                   <div className="video-play-overlay">
                     <i className="fas fa-play"></i>
                   </div>
@@ -198,7 +199,7 @@ const Videos = () => {
             <video 
               controls 
               autoPlay
-              src={selectedVideo.src}
+              src={getMediaUrl(selectedVideo.src)}
               className="video-player"
             >
               Your browser does not support the video tag.

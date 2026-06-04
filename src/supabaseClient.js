@@ -123,3 +123,15 @@ export async function getAllRegistrations() {
   }
 }
 
+// Helper to get public URL for media assets (photos/videos)
+export function getMediaUrl(localPath) {
+  if (!localPath) return '';
+  if (process.env.NODE_ENV === 'production') {
+    if (localPath.startsWith('/tournament-media/')) {
+      const cleanPath = localPath.replace('/tournament-media/', '');
+      return `https://yzoqnqubnwoijrwtdroj.supabase.co/storage/v1/object/public/tournament-assets/${cleanPath}`;
+    }
+  }
+  return localPath;
+}
+

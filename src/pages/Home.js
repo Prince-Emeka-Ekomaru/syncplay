@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
 // Registration count hook removed as tournament is completed
+import { getMediaUrl } from '../supabaseClient';
 import './Home.css';
 
 const Home = () => {
@@ -223,7 +224,7 @@ const Home = () => {
             {newsArticles.map(article => (
               <div key={article.id} className="news-card animate-on-scroll">
                 <div className="news-image">
-                  <img src={article.image} alt={article.title} />
+                  <img src={getMediaUrl(article.image)} alt={article.title} />
                   <div className="news-date">{article.date}</div>
                 </div>
                 <div className="news-content">

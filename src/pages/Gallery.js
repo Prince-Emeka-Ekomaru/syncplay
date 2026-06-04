@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
+import { getMediaUrl } from '../supabaseClient';
 import './Gallery.css';
 
 const Gallery = () => {
@@ -194,7 +195,7 @@ const Gallery = () => {
                 >
                   <div className="video-thumbnail-wrapper">
                     <img 
-                      src={video.thumbnail} 
+                      src={getMediaUrl(video.thumbnail)} 
                       alt={video.alt}
                       loading="lazy"
                     />
@@ -215,7 +216,7 @@ const Gallery = () => {
                   onClick={() => openLightbox(photo)}
                 >
                   <img 
-                    src={photo.src} 
+                    src={getMediaUrl(photo.src)} 
                     alt={photo.alt}
                     loading="lazy"
                   />
@@ -245,7 +246,7 @@ const Gallery = () => {
             <i className="fas fa-chevron-left"></i>
           </button>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <img src={selectedImage.src} alt={selectedImage.alt} />
+            <img src={getMediaUrl(selectedImage.src)} alt={selectedImage.alt} />
             <p className="lightbox-caption">{selectedImage.alt}</p>
           </div>
           <button 
@@ -270,7 +271,7 @@ const Gallery = () => {
             <video 
               controls 
               autoPlay
-              src={selectedVideo.src}
+              src={getMediaUrl(selectedVideo.src)}
               className="video-player"
             >
               Your browser does not support the video tag.
