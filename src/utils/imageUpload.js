@@ -14,10 +14,10 @@ export async function uploadPlayerPhoto(file, teamName, playerNumber) {
       throw new Error('File must be an image');
     }
 
-    // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    // Validate file size (max 10MB)
+    const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
-      throw new Error('Image size must be less than 5MB');
+      throw new Error('Image size must be less than 10MB');
     }
 
     // Sanitize team name for folder path
@@ -26,15 +26,15 @@ export async function uploadPlayerPhoto(file, teamName, playerNumber) {
       .toLowerCase()
       .substring(0, 50);
 
-    // Create unique filename with timestamp
+        // Create unique filename with timestamp
     const timestamp = Date.now();
     const fileExt = file.name.split('.').pop();
     const fileName = `${playerNumber}-${timestamp}.${fileExt}`;
-    const filePath = `player-photos/${sanitizedTeamName}/${fileName}`;
+    const filePath = `${sanitizedTeamName}/${fileName}`;
 
     // Upload to Supabase Storage
     const { error } = await supabase.storage
-      .from('tournament-assets') // Make sure this bucket exists in Supabase
+      .from('player-photos') // Using the dedicated player-photos bucket
       .upload(filePath, file, {
         cacheControl: '3600',
         upsert: false
@@ -47,7 +47,7 @@ export async function uploadPlayerPhoto(file, teamName, playerNumber) {
 
     // Get public URL
     const { data: urlData } = supabase.storage
-      .from('tournament-assets')
+      .from('player-photos')
       .getPublicUrl(filePath);
 
     if (!urlData?.publicUrl) {

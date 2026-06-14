@@ -2,16 +2,18 @@ import { createClient } from '@supabase/supabase-js';
 import { getEntryFee } from './utils/priceManager';
 
 // Supabase configuration
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.REACT_APP_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.REACT_APP_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Missing Supabase environment variables!');
   console.log('Please check your .env file');
 }
 
-// Create Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Create Supabase client safely to prevent module-load crashes if environment variables are missing
+export const supabase = (supabaseUrl && supabaseAnonKey)
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null;
 
 // Helper function to get registration count for current tournament
 export async function getRegistrationCount(tournamentId = '2v2-may-2026') {
@@ -102,13 +104,45 @@ export async function saveRegistration(paymentReference, formData, paymentGatewa
   }
 }
 
+// Helper function to save spectator ticket
+export async function saveSpectatorTicket(paymentReference, formData, amountPaid) {
+  try {
+    const { data, error } = await supabase
+      .from('spectator_tickets')
+      .insert([
+        {
+          payment_reference: paymentReference,
+          buyer_name: formData.buyerName,
+          buyer_email: formData.buyerEmail,
+          buyer_phone: formData.buyerPhone,
+          ticket_quantity: parseInt(formData.ticketQuantity, 10),
+          amount_paid: amountPaid,
+          payment_status: 'completed',
+          tournament_id: '2v2-july-2026'
+        }
+      ])
+      .select();
+
+    if (error) {
+      console.error('Error saving spectator ticket:', error);
+      throw error;
+    }
+
+    console.log('Spectator ticket saved successfully:', data);
+    return data;
+  } catch (error) {
+    console.error('Save spectator ticket error:', error);
+    throw error;
+  }
+}
+
+
 // Helper function to get all registrations (for admin)
 export async function getAllRegistrations() {
   try {
     const { data, error } = await supabase
       .from('registrations')
       .select('*')
-      .eq('payment_status', 'completed')
       .order('created_at', { ascending: false });
 
     if (error) {

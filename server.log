@@ -1,0 +1,14 @@
+
+> syncplay-esports@1.0.0 dev
+> next dev
+
+  ▲ Next.js 14.2.3
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 5.8s
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.3s (533 modules)
+ GET /news/10 404 in 2701ms
+[?25h

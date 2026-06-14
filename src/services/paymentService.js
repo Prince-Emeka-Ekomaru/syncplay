@@ -82,8 +82,10 @@ export function isGatewayAvailable(gateway) {
  * Creates payment link via backend API (which uses secret key)
  */
 export async function initializeKoraPayment(config) {
-  const amount = config.amount / 100; // Convert from kobo to Naira
-  const callbackUrl = `${window.location.origin}${window.location.pathname}?payment=kora&ref=${config.reference}`;
+  const amount = config.amount / 100; // Convert kobo → Naira (Kora Pay expects Naira)
+  // Use current page path so /spectator-register and /register each return to themselves
+  const callbackUrl = config.redirectUrl ||
+    `${window.location.origin}${window.location.pathname}?payment=kora&ref=${config.reference}`;
   
   // Store payment reference for verification after redirect
   sessionStorage.setItem('kora_payment_reference', config.reference);

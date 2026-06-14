@@ -1,0 +1,690 @@
+.weekly-stats-admin-page {
+  min-height: calc(100vh - 70px);
+  background: #09090b;
+  color: #f4f4f5;
+  padding: 3rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.weekly-stats-admin-page::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(230, 57, 70, 0.05) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.weekly-stats-admin-page .admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.weekly-stats-admin-page .portal-header {
+  margin-bottom: 2.5rem;
+}
+
+.weekly-stats-admin-page .portal-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(135deg, #ffffff 30%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.weekly-stats-admin-page .portal-header p {
+  color: #a1a1aa;
+  font-size: 0.95rem;
+  max-width: 800px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Glass panel baseline */
+.weekly-stats-admin-page .glass-panel {
+  background: rgba(15, 15, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 2rem;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Tabs */
+.weekly-stats-admin-page .methods-tabs {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 2rem;
+  padding-bottom: 0.1rem;
+}
+
+.weekly-stats-admin-page .method-tab {
+  background: none;
+  border: none;
+  color: #71717a;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.weekly-stats-admin-page .method-tab i {
+  font-size: 1rem;
+}
+
+.weekly-stats-admin-page .method-tab:hover {
+  color: #e4e4e7;
+}
+
+.weekly-stats-admin-page .method-tab.active {
+  color: #e63946;
+}
+
+.weekly-stats-admin-page .method-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.1rem;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #e63946;
+  box-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
+}
+
+/* Forms */
+.weekly-stats-admin-page .manual-form h3,
+.weekly-stats-admin-page .csv-upload-section h3,
+.weekly-stats-admin-page .ocr-scanner-section h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  color: #f4f4f5;
+}
+
+.weekly-stats-admin-page .instruction-text {
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.weekly-stats-admin-page .form-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.weekly-stats-admin-page .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.weekly-stats-admin-page .form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #a1a1aa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.weekly-stats-admin-page .form-group select,
+.weekly-stats-admin-page .form-group input[type="text"] {
+  background: rgba(30, 30, 40, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.weekly-stats-admin-page .form-group select:focus,
+.weekly-stats-admin-page .form-group input[type="text"]:focus {
+  border-color: #e63946;
+  box-shadow: 0 0 8px rgba(230, 57, 70, 0.15);
+}
+
+.weekly-stats-admin-page .custom-tag-toggle {
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Custom Checkbox */
+.weekly-stats-admin-page .checkbox-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 28px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  user-select: none;
+}
+
+.weekly-stats-admin-page .checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.weekly-stats-admin-page .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: rgba(30, 30, 40, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.weekly-stats-admin-page .checkbox-container:hover input ~ .checkmark {
+  background-color: rgba(50, 50, 60, 0.8);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.weekly-stats-admin-page .checkbox-container input:checked ~ .checkmark {
+  background-color: #e63946;
+  border-color: #e63946;
+}
+
+.weekly-stats-admin-page .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.weekly-stats-admin-page .checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.weekly-stats-admin-page .checkbox-container .checkmark:after {
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Sliders */
+.weekly-stats-admin-page .attributes-sliders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.weekly-stats-admin-page .slider-item {
+  background: rgba(20, 20, 25, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.weekly-stats-admin-page .slider-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #a1a1aa;
+}
+
+.weekly-stats-admin-page .slider-val {
+  color: #e63946;
+  font-size: 1rem;
+}
+
+.weekly-stats-admin-page .text-glow {
+  text-shadow: 0 0 10px rgba(230, 57, 70, 0.4);
+}
+
+.weekly-stats-admin-page .slider-item input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+.weekly-stats-admin-page .slider-item input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e63946;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(230, 57, 70, 0.6);
+  transition: transform 0.1s ease;
+}
+
+.weekly-stats-admin-page .slider-item input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Drop Zone */
+.weekly-stats-admin-page .file-drop-zone {
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 3rem 2rem;
+  text-align: center;
+  background: rgba(20, 20, 25, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.weekly-stats-admin-page .file-drop-zone input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.weekly-stats-admin-page .file-drop-zone:hover {
+  border-color: #e63946;
+  background: rgba(230, 57, 70, 0.02);
+}
+
+.weekly-stats-admin-page .file-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: #a1a1aa;
+}
+
+.weekly-stats-admin-page .file-label i {
+  font-size: 2.2rem;
+  color: #e63946;
+  text-shadow: 0 0 15px rgba(230, 57, 70, 0.3);
+}
+
+.weekly-stats-admin-page .file-label span {
+  font-size: 0.9rem;
+}
+
+/* OCR scanner specific */
+.weekly-stats-admin-page .ocr-progress-container {
+  margin-bottom: 2rem;
+  background: rgba(20, 20, 25, 0.5);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.weekly-stats-admin-page .ocr-status-lbl {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #a1a1aa;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.weekly-stats-admin-page .ocr-progress-bar-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.weekly-stats-admin-page .ocr-progress-bar-fill {
+  height: 100%;
+  background: #e63946;
+  box-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
+  transition: width 0.3s ease;
+}
+
+.weekly-stats-admin-page .info-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #a1a1aa;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-radius: 4px;
+  padding: 0.4rem 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.weekly-stats-admin-page .info-note i {
+  color: #3b82f6;
+}
+
+/* Tables and Preview */
+.weekly-stats-admin-page .preview-container {
+  margin-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 1.5rem;
+}
+
+.weekly-stats-admin-page .preview-container h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  color: #f4f4f5;
+}
+
+.weekly-stats-admin-page .table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+/* Ensure the preview table takes full natural width without squishing columns */
+.weekly-stats-admin-page .preview-table-wrapper {
+  overflow-x: auto;
+}
+.weekly-stats-admin-page .preview-table.editable-table {
+  min-width: 960px;
+  table-layout: fixed;
+}
+
+.weekly-stats-admin-page .preview-table,
+.weekly-stats-admin-page .ratings-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.weekly-stats-admin-page .preview-table th,
+.weekly-stats-admin-page .ratings-table th {
+  background: rgba(25, 25, 30, 0.9);
+  padding: 0.65rem 0.5rem;
+  color: #a1a1aa;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Gamer Tag column wider, stat columns compact */
+.weekly-stats-admin-page .preview-table.editable-table th:first-child,
+.weekly-stats-admin-page .preview-table.editable-table td:first-child {
+  width: 130px;
+  min-width: 110px;
+  text-align: left;
+  padding-left: 0.75rem;
+}
+
+.weekly-stats-admin-page .preview-table.editable-table th:not(:first-child),
+.weekly-stats-admin-page .preview-table.editable-table td:not(:first-child) {
+  width: 68px;
+  min-width: 60px;
+  text-align: center;
+}
+
+.weekly-stats-admin-page .preview-table td,
+.weekly-stats-admin-page .ratings-table td {
+  padding: 0.5rem 0.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: #e4e4e7;
+  vertical-align: middle;
+}
+
+.weekly-stats-admin-page .ratings-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.weekly-stats-admin-page .table-cell-input {
+  background: rgba(30, 30, 40, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 0.3rem 0.4rem;
+  color: #ffffff;
+  font-size: 0.82rem;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  text-align: center;
+  outline: none;
+  /* Hide spin arrows to save space */
+  -moz-appearance: textfield;
+}
+
+.weekly-stats-admin-page .table-cell-input::-webkit-inner-spin-button,
+.weekly-stats-admin-page .table-cell-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.weekly-stats-admin-page .table-cell-input:focus {
+  border-color: #e63946;
+  background: rgba(30, 30, 40, 1);
+  box-shadow: 0 0 0 2px rgba(230,57,70,0.15);
+}
+
+/* Gamer tag input left aligned */
+.weekly-stats-admin-page .bold-input {
+  font-weight: 700;
+  color: #e63946;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+/* Rating inputs (ATT-CLU) — orange tint to show they are auto-calculated */
+.weekly-stats-admin-page .auto-calc-input {
+  background: rgba(244, 162, 97, 0.07);
+  border-color: rgba(244, 162, 97, 0.25);
+  color: #f4a261;
+  font-weight: 600;
+}
+
+.weekly-stats-admin-page .auto-calc-input:focus {
+  border-color: #f4a261;
+  background: rgba(244, 162, 97, 0.12);
+  box-shadow: 0 0 0 2px rgba(244,162,97,0.15);
+}
+
+.weekly-stats-admin-page .bold-input {
+  font-weight: 700;
+  color: #e63946;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+/* Button stylings */
+.weekly-stats-admin-page .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.weekly-stats-admin-page .btn-primary {
+  background: #e63946;
+  color: #ffffff;
+  box-shadow: 0 4px 14px 0 rgba(230, 57, 70, 0.3);
+}
+
+.weekly-stats-admin-page .btn-primary:hover:not(:disabled) {
+  background: #f24e5b;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 rgba(230, 57, 70, 0.4);
+}
+
+.weekly-stats-admin-page .btn-primary:disabled {
+  background: rgba(230, 57, 70, 0.4);
+  color: rgba(255, 255, 255, 0.6);
+  cursor: not-allowed;
+}
+
+.weekly-stats-admin-page .btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e4e4e7;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.weekly-stats-admin-page .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.weekly-stats-admin-page .form-actions-row,
+.weekly-stats-admin-page .submit-action-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Feedback banners */
+.weekly-stats-admin-page .banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.weekly-stats-admin-page .error-banner {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.weekly-stats-admin-page .error-banner i {
+  color: #ef4444;
+}
+
+.weekly-stats-admin-page .success-banner {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+.weekly-stats-admin-page .success-banner i {
+  color: #10b981;
+}
+
+/* Existing ratings list styling */
+.weekly-stats-admin-page .no-ratings-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  color: #71717a;
+}
+
+.weekly-stats-admin-page .no-ratings-state i {
+  font-size: 2.5rem;
+}
+
+.weekly-stats-admin-page .no-ratings-state p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.weekly-stats-admin-page .badge-ovr {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: rgba(230, 57, 70, 0.15);
+  border: 1px solid rgba(230, 57, 70, 0.3);
+  border-radius: 50%;
+  color: #e63946;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-shadow: 0 0 5px rgba(230, 57, 70, 0.3);
+}
+
+.weekly-stats-admin-page .text-center {
+  text-align: center;
+}
+
+.weekly-stats-admin-page .action-col {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.weekly-stats-admin-page .btn-action {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.4rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weekly-stats-admin-page .btn-edit {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.weekly-stats-admin-page .btn-edit:hover {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+.weekly-stats-admin-page .btn-delete {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.1);
+}
+
+.weekly-stats-admin-page .btn-delete:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.weekly-stats-admin-page .ratings-loading {
+  text-align: center;
+  padding: 2rem;
+  color: #a1a1aa;
+}

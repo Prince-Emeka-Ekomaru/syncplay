@@ -1,11 +1,19 @@
+"use client";
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
 import './Footer.css';
+import Image from 'next/image';
 
 const Footer = () => {
+  const pathname = usePathname();
   const { currentLanguage } = useLanguage();
+  
+  if (pathname === '/community' || pathname.startsWith('/admin')) {
+    return null;
+  }
   const t = translations[currentLanguage];
   
   return (
@@ -13,21 +21,20 @@ const Footer = () => {
       <div className="footer-container container">
         <div className="footer-top">
           <div className="footer-logo">
-            <img src="/syncplay nobg (1).png" alt="syncplay eSports" />
+            <Image src="/syncplay-nobg-1.png" alt="syncplay eSports" width={200} height={45} style={{ width: 'auto', height: '45px' }} />
           </div>
 
           <div className="footer-links">
             <div className="footer-column">
               <h4>{t.navigation}</h4>
               <ul>
-                <li><Link to="/">{t.home}</Link></li>
-                <li><Link to="/events">{t.events}</Link></li>
-                <li><Link to="/tournaments">{t.tournaments}</Link></li>
-                <li><Link to="/players">{t.players}</Link></li>
-                <li><Link to="/news">{t.news}</Link></li>
-                <li><Link to="/gallery">{t.gallery}</Link></li>
-                <li><Link to="/videos">{t.videos}</Link></li>
-                <li><Link to="/contact">{t.contact}</Link></li>
+                <li><Link href="/">{t.home}</Link></li>
+                <li><Link href="/tournaments">{t.tournaments}</Link></li>
+                <li><Link href="/players">{t.playerLeaderboard || 'Leaderboard'}</Link></li>
+                <li><Link href="/gallery">{t.gallery || 'Media'}</Link></li>
+                <li><Link href="/community">{t.community}</Link></li>
+                <li><Link href="/news">{t.news}</Link></li>
+                <li><Link href="/contact">{t.contact}</Link></li>
               </ul>
             </div>
 
@@ -43,9 +50,9 @@ const Footer = () => {
             <div className="footer-column">
               <h4>{t.legal}</h4>
               <ul>
-                <li><Link to="/privacy">{t.privacyPolicy}</Link></li>
-                <li><Link to="/terms">{t.termsAndConditions}</Link></li>
-                <li><Link to="/tournament-rules">{t.tournamentRules}</Link></li>
+                <li><Link href="/privacy">{t.privacyPolicy}</Link></li>
+                <li><Link href="/terms">{t.termsAndConditions}</Link></li>
+                <li><Link href="/tournaments?tab=rules">{t.tournamentRules}</Link></li>
               </ul>
             </div>
 

@@ -1,0 +1,358 @@
+/* News Admin Portal styling */
+
+.admin-news-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.news-editor-card,
+.articles-list-card {
+  background: var(--color-white);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f1f1;
+}
+
+.news-editor-card h3,
+.articles-list-card h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  color: var(--color-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1.5px solid #f5f5f5;
+}
+
+.news-editor-card h3 i,
+.articles-list-card h3 i {
+  color: var(--color-primary-red);
+}
+
+.editor-form .form-group textarea {
+  font-family: monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.image-upload-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fafafa;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1.5px dashed #ccc;
+}
+
+.image-upload-controls input[type="file"] {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.cover-preview {
+  margin-top: 1rem;
+  max-width: 100%;
+  height: 140px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #eee;
+}
+
+.cover-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.loading-articles,
+.no-articles {
+  padding: 3rem;
+  text-align: center;
+  color: #888;
+}
+
+.articles-scroller {
+  max-height: 70vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-right: 0.5rem;
+}
+
+.admin-article-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #fafafa;
+  border: 1px solid #f1f1f1;
+  transition: all 0.2s ease;
+}
+
+.admin-article-item:hover {
+  background: #f5f5f5;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.art-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.art-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.art-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.art-info h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.art-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.badge-cat {
+  background: #e1f5fe;
+  color: #0288d1;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.btn-delete-art {
+  background: transparent;
+  border: none;
+  color: #ccc;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-delete-art:hover {
+  color: #e63946;
+  background: rgba(230, 57, 70, 0.05);
+}
+
+/* Login Card Portal Styling */
+.admin-login-page {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1.5rem;
+  background: radial-gradient(circle at top left, #1e0508, #0e0e0e 70%);
+}
+
+.login-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(rgba(230, 57, 70, 0.03) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(90deg, rgba(230, 57, 70, 0.03) 1px, transparent 1px) 0 0 / 40px 40px;
+  pointer-events: none;
+}
+
+.login-card-container {
+  max-width: 480px;
+  width: 100%;
+  z-index: 2;
+}
+
+.login-card {
+  background: #18181b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 3rem;
+  color: var(--color-white);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.login-card h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.login-card p {
+  color: #a1a1aa;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.login-form .form-group label {
+  color: #d4d4d8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.login-form .form-group input {
+  background: #27272a;
+  border: 1.5px solid #3f3f46;
+  color: var(--color-white);
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.login-form .form-group input:focus {
+  border-color: var(--color-primary-red);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
+}
+
+@media (max-width: 992px) {
+  .admin-news-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Editor Form Styles */
+.editor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.editor-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.editor-form label {
+  color: var(--color-dark);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.editor-form label .required {
+  color: var(--color-primary-red);
+  margin-left: 0.15rem;
+}
+
+.editor-form input[type="text"],
+.editor-form input[type="email"],
+.editor-form select,
+.editor-form textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  background: #fcfcfc;
+  border: 1.5px solid #e2e8f0;
+  color: var(--color-dark);
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  outline: none;
+  font-family: inherit;
+}
+
+.editor-form input[type="text"]:focus,
+.editor-form input[type="email"]:focus,
+.editor-form select:focus,
+.editor-form textarea:focus {
+  border-color: var(--color-primary-red);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
+}
+
+.editor-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.editor-form .form-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn-cancel-edit {
+  background: #f4f4f5;
+  color: #27272a;
+  border: 1px solid #e4e4e7;
+  padding: 0.875rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel-edit:hover {
+  background: #e4e4e7;
+}
+
+@media (max-width: 576px) {
+  .editor-form .form-row {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+.art-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.btn-edit-art {
+  background: transparent;
+  border: none;
+  color: #ccc;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-edit-art:hover {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.05);
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { getRegistrationCount } from '../supabaseClient';
 
 /**
@@ -15,7 +15,7 @@ export const useRegistrationCount = (realtime = false, interval = 30000, tournam
 
   const MAX_SLOTS = 12;
 
-  const fetchCount = useCallback(async () => {
+  const fetchCount = async () => {
     try {
       const currentCount = await getRegistrationCount(tournamentId);
       setCount(currentCount);
@@ -27,7 +27,7 @@ export const useRegistrationCount = (realtime = false, interval = 30000, tournam
     } finally {
       setLoading(false);
     }
-  }, [tournamentId]);
+  };
 
   useEffect(() => {
     // Initial fetch
@@ -38,7 +38,7 @@ export const useRegistrationCount = (realtime = false, interval = 30000, tournam
       const intervalId = setInterval(fetchCount, interval);
       return () => clearInterval(intervalId);
     }
-  }, [realtime, interval, fetchCount]);
+  }, [realtime, interval]);
 
   return {
     count,

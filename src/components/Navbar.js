@@ -1,10 +1,14 @@
+"use client";
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations, languages } from '../translations/translations';
 import './Navbar.css';
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
@@ -40,26 +44,32 @@ const Navbar = () => {
 
   const currentLang = languages.find(lang => lang.code === currentLanguage);
 
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
+
   return (
     <>
       {/* Vertical Social Sidebar */}
-      <div className={`social-sidebar ${isMobileMenuOpen ? 'hidden' : ''}`}>
-        <a href="https://www.instagram.com/syncplay_esports/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <i className="fab fa-instagram"></i>
-        </a>
-        <a href="https://www.tiktok.com/@syncplay_esport" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-          <i className="fab fa-tiktok"></i>
-        </a>
-        <a href="https://discord.gg/utstb8rGgM" target="_blank" rel="noopener noreferrer" aria-label="Discord">
-          <i className="fab fa-discord"></i>
-        </a>
-        <a href="https://www.youtube.com/@syncplayEsports" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-          <i className="fab fa-youtube"></i>
-        </a>
-        <a href="https://x.com/SyncplayEsport" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-          <i className="fab fa-twitter"></i>
-        </a>
-      </div>
+      {pathname !== '/community' && !pathname.startsWith('/admin') && (
+        <div className={`social-sidebar ${isMobileMenuOpen ? 'hidden' : ''}`}>
+          <a href="https://www.instagram.com/syncplay_esports/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <i className="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.tiktok.com/@syncplay_esport" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <i className="fab fa-tiktok"></i>
+          </a>
+          <a href="https://discord.gg/utstb8rGgM" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+            <i className="fab fa-discord"></i>
+          </a>
+          <a href="https://www.youtube.com/@syncplayEsports" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <i className="fab fa-youtube"></i>
+          </a>
+          <a href="https://x.com/SyncplayEsport" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <i className="fab fa-twitter"></i>
+          </a>
+        </div>
+      )}
 
       {/* Invisible Click Outside Area */}
       {isMobileMenuOpen && (
@@ -68,8 +78,34 @@ const Navbar = () => {
 
       <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="navbar-container">
-          {/* Left Side: Hamburger Only */}
-          <div className="navbar-left">
+          {/* Left Navigation (Desktop Only) */}
+          <div className="navbar-desktop-nav desktop-nav-left">
+            <ul className="desktop-nav-list">
+              <li className="nav-item">
+                <Link href="/" className={`desktop-nav-link ${pathname === '/' ? 'active' : ''}`}>
+                  {t.home}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link href="/tournaments" className={`desktop-nav-link ${pathname.startsWith('/tournaments') ? 'active' : ''}`}>
+                  {t.tournaments}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link href="/players" className={`desktop-nav-link ${pathname.startsWith('/players') ? 'active' : ''}`}>
+                  {t.playerLeaderboard || 'LEADERBOARD'}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link href="/gallery" className={`desktop-nav-link ${pathname.startsWith('/gallery') ? 'active' : ''}`}>
+                  {t.gallery || 'MEDIA'}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Left Side: Hamburger Only (Mobile Only) */}
+          <div className="navbar-left mobile-only">
             <button 
               className={`navbar-toggle ${isMobileMenuOpen ? 'active' : ''}`}
               onClick={toggleMobileMenu}
@@ -81,10 +117,30 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* Centered Logo */}
-          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-            <img src="/syncplay nobg (1).png" alt="syncplay eSports" />
+          <Link href="/" className="navbar-logo" onClick={closeMobileMenu}>
+            <Image src="/syncplay-nobg-1.png" alt="syncplay eSports" width={200} height={60} style={{ width: '95%', height: '95%', objectFit: 'contain' }} priority />
           </Link>
+
+          {/* Right Navigation (Desktop Only) */}
+          <div className="navbar-desktop-nav desktop-nav-right">
+            <ul className="desktop-nav-list">
+              <li className="nav-item">
+                <Link href="/community" className={`desktop-nav-link ${pathname.startsWith('/community') ? 'active' : ''}`}>
+                  {t.community}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link href="/news" className={`desktop-nav-link ${pathname.startsWith('/news') ? 'active' : ''}`}>
+                  {t.news}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link href="/contact" className={`desktop-nav-link ${pathname === '/contact' ? 'active' : ''}`}>
+                  {t.contacts || 'CONTACT'}
+                </Link>
+              </li>
+            </ul>
+          </div>
 
           {/* Mobile Menu Overlay */}
           <div className={`navbar-menu ${isMobileMenuOpen ? 'active' : ''}`}>
@@ -115,85 +171,49 @@ const Navbar = () => {
             </div>
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link to="/" className="nav-link" onClick={closeMobileMenu}>
+                <Link href="/" className="nav-link" onClick={closeMobileMenu}>
                   {t.home}
                 </Link>
               </li>
-              <li className="nav-item nav-item-dropdown">
-                <div className="nav-link nav-link-with-dropdown">
+              <li className="nav-item">
+                <Link href="/tournaments" className="nav-link" onClick={closeMobileMenu}>
                   {t.tournaments}
-                </div>
-                <div className="nav-dropdown-mobile">
-                  {/* Commented out - Classic League and Weekend Tournaments removed */}
-                  {/* <Link to="/tournaments#classic" className="dropdown-item" onClick={closeMobileMenu}>
-                    {t.classicLeague}
-                  </Link>
-                  <Link to="/tournaments#weekend" className="dropdown-item" onClick={closeMobileMenu}>
-                    {t.weekendTournaments}
-                  </Link> */}
-                  <Link to="/news" className="dropdown-item" onClick={closeMobileMenu}>
-                    {t.archives}
-                  </Link>
-                </div>
-              </li>
-              <li className="nav-item">
-                <Link to="/events" className="nav-link" onClick={closeMobileMenu}>
-                  {t.events}
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/players" className="nav-link" onClick={closeMobileMenu}>
-                  {t.players}
+                <Link href="/players" className="nav-link" onClick={closeMobileMenu}>
+                  {t.playerLeaderboard || 'LEADERBOARD'}
                 </Link>
               </li>
-              <li className="nav-item nav-item-dropdown">
-                <div className="nav-link nav-link-with-dropdown">
-                  {t.aboutUs}
-                </div>
-                <div className="nav-dropdown-mobile">
-                  <Link to="/events" className="dropdown-item" onClick={closeMobileMenu}>
-                    {t.eventCalendars}
-                  </Link>
-                  <Link to="/tournaments" className="dropdown-item" onClick={closeMobileMenu}>
-                    {t.tournamentRegulations}
-                  </Link>
-                  <Link to="/tournaments" className="dropdown-item" onClick={closeMobileMenu}>
-                    {t.gameSettings}
-                  </Link>
-                  <Link to="/contact" className="dropdown-item" onClick={closeMobileMenu}>
-                    {t.contacts}
-                  </Link>
-                </div>
+              <li className="nav-item">
+                <Link href="/gallery" className="nav-link" onClick={closeMobileMenu}>
+                  {t.gallery || 'MEDIA'}
+                </Link>
               </li>
               <li className="nav-item">
-                <Link to="/news" className="nav-link" onClick={closeMobileMenu}>
+                <Link href="/community" className="nav-link" onClick={closeMobileMenu}>
+                  {t.community}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link href="/news" className="nav-link" onClick={closeMobileMenu}>
                   {t.news}
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/gallery" className="nav-link" onClick={closeMobileMenu}>
-                  {t.gallery}
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/videos" className="nav-link" onClick={closeMobileMenu}>
-                  {t.videos}
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/tournament-results" className="nav-link" onClick={closeMobileMenu}>
-                  {t.tournamentResults}
+                <Link href="/contact" className="nav-link" onClick={closeMobileMenu}>
+                  {t.contacts || 'CONTACT'}
                 </Link>
               </li>
             </ul>
 
             {/* Mobile Menu CTA Buttons */}
             <div className="mobile-menu-actions">
-              <Link to="/events" className="mobile-btn mobile-btn-primary" onClick={closeMobileMenu}>
-                {t.events}
+              <Link href="/register" className="mobile-btn mobile-btn-primary" onClick={closeMobileMenu}>
+                {t.joinTournaments || 'REGISTER TEAM'}
               </Link>
-              <Link to="/register" className="mobile-btn mobile-btn-secondary" onClick={closeMobileMenu}>
-                {t.joinTournaments}
+              <Link href="/spectator-register" className="mobile-btn mobile-btn-secondary" onClick={closeMobileMenu}>
+                {t.spectatorTickets || 'SPECTATOR TICKET'}
               </Link>
             </div>
 

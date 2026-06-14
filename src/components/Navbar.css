@@ -672,3 +672,76 @@
     left: 0;
   }
 }
+
+/* Desktop Navigation Links */
+.navbar-desktop-nav {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.desktop-nav-left {
+  justify-content: flex-end;
+  padding-right: 120px; /* Space for the centered logo */
+}
+
+.desktop-nav-right {
+  justify-content: flex-start;
+  padding-left: 120px; /* Space for the centered logo */
+}
+
+.desktop-nav-list {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.desktop-nav-link {
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.desktop-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-primary-red);
+  transition: width 0.3s ease;
+}
+
+.desktop-nav-link:hover::after,
+.desktop-nav-link.active::after {
+  width: 100%;
+}
+
+.desktop-nav-link:hover,
+.desktop-nav-link.active {
+  color: var(--color-primary-red);
+}
+
+@media (max-width: 968px) {
+  .navbar-desktop-nav {
+    display: none;
+  }
+  .mobile-only {
+    display: flex !important;
+  }
+}
+
+/* Ensure hamburger is hidden on desktop by default if needed */
+@media (min-width: 969px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
