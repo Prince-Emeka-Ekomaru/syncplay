@@ -625,7 +625,19 @@ const CommunityChat = () => {
         // Pre-fetch sender profiles for these messages
         const senderIds = [...new Set(data.map(m => m.sender_id))];
         await Promise.all(senderIds.map(id => fetchSenderProfile(id)));
+        
+        const container = messagesContainerRef.current;
+        const prevScrollHeight = container ? container.scrollHeight : 0;
+
         setMessages(prev => isLoadMore ? [...reversedData, ...prev] : reversedData);
+        
+        if (isLoadMore) {
+          setTimeout(() => {
+            if (messagesContainerRef.current) {
+              messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight - prevScrollHeight;
+            }
+          }, 0);
+        }
       } else if (error) {
         console.error('Fetch messages error:', error);
       }
