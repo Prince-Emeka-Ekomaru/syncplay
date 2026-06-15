@@ -1478,3 +1478,243 @@
   border-color: #e63946;
   color: #e63946;
 }
+
+/* WhatsApp Sidebar Styles */
+.whatsapp-style-sidebar {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.chat-filters {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: #121215;
+  border-bottom: 1px solid #27272a;
+}
+
+.filter-pill {
+  background-color: #27272a;
+  color: #a1a1aa;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.filter-pill.active {
+  background-color: #059669; /* WhatsApp Green */
+  color: #ffffff;
+}
+
+.filter-count {
+  background-color: #ffffff;
+  color: #059669;
+  border-radius: 50%;
+  padding: 0 5px;
+  font-size: 0.75rem;
+}
+
+.unified-chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.whatsapp-chat-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #1f1f22;
+  transition: background 0.2s;
+  gap: 12px;
+}
+
+.whatsapp-chat-row:hover {
+  background-color: #1c1c21;
+}
+
+.whatsapp-chat-row.active {
+  background-color: #27272a;
+}
+
+.chat-row-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #3f3f46;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #e4e4e7;
+}
+
+.global-avatar {
+  background-color: #059669;
+}
+
+.chat-row-details {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.chat-row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.chat-row-header .room-name {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #f4f4f5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-row-header .chat-time {
+  font-size: 0.75rem;
+  color: #a1a1aa;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.chat-time.unread-time {
+  color: #059669;
+  font-weight: 600;
+}
+
+.chat-row-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview-text {
+  font-size: 0.9rem;
+  color: #a1a1aa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.whatsapp-unread-badge {
+  background-color: #059669;
+  color: #ffffff;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0 6px;
+  margin-left: 8px;
+}
+
+.new-chat-fab {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #059669;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: transform 0.2s;
+  z-index: 10;
+}
+
+.new-chat-fab:hover {
+  transform: scale(1.05);
+}
+
+.new-chat-modal {
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.close-modal-btn {
+  background: transparent;
+  border: none;
+  color: #a1a1aa;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.create-group-row-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #f4f4f5;
+  padding: 12px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 1px solid #27272a;
+  margin-bottom: 1rem;
+}
+
+.group-icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.community-contacts-list h4 {
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  margin-bottom: 12px;
+}
+
+.whatsapp-contact-row {
+  padding: 12px 0;
+  border-bottom: 1px solid #1f1f22;
+  cursor: pointer;
+}
+.whatsapp-contact-row:hover {
+  background-color: #1c1c21;
+}

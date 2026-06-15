@@ -42,6 +42,8 @@ const CommunityChat = () => {
   const [showAddMembers, setShowAddMembers] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeDropdownRoomId, setActiveDropdownRoomId] = useState(null);
+  const [chatFilter, setChatFilter] = useState('all');
+  const [showNewChatModal, setShowNewChatModal] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   
   // Chat features states
@@ -371,6 +373,13 @@ const CommunityChat = () => {
       )
       .on(
         'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'chat_rooms' },
+        (payload) => {
+          setRooms(prev => prev.map(r => r.id === payload.new.id ? { ...r, last_message_at: payload.new.last_message_at, last_message_preview: payload.new.last_message_preview, last_message_sender_id: payload.new.last_message_sender_id } : r));
+        }
+      )
+      .on(
+        'postgres_changes',
         { event: 'DELETE', schema: 'public', table: 'chat_rooms' },
         (payload) => {
           console.log('Room deleted from server:', payload.old);
@@ -633,7 +642,31 @@ const CommunityChat = () => {
     }
   };
 
+
+  // Sort and filter rooms for WhatsApp UI
+  const getSortedRooms = () => {
+    let sorted = [...rooms];
+    
+    // Sort by last_message_at descending (or created_at if null)
+    sorted.sort((a, b) => {
+      const timeA = new Date(a.last_message_at || a.created_at).getTime();
+      const timeB = new Date(b.last_message_at || b.created_at).getTime();
+      return timeB - timeA;
+    });
+
+    if (chatFilter === 'unread') {
+      sorted = sorted.filter(r => unreadCounts[r.id] > 0);
+    } else if (chatFilter === 'groups') {
+      sorted = sorted.filter(r => r.room_type === 'group');
+    }
+
+    return sorted;
+  };
+
+  const sortedRooms = getSortedRooms();
+
   // Change Active Room
+
   const handleRoomSelect = (room) => {
     setActiveRoom(room);
     setMessages([]);
@@ -1290,76 +1323,96 @@ const CommunityChat = () => {
           </div>
         </div>
 
-        <div className="sidebar-rooms">
-          {/* Chat Rooms Section */}
-          <div className="rooms-title-section">
-            <h4>CHAT ROOMS</h4>
-            <button className="create-room-btn" onClick={() => setShowCreateRoom(true)} title="Create New Group Chat">
-              <i className="fas fa-plus"></i>
+        <div className="sidebar-rooms whatsapp-style-sidebar">
+          {/* WhatsApp Style Chat Filters */}
+          <div className="chat-filters">
+            <button className={`filter-pill ${chatFilter === 'all' ? 'active' : ''}`} onClick={() => setChatFilter('all')}>All</button>
+            <button className={`filter-pill ${chatFilter === 'unread' ? 'active' : ''}`} onClick={() => setChatFilter('unread')}>
+              Unread {Object.values(unreadCounts).reduce((a,b)=>a+b, 0) > 0 && <span className="filter-count">{Object.values(unreadCounts).reduce((a,b)=>a+b, 0)}</span>}
             </button>
+            <button className={`filter-pill ${chatFilter === 'groups' ? 'active' : ''}`} onClick={() => setChatFilter('groups')}>Groups</button>
           </div>
           
-          <ul className="rooms-list">
-            <li 
-              className={`room-item ${activeRoom === null ? 'active' : ''}`}
-              onClick={() => handleRoomSelect(null)}
-            >
-              <i className="fas fa-globe-africa room-icon"></i>
-              <span className="room-name">Global Chat</span>
-            </li>
+          <ul className="rooms-list unified-chat-list">
+            {/* Global Chat Pinned to Top */}
+            {chatFilter !== 'unread' && chatFilter !== 'groups' && (
+              <li 
+                className={`room-item whatsapp-chat-row ${activeRoom === null ? 'active' : ''}`}
+                onClick={() => handleRoomSelect(null)}
+              >
+                <div className="chat-row-avatar global-avatar">
+                  <i className="fas fa-globe-africa"></i>
+                </div>
+                <div className="chat-row-details">
+                  <div className="chat-row-header">
+                    <span className="room-name">Global Chat</span>
+                  </div>
+                  <div className="chat-row-preview">
+                    <span>Public Community Hub</span>
+                  </div>
+                </div>
+              </li>
+            )}
 
-            {rooms.filter(r => r.room_type !== 'dm').map(room => {
+            {sortedRooms.map(room => {
               const isCreator = room.created_by === user?.id;
+              const isGroup = room.room_type !== 'dm';
+              const otherMember = !isGroup ? room.chat_room_members?.find(m => m.user_id !== user?.id) : null;
+              const isOnline = otherMember ? !!onlineUsers[otherMember.user_id] : false;
+              const displayName = getRoomDisplayName(room);
+              const unread = unreadCounts[room.id] > 0 ? unreadCounts[room.id] : 0;
+              const timeDisplay = room.last_message_at ? formatTime(room.last_message_at) : formatTime(room.created_at);
+              
               return (
                 <li 
                   key={room.id}
-                  className={`room-item ${activeRoom?.id === room.id ? 'active' : ''}`}
+                  className={`room-item whatsapp-chat-row ${activeRoom?.id === room.id ? 'active' : ''}`}
                   onClick={() => handleRoomSelect(room)}
                 >
-                  <div className="room-item-content">
-                    <i className={room.is_private ? "fas fa-lock room-icon" : "fas fa-hashtag room-icon"}></i>
-                    <span className="room-name">{room.name}</span>
-                    {unreadCounts[room.id] > 0 && <span className="unread-badge">{unreadCounts[room.id]}</span>}
+                  <div className="chat-row-avatar">
+                    {isGroup ? (
+                      <div className="group-avatar-placeholder">
+                        <i className={room.is_private ? "fas fa-lock" : "fas fa-hashtag"}></i>
+                      </div>
+                    ) : (
+                      <div className="dm-avatar-placeholder">
+                        {displayName.substring(0, 2).toUpperCase()}
+                        <span className={`status-badge-dot ${isOnline ? 'online' : 'offline'}`}></span>
+                      </div>
+                    )}
                   </div>
                   
+                  <div className="chat-row-details">
+                    <div className="chat-row-header">
+                      <span className="room-name">{displayName}</span>
+                      <span className={`chat-time ${unread > 0 ? 'unread-time' : ''}`}>{timeDisplay}</span>
+                    </div>
+                    <div className="chat-row-preview">
+                      <span className="preview-text">
+                        {room.last_message_preview || (isGroup ? 'Group created' : 'Direct Message created')}
+                      </span>
+                      {unread > 0 && <span className="whatsapp-unread-badge">{unread}</span>}
+                    </div>
+                  </div>
+
                   <div className="room-actions-wrapper">
                     <button 
                       type="button" 
                       className="room-action-btn" 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveDropdownRoomId(activeDropdownRoomId === room.id ? null : room.id);
-                      }}
-                      title="Room Actions"
+                      onClick={(e) => { e.stopPropagation(); setActiveDropdownRoomId(activeDropdownRoomId === room.id ? null : room.id); }}
                     >
-                      <i className="fas fa-ellipsis-v"></i>
+                      <i className="fas fa-chevron-down"></i>
                     </button>
                     
                     {activeDropdownRoomId === room.id && (
                       <div className="room-dropdown-menu">
                         {isCreator ? (
-                          <button 
-                            type="button" 
-                            className="dropdown-item delete" 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteRoom(room);
-                              setActiveDropdownRoomId(null);
-                            }}
-                          >
-                            <i className="fas fa-trash-alt"></i> Delete Room
+                          <button type="button" className="dropdown-item delete" onClick={(e) => { e.stopPropagation(); handleDeleteRoom(room); setActiveDropdownRoomId(null); }}>
+                            <i className="fas fa-trash-alt"></i> Delete
                           </button>
                         ) : (
-                          <button 
-                            type="button" 
-                            className="dropdown-item leave" 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleLeaveRoom(room);
-                              setActiveDropdownRoomId(null);
-                            }}
-                          >
-                            <i className="fas fa-sign-out-alt"></i> Leave Room
+                          <button type="button" className="dropdown-item leave" onClick={(e) => { e.stopPropagation(); handleLeaveRoom(room); setActiveDropdownRoomId(null); }}>
+                            <i className="fas fa-sign-out-alt"></i> Leave
                           </button>
                         )}
                       </div>
@@ -1368,110 +1421,19 @@ const CommunityChat = () => {
                 </li>
               );
             })}
-          </ul>
-
-          {/* DM Rooms Section */}
-          <div className="rooms-title-section" style={{ marginTop: '2rem' }}>
-            <h4>DIRECT MESSAGES</h4>
-          </div>
-          
-          <ul className="rooms-list">
-            {rooms.filter(r => r.room_type === 'dm').map(room => {
-              const isCreator = room.created_by === user?.id;
-              return (
-                <li 
-                  key={room.id}
-                  className={`room-item ${activeRoom?.id === room.id ? 'active' : ''}`}
-                  onClick={() => handleRoomSelect(room)}
-                >
-                  <div className="room-item-content">
-                    <div className="dm-avatar-wrapper">
-                      <div className="dm-avatar-placeholder">
-                        {getRoomDisplayName(room).substring(0, 2).toUpperCase()}
-                      </div>
-                      {(() => {
-                        const otherMember = room.chat_room_members?.find(m => m.user_id !== user?.id);
-                        const isOnline = otherMember ? !!onlineUsers[otherMember.user_id] : false;
-                        return <span className={`status-badge-dot ${isOnline ? 'online' : 'offline'}`}></span>;
-                      })()}
-                    </div>
-                    <span className="room-name">{getRoomDisplayName(room)}</span>
-                    {unreadCounts[room.id] > 0 && <span className="unread-badge">{unreadCounts[room.id]}</span>}
-                  </div>
-                  {isCreator && (
-                    <div className="room-actions-wrapper">
-                      <button 
-                        type="button" 
-                        className="room-action-btn" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveDropdownRoomId(activeDropdownRoomId === room.id ? null : room.id);
-                        }}
-                        title="DM Actions"
-                      >
-                        <i className="fas fa-ellipsis-v"></i>
-                      </button>
-                      
-                      {activeDropdownRoomId === room.id && (
-                        <div className="room-dropdown-menu">
-                          <button 
-                            type="button" 
-                            className="dropdown-item delete" 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteRoom(room);
-                              setActiveDropdownRoomId(null);
-                            }}
-                          >
-                            <i className="fas fa-trash-alt"></i> Delete DM
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-            {rooms.filter(r => r.room_type === 'dm').length === 0 && (
-              <li className="no-dms-hint">Click a player below to DM!</li>
+            {sortedRooms.length === 0 && (
+              <li className="no-dms-hint">No chats found in this category.</li>
             )}
           </ul>
-
-          {/* Community Players Section */}
-          <div className="rooms-title-section" style={{ marginTop: '2.5rem' }}>
-            <h4>COMMUNITY PLAYERS</h4>
-          </div>
-          
-          <ul className="players-list">
-            {allProfiles
-              .filter(p => p.id !== user?.id)
-              .map(player => {
-                const isOnline = !!onlineUsers[player.id];
-                return (
-                  <li 
-                    key={player.id} 
-                    className="player-item"
-                    onClick={() => handleStartDM(player.id, player.gamer_tag || player.username)}
-                  >
-                    <div className="player-avatar-wrapper">
-                      <div className="player-avatar">
-                        {player.gamer_tag?.substring(0, 2).toUpperCase() || 'P'}
-                      </div>
-                      <span className={`status-badge-dot ${isOnline ? 'online' : 'offline'}`}></span>
-                    </div>
-                    <div className="player-item-info">
-                      <span className="player-item-tag">{player.gamer_tag || 'Player'}</span>
-                      <span className="player-item-platform">{getPlatformIcon(player.platform)} {player.platform}</span>
-                    </div>
-                  </li>
-                );
-              })}
-          </ul>
         </div>
+        
+        {/* Floating New Chat Button */}
+        <button className="new-chat-fab" onClick={() => setShowNewChatModal(true)} title="New Chat">
+          <i className="fas fa-comment-dots"></i>
+        </button>
       </div>
 
-      {/* Main Chat Area */}
-      <div className={`chat-main ${mobileSidebarOpen ? 'sidebar-open' : ''}`} onClick={() => setMobileSidebarOpen(false)}>
+      {<div className={`chat-main ${mobileSidebarOpen ? 'sidebar-open' : ''}`} onClick={() => setMobileSidebarOpen(false)}>
         <div className="chat-header">
           <h3>
             <button 
@@ -1630,6 +1592,63 @@ const CommunityChat = () => {
           </button>
         </form>
       </div>
+
+
+      {/* New Chat Modal */}
+      {showNewChatModal && (
+        <div className="modal-backdrop">
+          <div className="modal-content new-chat-modal">
+            <div className="modal-header-flex">
+              <h3>New Chat</h3>
+              <button type="button" className="close-modal-btn" onClick={() => setShowNewChatModal(false)}><i className="fas fa-times"></i></button>
+            </div>
+            
+            <button className="create-group-row-btn" onClick={() => { setShowNewChatModal(false); setShowCreateRoom(true); }}>
+              <div className="group-icon-circle"><i className="fas fa-users"></i></div>
+              <span>New Group</span>
+            </button>
+
+            <div className="community-contacts-list">
+              <h4>CONTACTS ON SYNCPLAY</h4>
+              <div className="search-players-box" style={{marginBottom: '1rem'}}>
+                <input type="text" placeholder="Search gamers..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="search-input" />
+                <i className="fas fa-search search-icon"></i>
+              </div>
+
+              <ul className="players-list">
+                {allProfiles
+                  .filter(p => p.id !== user?.id)
+                  .filter(p => {
+                    if (!searchQuery) return true;
+                    const tag = p.gamer_tag || '';
+                    return tag.toLowerCase().includes(searchQuery.toLowerCase());
+                  })
+                  .map(player => {
+                    const isOnline = !!onlineUsers[player.id];
+                    return (
+                      <li 
+                        key={player.id} 
+                        className="player-item whatsapp-contact-row"
+                        onClick={() => { setShowNewChatModal(false); handleStartDM(player.id, player.gamer_tag || player.username); }}
+                      >
+                        <div className="player-avatar-wrapper">
+                          <div className="player-avatar">
+                            {player.gamer_tag?.substring(0, 2).toUpperCase() || 'P'}
+                          </div>
+                          <span className={`status-badge-dot ${isOnline ? 'online' : 'offline'}`}></span>
+                        </div>
+                        <div className="player-item-info">
+                          <span className="player-item-tag">{player.gamer_tag || 'Player'}</span>
+                          <span className="player-item-platform">{getPlatformIcon(player.platform)} {player.platform}</span>
+                        </div>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Create Room Modal */}
       {showCreateRoom && (
