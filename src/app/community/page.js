@@ -1433,7 +1433,7 @@ const CommunityChat = () => {
         </button>
       </div>
 
-      {<div className={`chat-main ${mobileSidebarOpen ? 'sidebar-open' : ''}`} onClick={() => setMobileSidebarOpen(false)}>
+      <div className={`chat-main ${mobileSidebarOpen ? 'sidebar-open' : ''}`} onClick={() => setMobileSidebarOpen(false)}>
         <div className="chat-header">
           <h3>
             <button 
