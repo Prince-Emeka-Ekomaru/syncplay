@@ -1126,8 +1126,7 @@ const CommunityChat = () => {
 
   // Active Chat Dashboard View
   return (
-    <div style={{ backgroundColor: '#09090b', minHeight: '100vh', width: '100%' }}>
-      <div className="community-chat-dashboard">
+    <div className="community-chat-dashboard">
       {/* Sidebar */}
       <div className={`chat-sidebar ${mobileSidebarOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-header">
@@ -1597,7 +1596,6 @@ const CommunityChat = () => {
       )}
 
       {/* Context Menu */}
-      </div>
     </div>
   );
 };
