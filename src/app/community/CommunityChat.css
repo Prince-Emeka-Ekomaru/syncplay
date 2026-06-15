@@ -1445,8 +1445,17 @@
 @media (max-width: 768px) {
   .msg-actions-hover {
     display: flex;
-    opacity: 0.6;
-    transform: scale(0.9);
+    position: relative;
+    top: auto;
+    bottom: auto;
+    right: auto;
+    justify-content: flex-end;
+    opacity: 0.8;
+    transform: scale(0.95);
+    background: transparent;
+    box-shadow: none;
+    margin-top: -5px;
+    margin-bottom: 5px;
   }
 }
 

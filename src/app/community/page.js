@@ -446,7 +446,7 @@ const CommunityChat = () => {
       supabase.removeChannel(profilesSubscription);
       supabase.removeChannel(membershipsSubscription);
     };
-  }, [user, activeRoom]);
+  }, [user?.id, activeRoom?.id]);
 
   // Realtime Presence tracking Effect
   useEffect(() => {
@@ -1507,10 +1507,10 @@ const CommunityChat = () => {
                     )}
                     <div className="message-content-wrapper" tabIndex="0">
                       <div className="msg-meta-header">
-                        {!isMyMessage && activeRoom?.room_type === 'group' && (
+                        {!isMyMessage && (!activeRoom || activeRoom.room_type === 'group') && (
                           <span className="msg-sender" title={senderDisplayName}>{senderDisplayName}</span>
                         )}
-                        {!isMyMessage && activeRoom?.room_type === 'group' && (
+                        {!isMyMessage && (!activeRoom || activeRoom.room_type === 'group') && (
                           <span className="msg-platform">{getPlatformIcon(senderProfile.platform)}</span>
                         )}
                         <span className="msg-time">{formatTime(msg.created_at)}</span>
