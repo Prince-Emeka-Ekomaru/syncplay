@@ -301,6 +301,7 @@ const Register = () => {
         // Upload photos before payment
         let player1PhotoUrl = formData.player1PhotoUrl;
         let player2PhotoUrl = formData.player2PhotoUrl;
+        let finalFormData = { ...formData };
         
         if (formData.player1Photo && !player1PhotoUrl) {
           console.log('Uploading Player 1 photo...');
@@ -309,7 +310,7 @@ const Register = () => {
             formData.teamName,
             'player1'
           );
-          setFormData(prev => ({ ...prev, player1PhotoUrl: player1PhotoUrl }));
+          finalFormData.player1PhotoUrl = player1PhotoUrl;
         }
         
         if (formData.player2Photo && !player2PhotoUrl) {
@@ -319,9 +320,10 @@ const Register = () => {
             formData.teamName,
             'player2'
           );
-          setFormData(prev => ({ ...prev, player2PhotoUrl: player2PhotoUrl }));
+          finalFormData.player2PhotoUrl = player2PhotoUrl;
         }
         
+        setFormData(finalFormData);
         setUploadingPhotos(false);
       } catch (error) {
         setUploadingPhotos(false);
@@ -356,7 +358,7 @@ const Register = () => {
       };
 
       try {
-        sessionStorage.setItem('pending_registration', JSON.stringify(formData));
+        sessionStorage.setItem('pending_registration', JSON.stringify(finalFormData));
         sessionStorage.setItem('selected_gateway', selectedPaymentGateway);
         
         await initializePayment(paymentConfig, selectedPaymentGateway);
