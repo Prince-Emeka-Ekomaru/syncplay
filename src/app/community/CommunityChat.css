@@ -252,6 +252,10 @@
   color: var(--color-white);
   overflow: hidden;
   box-sizing: border-box;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-left: 1px solid #27272a;
+  border-right: 1px solid #27272a;
 }
 
 .chat-sidebar {
@@ -533,6 +537,24 @@
 }
 
 /* 4. Chat Main Container */
+.mobile-sidebar-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #a1a1aa;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin-right: 0.5rem;
+  transition: all 0.2s;
+}
+
+.mobile-sidebar-toggle:hover {
+  color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 .chat-main {
   display: flex;
   flex-direction: column;
@@ -1179,28 +1201,38 @@
 
   .community-chat-dashboard {
     grid-template-columns: 1fr;
+    border: none;
+    height: 100vh;
   }
   
-  /* Sidebar toggling behavior could be added, but for now we hide/show simple layout */
-  /* Sidebar takes full height, chat is hidden, or they are stacked. 
-     We make the sidebar collapsable or toggle on mobile. */
   .chat-sidebar {
-    height: 30vh;
-    border-right: none;
-    border-bottom: 1px solid #27272a;
+    position: fixed;
+    top: 90px;
+    left: -100%;
+    width: 280px;
+    height: calc(100vh - 90px);
+    z-index: 200;
+    border-right: 1px solid #27272a;
+    transition: left 0.3s ease;
+    box-shadow: 10px 0 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .chat-sidebar.mobile-open {
+    left: 0;
+  }
+  
+  .mobile-sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .sidebar-rooms {
     padding: 1rem;
   }
   
-  .community-chat-dashboard {
-    height: auto;
-    min-height: calc(100vh - 70px);
-  }
-  
   .chat-main {
-    height: 60vh;
+    height: calc(100vh - 90px);
   }
   
   .chat-messages-container {

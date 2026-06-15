@@ -42,6 +42,7 @@ const CommunityChat = () => {
   const [showAddMembers, setShowAddMembers] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeDropdownRoomId, setActiveDropdownRoomId] = useState(null);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   
   // UI Loading/Status
   const [loading, setLoading] = useState(true);
@@ -544,6 +545,7 @@ const CommunityChat = () => {
   const handleRoomSelect = (room) => {
     setActiveRoom(room);
     setMessages([]);
+    setMobileSidebarOpen(false); // Close sidebar on mobile after selection
   };
 
   // 5. Auth Handlers
@@ -1126,7 +1128,7 @@ const CommunityChat = () => {
   return (
     <div className="community-chat-dashboard">
       {/* Sidebar */}
-      <div className="chat-sidebar">
+      <div className={`chat-sidebar ${mobileSidebarOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-header">
           <div className="user-profile-widget" onClick={openEditProfile} style={{ cursor: 'pointer' }} title="Edit Profile">
             <div className="user-avatar-placeholder">
@@ -1334,10 +1336,16 @@ const CommunityChat = () => {
         </div>
       </div>
 
-      {/* Chat Box Area */}
-      <div className="chat-main">
+      {/* Main Chat Area */}
+      <div className={`chat-main ${mobileSidebarOpen ? 'sidebar-open' : ''}`} onClick={() => setMobileSidebarOpen(false)}>
         <div className="chat-header">
           <h3>
+            <button 
+              className="mobile-sidebar-toggle" 
+              onClick={(e) => { e.stopPropagation(); setMobileSidebarOpen(!mobileSidebarOpen); }}
+            >
+              <i className="fas fa-bars"></i>
+            </button>
             {activeRoom ? (
               <>
                 <i className={activeRoom.room_type === 'dm' ? "fas fa-user" : "fas fa-hashtag"}></i> {getRoomDisplayName(activeRoom)}
