@@ -341,10 +341,21 @@ const CommunityChat = () => {
     const reactionsSubscription = supabase
       .channel('public-reactions')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_message_reactions' }, (payload) => {
-        setReactionsMap(prev => { const msgId = payload.new.message_id; const current = prev[msgId] || []; return { ...prev, [msgId]: [...current, payload.new] }; });
+        setReactionsMap(prev => { 
+          const msgId = payload.new.message_id; 
+          const current = prev[msgId] || []; 
+          const filtered = current.filter(r => r.user_id !== payload.new.user_id);
+          return { ...prev, [msgId]: [...filtered, payload.new] }; 
+        });
       })
       .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'chat_message_reactions' }, (payload) => {
-        setReactionsMap(prev => { const newMap = {}; Object.keys(prev).forEach(key => { newMap[key] = prev[key].filter(r => r.id !== payload.old.id); }); return newMap; });
+        setReactionsMap(prev => { 
+          const newMap = {}; 
+          Object.keys(prev).forEach(key => { 
+            newMap[key] = prev[key].filter(r => r.id !== payload.old.id); 
+          }); 
+          return newMap; 
+        });
       })
       .subscribe();
 
@@ -833,11 +844,34 @@ const CommunityChat = () => {
 
   const handleReact = async (msgId, emoji) => {
     setShowEmojiPickerFor(null);
-    const existing = (reactionsMap[msgId] || []).find(r => r.emoji === emoji && r.user_id === user.id);
-    if (existing) {
-      await supabase.from('chat_message_reactions').delete().eq('id', existing.id);
-    } else {
-      await supabase.from('chat_message_reactions').insert([{ message_id: msgId, user_id: user.id, emoji }]);
+    const existingForUser = (reactionsMap[msgId] || []).filter(r => r.user_id === user?.id);
+    const alreadyHasThisEmoji = existingForUser.some(r => r.emoji === emoji);
+
+    // Optimistically update UI
+    setReactionsMap(prev => {
+      const current = prev[msgId] || [];
+      const filtered = current.filter(r => r.user_id !== user?.id);
+      if (!alreadyHasThisEmoji) {
+        filtered.push({ id: `temp-${Date.now()}`, message_id: msgId, user_id: user?.id, emoji });
+      }
+      return { ...prev, [msgId]: filtered };
+    });
+
+    try {
+      // Clean up all existing reactions by this user for this message
+      if (existingForUser.length > 0) {
+        const idsToDelete = existingForUser.map(r => r.id).filter(id => !id.toString().startsWith('temp-'));
+        if (idsToDelete.length > 0) {
+          await supabase.from('chat_message_reactions').delete().in('id', idsToDelete);
+        }
+      }
+      
+      // Insert new one if they aren't just removing it
+      if (!alreadyHasThisEmoji) {
+        await supabase.from('chat_message_reactions').insert([{ message_id: msgId, user_id: user?.id, emoji }]);
+      }
+    } catch (err) {
+      console.error('Error setting reaction:', err);
     }
   };
 
