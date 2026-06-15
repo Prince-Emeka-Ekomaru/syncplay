@@ -1453,12 +1453,15 @@ const CommunityChat = () => {
               </>
             ) : (
               <>
-                <i className="fas fa-globe-africa"></i> Global Chat room
+                <i className="fas fa-globe-africa"></i> <span className="header-title-text">SyncPlay Lobby</span>
               </>
             )}
           </h3>
           <div className="chat-header-actions">
-            <span className="room-perk">eSports Community</span>
+            <button type="button" className="admin-portal-link-btn" onClick={() => router.push('/admin')}>
+              <i className="fas fa-shield-alt"></i> Admin Portal
+            </button>
+            <span className="room-perk">SP HUB</span>
           </div>
         </div>
 
