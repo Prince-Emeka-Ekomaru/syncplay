@@ -306,11 +306,12 @@ const Register = () => {
       setPaymentLoading(true);
       setUploadingPhotos(true);
       
+      let finalFormData = { ...formData };
+      
       try {
         // Upload photos before payment
         let player1PhotoUrl = formData.player1PhotoUrl;
         let player2PhotoUrl = formData.player2PhotoUrl;
-        let finalFormData = { ...formData };
         
         if (formData.player1Photo && !player1PhotoUrl) {
           console.log('Uploading Player 1 photo...');
