@@ -700,6 +700,12 @@
 .msg-sender {
   font-weight: 700;
   color: #e4e4e7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  display: inline-block;
+  vertical-align: bottom;
 }
 
 .msg-platform {

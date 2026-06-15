@@ -1499,22 +1499,20 @@ const CommunityChat = () => {
                 const senderDisplayName = senderProfile.username || senderProfile.gamer_tag || 'Player';
                 
                 return (
-                  <div key={msg.id} className={`message-row ${isMyMessage ? 'my-message' : 'their-message'}`}>
+                  <div key={msg.id} className={`message-bubble-wrapper ${isMyMessage ? 'own-message' : ''}`}>
                     {!isMyMessage && (
                       <div className="msg-avatar">
                         {senderDisplayName.substring(0, 2).toUpperCase()}
                       </div>
                     )}
-                    <div className="message-bubble-wrapper" tabIndex="0">
-                      {!isMyMessage && activeRoom?.room_type === 'group' && (
-                        <div className="msg-sender-info">
-                          <span className="msg-sender">{senderDisplayName}</span>
-                          <span className="msg-platform">{getPlatformIcon(senderProfile.platform)}</span>
-                        </div>
-                      )}
+                    <div className="message-content-wrapper" tabIndex="0">
                       <div className="msg-meta-header">
-                        <span className="msg-sender">{senderDisplayName}</span>
-                        <span className="msg-platform">{getPlatformIcon(senderProfile.platform)}</span>
+                        {!isMyMessage && activeRoom?.room_type === 'group' && (
+                          <span className="msg-sender" title={senderDisplayName}>{senderDisplayName}</span>
+                        )}
+                        {!isMyMessage && activeRoom?.room_type === 'group' && (
+                          <span className="msg-platform">{getPlatformIcon(senderProfile.platform)}</span>
+                        )}
                         <span className="msg-time">{formatTime(msg.created_at)}</span>
                       </div>
                       <div className="msg-bubble">
