@@ -21,6 +21,7 @@ const CommunityChat = () => {
   const [gamerTag, setGamerTag] = useState('');
   const [platform, setPlatform] = useState('PlayStation');
   const [formErrors, setFormErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   // Profile editing state
   const [showEditProfile, setShowEditProfile] = useState(false);
@@ -785,9 +786,15 @@ const CommunityChat = () => {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setUser(null);
-    setProfile(null);
+    try {
+      // Use local scope to prevent 403 errors if session is already expired
+      await supabase.auth.signOut({ scope: 'local' });
+    } catch (err) {
+      console.error('Logout error:', err);
+    } finally {
+      setUser(null);
+      setProfile(null);
+    }
   };
 
   // 6. Chat Handlers
@@ -1219,19 +1226,30 @@ const CommunityChat = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="player@syncplay.com"
                     required
+                    autoComplete="username email"
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group password-group">
                   <label>Password</label>
-                  <input 
-                    type="password" 
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    required
-                    autoComplete="current-password"
-                  />
+                  <div className="password-input-wrapper">
+                    <input 
+                      type={showPassword ? "text" : "password"} 
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••"
+                      required
+                      autoComplete="current-password"
+                    />
+                    <button 
+                      type="button" 
+                      className="password-toggle-btn"
+                      onClick={() => setShowPassword(!showPassword)}
+                      tabIndex="-1"
+                    >
+                      <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                    </button>
+                  </div>
                 </div>
 
                 <button type="submit" className="btn btn-primary btn-block" disabled={actionLoading}>
@@ -1283,6 +1301,7 @@ const CommunityChat = () => {
                       placeholder="player@syncplay.com"
                       className={formErrors.email ? 'error' : ''}
                       required
+                      autoComplete="username email"
                     />
                     {formErrors.email && <span className="error-message">{formErrors.email}</span>}
                   </div>
@@ -1311,16 +1330,26 @@ const CommunityChat = () => {
                     </select>
                   </div>
 
-                  <div className="form-group">
+                  <div className="form-group password-group">
                     <label>Password (min. 6 chars) <span className="required">*</span></label>
-                    <input 
-                      type="password" 
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="••••••••"
-                      className={formErrors.password ? 'error' : ''}
-                      required
-                    />
+                    <div className="password-input-wrapper">
+                      <input 
+                        type={showPassword ? "text" : "password"} 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="••••••••"
+                        className={formErrors.password ? 'error' : ''}
+                        required
+                      />
+                      <button 
+                        type="button" 
+                        className="password-toggle-btn"
+                        onClick={() => setShowPassword(!showPassword)}
+                        tabIndex="-1"
+                      >
+                        <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                      </button>
+                    </div>
                     {formErrors.password && <span className="error-message">{formErrors.password}</span>}
                   </div>
                 </div>
