@@ -1363,6 +1363,12 @@
   transform: translateY(0) scale(0.95);
 }
 
+@media (max-width: 768px) {
+  .admin-portal-link-btn {
+    display: none;
+  }
+}
+
 /* New Chat Features CSS */
 
 .unread-badge {
@@ -1424,8 +1430,18 @@
   z-index: 10;
 }
 
-.message-bubble-wrapper:hover .msg-actions-hover {
+.message-bubble-wrapper:hover .msg-actions-hover,
+.message-bubble-wrapper:focus-within .msg-actions-hover,
+.message-bubble-wrapper:active .msg-actions-hover {
   display: flex;
+}
+
+@media (max-width: 768px) {
+  .msg-actions-hover {
+    display: flex;
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
 }
 
 .msg-actions-hover button {

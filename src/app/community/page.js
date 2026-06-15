@@ -637,7 +637,7 @@ const CommunityChat = () => {
   };
 
   const handleScroll = (e) => {
-    if (e.target.scrollTop === 0 && !loadingMore && hasMoreMessages) {
+    if (e.target.scrollTop === 0 && !loadingMore && hasMoreMessages && messages.length > 0) {
       fetchMessages(true);
     }
   };
@@ -1184,6 +1184,7 @@ const CommunityChat = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
                     required
+                    autoComplete="current-password"
                   />
                 </div>
 
