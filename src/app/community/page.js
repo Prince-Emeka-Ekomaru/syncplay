@@ -897,7 +897,7 @@ const CommunityChat = () => {
       if (otherMember) {
         const otherProfile = allProfiles.find(p => p.id === otherMember.user_id);
         if (otherProfile) {
-          return otherProfile.gamer_tag || otherProfile.username || 'Chat Partner';
+          return otherProfile.username || otherProfile.gamer_tag || 'Chat Partner';
         }
       }
       return 'Direct Message';
@@ -1483,18 +1483,25 @@ const CommunityChat = () => {
             <div className="messages-scroller">
               {messages.map(msg => {
                 const senderProfile = profilesCache[msg.sender_id] || {};
-                const isOwnMessage = msg.sender_id === user.id;
+                const isMyMessage = msg.sender_id === user?.id;
+                const senderDisplayName = senderProfile.username || senderProfile.gamer_tag || 'Player';
                 
                 return (
-                  <div key={msg.id} className={`message-bubble-wrapper ${isOwnMessage ? 'own-message' : ''}`}>
-                    {!isOwnMessage && (
+                  <div key={msg.id} className={`message-row ${isMyMessage ? 'my-message' : 'their-message'}`}>
+                    {!isMyMessage && (
                       <div className="msg-avatar">
-                        {senderProfile.gamer_tag?.substring(0, 2).toUpperCase() || 'P'}
+                        {senderDisplayName.substring(0, 2).toUpperCase()}
                       </div>
                     )}
-                    <div className="message-content-wrapper">
+                    <div className="message-bubble-wrapper" tabIndex="0">
+                      {!isMyMessage && activeRoom?.room_type === 'group' && (
+                        <div className="msg-sender-info">
+                          <span className="msg-sender">{senderDisplayName}</span>
+                          <span className="msg-platform">{getPlatformIcon(senderProfile.platform)}</span>
+                        </div>
+                      )}
                       <div className="msg-meta-header">
-                        <span className="msg-sender">{senderProfile.gamer_tag || 'Player'}</span>
+                        <span className="msg-sender">{senderDisplayName}</span>
                         <span className="msg-platform">{getPlatformIcon(senderProfile.platform)}</span>
                         <span className="msg-time">{formatTime(msg.created_at)}</span>
                       </div>
@@ -1536,7 +1543,7 @@ const CommunityChat = () => {
                         {!msg.is_deleted && (
                           <div className="msg-actions-hover">
                             <button onClick={() => setShowEmojiPickerFor(showEmojiPickerFor === msg.id ? null : msg.id)} title="Add Reaction"><i className="far fa-smile"></i></button>
-                            {isOwnMessage && (
+                            {isMyMessage && (
                               <>
                                 <button onClick={() => { setEditingMessageId(msg.id); setEditMessageText(msg.message); }} title="Edit Message"><i className="fas fa-pencil-alt"></i></button>
                                 <button onClick={() => handleDeleteMessage(msg.id)} title="Delete Message"><i className="fas fa-trash"></i></button>
@@ -1624,25 +1631,26 @@ const CommunityChat = () => {
                   .filter(p => p.id !== user?.id)
                   .filter(p => {
                     if (!searchQuery) return true;
-                    const tag = p.gamer_tag || '';
+                    const tag = p.username || p.gamer_tag || '';
                     return tag.toLowerCase().includes(searchQuery.toLowerCase());
                   })
                   .map(player => {
                     const isOnline = !!onlineUsers[player.id];
+                    const displayName = player.username || player.gamer_tag || 'Player';
                     return (
                       <li 
                         key={player.id} 
                         className="player-item whatsapp-contact-row"
-                        onClick={() => { setShowNewChatModal(false); handleStartDM(player.id, player.gamer_tag || player.username); }}
+                        onClick={() => { setShowNewChatModal(false); handleStartDM(player.id, displayName); }}
                       >
                         <div className="player-avatar-wrapper">
                           <div className="player-avatar">
-                            {player.gamer_tag?.substring(0, 2).toUpperCase() || 'P'}
+                            {displayName.substring(0, 2).toUpperCase()}
                           </div>
                           <span className={`status-badge-dot ${isOnline ? 'online' : 'offline'}`}></span>
                         </div>
                         <div className="player-item-info">
-                          <span className="player-item-tag">{player.gamer_tag || 'Player'}</span>
+                          <span className="player-item-tag">{displayName}</span>
                           <span className="player-item-platform">{getPlatformIcon(player.platform)} {player.platform}</span>
                         </div>
                       </li>
