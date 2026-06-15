@@ -578,46 +578,53 @@ const CommunityChat = () => {
   };
 
   const fetchMessages = async (isLoadMore = false) => {
-    if (!isLoadMore) setLoading(true); else setLoadingMore(true);
-    const currentOffset = isLoadMore ? pageOffset + PAGE_SIZE : 0;
-    const roomId = activeRoom ? activeRoom.id : null;
-    
-    let query = supabase
-      .from('chat_messages')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .range(currentOffset, currentOffset + PAGE_SIZE - 1);
-    
-    if (roomId) {
-      query = query.eq('room_id', roomId);
-    } else {
-      query = query.is('room_id', null);
-    }
-
-    const { data, error } = await query;
-
-    if (!error && data) {
-      const reversedData = [...data].reverse();
-      if (data.length < PAGE_SIZE) setHasMoreMessages(false); else setHasMoreMessages(true);
-      if (!isLoadMore) setPageOffset(0); else setPageOffset(currentOffset);
-
-      // Fetch reactions for these messages
-      const msgIds = reversedData.map(m => m.id);
-      if (msgIds.length > 0) {
-        const { data: reactionsData } = await supabase.from('chat_message_reactions').select('*').in('message_id', msgIds);
-        if (reactionsData) {
-          const rMap = {};
-          reactionsData.forEach(r => { if (!rMap[r.message_id]) rMap[r.message_id] = []; rMap[r.message_id].push(r); });
-          setReactionsMap(prev => isLoadMore ? { ...prev, ...rMap } : rMap);
-        }
+    try {
+      if (!isLoadMore) setLoading(true); else setLoadingMore(true);
+      const currentOffset = isLoadMore ? pageOffset + PAGE_SIZE : 0;
+      const roomId = activeRoom ? activeRoom.id : null;
+      
+      let query = supabase
+        .from('chat_messages')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .range(currentOffset, currentOffset + PAGE_SIZE - 1);
+      
+      if (roomId) {
+        query = query.eq('room_id', roomId);
+      } else {
+        query = query.is('room_id', null);
       }
 
-      // Pre-fetch sender profiles for these messages
-      const senderIds = [...new Set(data.map(m => m.sender_id))];
-      await Promise.all(senderIds.map(id => fetchSenderProfile(id)));
-      setMessages(prev => isLoadMore ? [...reversedData, ...prev] : reversedData);
+      const { data, error } = await query;
+
+      if (!error && data) {
+        const reversedData = [...data].reverse();
+        if (data.length < PAGE_SIZE) setHasMoreMessages(false); else setHasMoreMessages(true);
+        if (!isLoadMore) setPageOffset(0); else setPageOffset(currentOffset);
+
+        // Fetch reactions for these messages
+        const msgIds = reversedData.map(m => m.id);
+        if (msgIds.length > 0) {
+          const { data: reactionsData } = await supabase.from('chat_message_reactions').select('*').in('message_id', msgIds);
+          if (reactionsData) {
+            const rMap = {};
+            reactionsData.forEach(r => { if (!rMap[r.message_id]) rMap[r.message_id] = []; rMap[r.message_id].push(r); });
+            setReactionsMap(prev => isLoadMore ? { ...prev, ...rMap } : rMap);
+          }
+        }
+
+        // Pre-fetch sender profiles for these messages
+        const senderIds = [...new Set(data.map(m => m.sender_id))];
+        await Promise.all(senderIds.map(id => fetchSenderProfile(id)));
+        setMessages(prev => isLoadMore ? [...reversedData, ...prev] : reversedData);
+      } else if (error) {
+        console.error('Fetch messages error:', error);
+      }
+    } catch (err) {
+      console.error('Fetch messages exception:', err);
+    } finally {
+      if (!isLoadMore) setLoading(false); else setLoadingMore(false);
     }
-    if (!isLoadMore) setLoading(false); else setLoadingMore(false);
   };
 
   const handleScroll = (e) => {
