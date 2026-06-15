@@ -180,6 +180,15 @@ const Register = () => {
     
     if (type === 'file' && files && files[0]) {
       const file = files[0];
+      
+      // Maximum file size of 5MB (5 * 1024 * 1024 bytes)
+      const MAX_FILE_SIZE = 5 * 1024 * 1024; 
+      if (file.size > MAX_FILE_SIZE) {
+        alert(`Image is too large (${(file.size / (1024 * 1024)).toFixed(1)}MB). Please upload an image smaller than 5MB.`);
+        e.target.value = ''; // Reset the file input
+        return;
+      }
+
       const playerNum = name.includes('player1') ? 'player1' : 'player2';
       
       // Create preview
