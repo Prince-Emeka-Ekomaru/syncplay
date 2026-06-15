@@ -566,6 +566,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .chat-header h3 {
@@ -723,6 +724,7 @@
   border-top: 1px solid #27272a;
   display: flex;
   gap: 1rem;
+  flex-shrink: 0;
 }
 
 .chat-input-area input {
