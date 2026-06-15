@@ -44,6 +44,25 @@ const CommunityChat = () => {
   const [activeDropdownRoomId, setActiveDropdownRoomId] = useState(null);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   
+  // Chat features states
+  const [editingMessageId, setEditingMessageId] = useState(null);
+  const [editMessageText, setEditMessageText] = useState('');
+  const [reactionsMap, setReactionsMap] = useState({});
+  const [showEmojiPickerFor, setShowEmojiPickerFor] = useState(null);
+  const [uploadingMedia, setUploadingMedia] = useState(false);
+  const [mediaPreview, setMediaPreview] = useState(null);
+  const fileInputRef = useRef(null);
+  
+  // Pagination & Unread
+  const [hasMoreMessages, setHasMoreMessages] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [pageOffset, setPageOffset] = useState(0);
+  const PAGE_SIZE = 50;
+  const messagesContainerRef = useRef(null);
+  const [unreadCounts, setUnreadCounts] = useState({});
+  const [typingUsers, setTypingUsers] = useState({});
+  const typingTimeoutRef = useRef(null);
+
   // UI Loading/Status
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
@@ -307,9 +326,24 @@ const CommunityChat = () => {
             // Ensure sender profile is in cache
             await fetchSenderProfile(newMsg.sender_id);
             setMessages(prev => [...prev, newMsg]);
+            if (activeRoom && newMsg.room_id === activeRoom.id) updateLastRead(activeRoom.id);
+            else if (newMsg.room_id) setUnreadCounts(prev => ({ ...prev, [newMsg.room_id]: (prev[newMsg.room_id] || 0) + 1 }));
           }
         }
       )
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'chat_messages' }, (payload) => {
+        setMessages(prev => prev.map(m => m.id === payload.new.id ? payload.new : m));
+      })
+      .subscribe();
+
+    const reactionsSubscription = supabase
+      .channel('public-reactions')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_message_reactions' }, (payload) => {
+        setReactionsMap(prev => { const msgId = payload.new.message_id; const current = prev[msgId] || []; return { ...prev, [msgId]: [...current, payload.new] }; });
+      })
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'chat_message_reactions' }, (payload) => {
+        setReactionsMap(prev => { const newMap = {}; Object.keys(prev).forEach(key => { newMap[key] = prev[key].filter(r => r.id !== payload.old.id); }); return newMap; });
+      })
       .subscribe();
 
     const roomsSubscription = supabase
@@ -398,6 +432,7 @@ const CommunityChat = () => {
 
     return () => {
       supabase.removeChannel(messagesSubscription);
+      supabase.removeChannel(reactionsSubscription);
       supabase.removeChannel(roomsSubscription);
       supabase.removeChannel(profilesSubscription);
       supabase.removeChannel(membershipsSubscription);
@@ -476,6 +511,33 @@ const CommunityChat = () => {
     scrollToBottom();
   }, [messages]);
 
+
+  const updateLastRead = async (roomId) => {
+    if (!user || !roomId) return;
+    try {
+      await supabase.from('chat_room_members').update({ last_read_at: new Date().toISOString() }).eq('room_id', roomId).eq('user_id', user.id);
+      setUnreadCounts(prev => ({ ...prev, [roomId]: 0 }));
+    } catch (e) { console.error('Error updating read status', e); }
+  };
+  
+  const handleTyping = () => {
+    if (!activeRoom || !user || !supabase) return;
+    const channelName = `typing-${activeRoom.id}`;
+    let channel = supabase.getChannels().find(c => c.topic === `realtime:${channelName}`);
+    if (!channel) {
+      channel = supabase.channel(channelName, { config: { presence: { key: user.id } } });
+      channel.on('presence', { event: 'sync' }, () => {
+        const state = channel.presenceState();
+        const typingNames = Object.keys(state).filter(k => k !== user.id).map(k => state[k][0]?.gamer_tag).filter(Boolean);
+        setTypingUsers(prev => ({ ...prev, [activeRoom.id]: typingNames }));
+      }).subscribe();
+    }
+    channel.track({ gamer_tag: profile?.gamer_tag || 'Player', typing_at: new Date().toISOString() });
+    
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+    typingTimeoutRef.current = setTimeout(() => { channel.untrack(); }, 3000);
+  };
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -515,14 +577,16 @@ const CommunityChat = () => {
     }
   };
 
-  const fetchMessages = async () => {
-    setLoading(true);
+  const fetchMessages = async (isLoadMore = false) => {
+    if (!isLoadMore) setLoading(true); else setLoadingMore(true);
+    const currentOffset = isLoadMore ? pageOffset + PAGE_SIZE : 0;
     const roomId = activeRoom ? activeRoom.id : null;
     
     let query = supabase
       .from('chat_messages')
       .select('*')
-      .order('created_at', { ascending: true });
+      .order('created_at', { ascending: false })
+      .range(currentOffset, currentOffset + PAGE_SIZE - 1);
     
     if (roomId) {
       query = query.eq('room_id', roomId);
@@ -533,19 +597,43 @@ const CommunityChat = () => {
     const { data, error } = await query;
 
     if (!error && data) {
+      const reversedData = [...data].reverse();
+      if (data.length < PAGE_SIZE) setHasMoreMessages(false); else setHasMoreMessages(true);
+      if (!isLoadMore) setPageOffset(0); else setPageOffset(currentOffset);
+
+      // Fetch reactions for these messages
+      const msgIds = reversedData.map(m => m.id);
+      if (msgIds.length > 0) {
+        const { data: reactionsData } = await supabase.from('chat_message_reactions').select('*').in('message_id', msgIds);
+        if (reactionsData) {
+          const rMap = {};
+          reactionsData.forEach(r => { if (!rMap[r.message_id]) rMap[r.message_id] = []; rMap[r.message_id].push(r); });
+          setReactionsMap(prev => isLoadMore ? { ...prev, ...rMap } : rMap);
+        }
+      }
+
       // Pre-fetch sender profiles for these messages
       const senderIds = [...new Set(data.map(m => m.sender_id))];
       await Promise.all(senderIds.map(id => fetchSenderProfile(id)));
-      setMessages(data);
+      setMessages(prev => isLoadMore ? [...reversedData, ...prev] : reversedData);
     }
-    setLoading(false);
+    if (!isLoadMore) setLoading(false); else setLoadingMore(false);
+  };
+
+  const handleScroll = (e) => {
+    if (e.target.scrollTop === 0 && !loadingMore && hasMoreMessages) {
+      fetchMessages(true);
+    }
   };
 
   // Change Active Room
   const handleRoomSelect = (room) => {
     setActiveRoom(room);
     setMessages([]);
-    setMobileSidebarOpen(false); // Close sidebar on mobile after selection
+    setPageOffset(0);
+    setHasMoreMessages(true);
+    setMobileSidebarOpen(false);
+    if (room) updateLastRead(room.id);
   };
 
   // 5. Auth Handlers
@@ -640,27 +728,64 @@ const CommunityChat = () => {
   };
 
   // 6. Chat Handlers
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { alert('File too large. Max 5MB.'); return; }
+    setMediaPreview({ file, url: URL.createObjectURL(file) });
+  };
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!newMessage.trim() || !user) return;
-
+    if (!newMessage.trim() && !mediaPreview) return;
+    if (!user) return;
+    
+    setUploadingMedia(true);
+    let attachmentUrl = null;
+    let attachmentType = null;
+    
+    if (mediaPreview) {
+      const fileExt = mediaPreview.file.name.split('.').pop();
+      const fileName = `${user.id}-${Date.now()}.${fileExt}`;
+      const { data, error } = await supabase.storage.from('chat-attachments').upload(fileName, mediaPreview.file);
+      if (error) { console.error('Upload error', error); alert('Failed to upload image.'); setUploadingMedia(false); return; }
+      const { data: publicUrlData } = supabase.storage.from('chat-attachments').getPublicUrl(fileName);
+      attachmentUrl = publicUrlData.publicUrl;
+      attachmentType = 'image';
+    }
+    
     const roomId = activeRoom ? activeRoom.id : null;
     const messageText = newMessage;
     setNewMessage('');
+    setMediaPreview(null);
+    setUploadingMedia(false);
 
-    const { error } = await supabase
-      .from('chat_messages')
-      .insert([
-        {
-          room_id: roomId,
-          sender_id: user.id,
-          message: messageText
-        }
-      ]);
+    const { error } = await supabase.from('chat_messages').insert([{
+      room_id: roomId, sender_id: user.id, message: messageText, attachment_url: attachmentUrl, attachment_type: attachmentType
+    }]);
+    if (error) { console.error('Error sending:', error); alert('Failed to send message: ' + error.message); }
+  };
 
-    if (error) {
-      console.error('Error sending message:', error);
-      alert('Failed to send message: ' + error.message);
+  const handleEditMessage = async (e) => {
+    e.preventDefault();
+    if (!editMessageText.trim() || !editingMessageId) return;
+    const { error } = await supabase.from('chat_messages').update({ message: editMessageText, is_edited: true }).eq('id', editingMessageId).eq('sender_id', user.id);
+    if (!error) { setEditingMessageId(null); setEditMessageText(''); }
+  };
+
+  const handleDeleteMessage = async (msgId) => {
+    if (!window.confirm('Delete this message?')) return;
+    await supabase.from('chat_messages').update({ is_deleted: true, message: 'This message was deleted.', attachment_url: null }).eq('id', msgId).eq('sender_id', user.id);
+  };
+
+  const handleReact = async (msgId, emoji) => {
+    setShowEmojiPickerFor(null);
+    const existing = (reactionsMap[msgId] || []).find(r => r.emoji === emoji && r.user_id === user.id);
+    if (existing) {
+      await supabase.from('chat_message_reactions').delete().eq('id', existing.id);
+    } else {
+      await supabase.from('chat_message_reactions').insert([{ message_id: msgId, user_id: user.id, emoji }]);
     }
   };
 
@@ -1187,6 +1312,7 @@ const CommunityChat = () => {
                   <div className="room-item-content">
                     <i className={room.is_private ? "fas fa-lock room-icon" : "fas fa-hashtag room-icon"}></i>
                     <span className="room-name">{room.name}</span>
+                    {unreadCounts[room.id] > 0 && <span className="unread-badge">{unreadCounts[room.id]}</span>}
                   </div>
                   
                   <div className="room-actions-wrapper">
@@ -1263,6 +1389,7 @@ const CommunityChat = () => {
                       })()}
                     </div>
                     <span className="room-name">{getRoomDisplayName(room)}</span>
+                    {unreadCounts[room.id] > 0 && <span className="unread-badge">{unreadCounts[room.id]}</span>}
                   </div>
                   {isCreator && (
                     <div className="room-actions-wrapper">
@@ -1367,7 +1494,8 @@ const CommunityChat = () => {
         </div>
 
         {/* Message History */}
-        <div className="chat-messages-container">
+        <div className="chat-messages-container" onScroll={handleScroll} ref={messagesContainerRef}>
+          {loadingMore && <div className="loading-more"><i className="fas fa-spinner fa-spin"></i> Loading older messages...</div>}
           {loading ? (
             <div className="chat-inner-loading">
               <i className="fas fa-circle-notch fa-spin"></i>
@@ -1398,7 +1526,60 @@ const CommunityChat = () => {
                         <span className="msg-time">{formatTime(msg.created_at)}</span>
                       </div>
                       <div className="msg-bubble">
-                        {msg.message}
+                        {editingMessageId === msg.id ? (
+                          <form onSubmit={handleEditMessage} className="edit-message-form">
+                            <input type="text" value={editMessageText} onChange={e => setEditMessageText(e.target.value)} autoFocus />
+                            <button type="submit" className="btn-save-edit"><i className="fas fa-check"></i></button>
+                            <button type="button" className="btn-cancel-edit" onClick={() => setEditingMessageId(null)}><i className="fas fa-times"></i></button>
+                          </form>
+                        ) : (
+                          <>
+                            {msg.is_deleted ? <em style={{opacity: 0.6}}><i className="fas fa-ban"></i> {msg.message}</em> : msg.message}
+                            {msg.attachment_url && !msg.is_deleted && (
+                              <div className="msg-attachment">
+                                <img src={msg.attachment_url} alt="attachment" style={{maxWidth:'100%', borderRadius:'8px', marginTop:'8px', maxHeight:'300px', objectFit:'cover'}} />
+                              </div>
+                            )}
+                            {msg.is_edited && !msg.is_deleted && <span style={{fontSize:'0.7rem', opacity:0.5, marginLeft:'5px'}}>(edited)</span>}
+                          </>
+                        )}
+                        
+                        {/* Reactions Display */}
+                        {reactionsMap[msg.id] && reactionsMap[msg.id].length > 0 && (
+                          <div className="msg-reactions">
+                            {Array.from(new Set(reactionsMap[msg.id].map(r => r.emoji))).map(emoji => {
+                              const count = reactionsMap[msg.id].filter(r => r.emoji === emoji).length;
+                              const hasReacted = reactionsMap[msg.id].some(r => r.emoji === emoji && r.user_id === user.id);
+                              return (
+                                <button key={emoji} onClick={() => handleReact(msg.id, emoji)} className={`reaction-pill ${hasReacted ? 'active' : ''}`}>
+                                  {emoji} {count}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
+                        
+                        {/* Action Menu (Hover) */}
+                        {!msg.is_deleted && (
+                          <div className="msg-actions-hover">
+                            <button onClick={() => setShowEmojiPickerFor(showEmojiPickerFor === msg.id ? null : msg.id)} title="Add Reaction"><i className="far fa-smile"></i></button>
+                            {isOwnMessage && (
+                              <>
+                                <button onClick={() => { setEditingMessageId(msg.id); setEditMessageText(msg.message); }} title="Edit Message"><i className="fas fa-pencil-alt"></i></button>
+                                <button onClick={() => handleDeleteMessage(msg.id)} title="Delete Message"><i className="fas fa-trash"></i></button>
+                              </>
+                            )}
+                          </div>
+                        )}
+                        
+                        {/* Emoji Picker Popup */}
+                        {showEmojiPickerFor === msg.id && (
+                          <div className="emoji-picker-popup">
+                            {['👍','❤️','🔥','😂','🎉','🎮','👀','💯'].map(emoji => (
+                              <button key={emoji} onClick={() => handleReact(msg.id, emoji)}>{emoji}</button>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -1410,11 +1591,29 @@ const CommunityChat = () => {
         </div>
 
         {/* Message Input Box */}
+        
+        {typingUsers[activeRoom?.id] && typingUsers[activeRoom?.id].length > 0 && (
+          <div className="typing-indicator" style={{padding: '0 2rem', color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '0.5rem'}}>
+            <i className="fas fa-keyboard"></i> {typingUsers[activeRoom.id].join(', ')} {typingUsers[activeRoom.id].length > 1 ? 'are' : 'is'} typing...
+          </div>
+        )}
+        
+        {mediaPreview && (
+          <div className="media-preview-bar" style={{padding: '1rem 2rem', backgroundColor: '#18181b', display: 'flex', alignItems: 'center', gap: '1rem'}}>
+            <img src={mediaPreview.url} alt="preview" style={{height: '60px', borderRadius: '4px'}} />
+            <button type="button" onClick={() => setMediaPreview(null)} className="btn btn-secondary btn-sm"><i className="fas fa-times"></i> Cancel Attachment</button>
+          </div>
+        )}
+
         <form onSubmit={handleSendMessage} className="chat-input-area">
+          <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" style={{display: 'none'}} />
+          <button type="button" className="chat-attach-btn" onClick={() => fileInputRef.current.click()} disabled={uploadingMedia} style={{background: 'none', border: 'none', color: '#a1a1aa', fontSize: '1.2rem', cursor: 'pointer', padding: '0 0.5rem'}}>
+            <i className="fas fa-paperclip"></i>
+          </button>
           <input 
             type="text"
             value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
+            onChange={(e) => { setNewMessage(e.target.value); handleTyping(); }}
             placeholder={`Message ${activeRoom ? getRoomDisplayName(activeRoom) : 'Global Chat'}`}
             required
             maxLength={1000}
