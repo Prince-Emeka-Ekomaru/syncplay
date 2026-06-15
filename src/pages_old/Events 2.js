@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
 // Registration count hook removed as tournament is completed
+import { getMediaUrl } from '../supabaseClient';
 import './Events.css';
 
 const Events = () => {
@@ -15,14 +16,14 @@ const Events = () => {
       id: 1,
       title: t.tournament2v2,
       game: 'eFootball - EA Sports FC 26',
-      date: 'May 23, 2026',
+      date: 'July 29, 2026',
       time: '10:00 AM',
       prize: t.exclusivePrizePoolShort,
-      participants: '12 Teams (24 Players)',
+      participants: '',
       image: '/ea-sports-fc-26-xbox-one-xbox-series-x-s-microsoft-store-cover.jpg',
       featured: true,
       status: 'Registration Open',
-      description: 'Our second 2v2 tournament! Team up with a partner and compete for glory and prizes. Building on the success of our inaugural event, this tournament promises even more excitement and competition.',
+      description: "Join us for the next syncplay 2v2 eFootball tournament live at Rufus and Bee's, Lagos! Teams of 2 players per team will compete in a league phase of 3 matches, with the top 8 teams proceeding to home-and-away playoffs till a single-match final. Players are highly encouraged to bring their own pads (controllers).",
       badge: 'SECOND EDITION'
     }
   ];
@@ -50,7 +51,7 @@ const Events = () => {
   //     description: t.championshipSeriesDesc
   //   }
   // ];
-  const comingSoonEvents = [];
+
 
   const pastEvents = [
     {
@@ -99,8 +100,8 @@ const Events = () => {
                       <div className="featured-header">
                         <div className="event-game-tag">{event.game}</div>
                         <h2>{event.title}</h2>
-                        <p className="featured-subtitle">Saturday, May 23, 2026</p>
-                        <p className="featured-description">{event.description || t.tournament2v2Details}</p>
+                        <p className="featured-subtitle">Wednesday, July 29, 2026</p>
+                        <p className="featured-description">{event.description}</p>
                       </div>
                       <div className="featured-details">
                         <div className="featured-detail-item">
@@ -115,6 +116,13 @@ const Events = () => {
                           <div>
                             <span className="detail-label">{t.timeLabel}</span>
                             <span className="detail-value">{event.time}</span>
+                          </div>
+                        </div>
+                        <div className="featured-detail-item">
+                          <i className="fas fa-map-marker-alt"></i>
+                          <div>
+                            <span className="detail-label">VENUE</span>
+                            <span className="detail-value">Rufus and Bee's, Lagos</span>
                           </div>
                         </div>
                         <div className="featured-detail-item">
@@ -139,15 +147,22 @@ const Events = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="featured-cta">
-                        <Link to="/register" className="btn btn-primary btn-large">
-                          <i className="fas fa-users"></i> {t.registerYourTeam}
-                        </Link>
-                        <p className="featured-note">{t.moreRegularEvents}</p>
+                      <div className="featured-cta" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
+                        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                          <Link to="/register" className="btn btn-primary btn-large" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <i className="fas fa-gamepad"></i> REGISTER TEAM (₦50,000)
+                          </Link>
+                          <Link to="/spectator-register" className="btn btn-secondary btn-large" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <i className="fas fa-ticket-alt"></i> SPECTATOR TICKET (₦5,000)
+                          </Link>
+                        </div>
+                        <p className="featured-note" style={{ color: '#FFB300', fontWeight: 'bold', margin: '0.5rem 0 0 0' }}>
+                          * Spectator tickets include a Rufus & Bee's Buzz Card loaded with gaming credits/chips!
+                        </p>
                       </div>
                     </div>
                     <div className="featured-image">
-                      <img src={event.image} alt={event.title} />
+                      <img src={getMediaUrl(event.image)} alt={event.title} />
                     </div>
                   </div>
                 ))}

@@ -4,7 +4,7 @@
 import { supabase } from '../supabaseClient';
 
 const PRICE_STORAGE_KEY = 'syncplay_entry_fee';
-const DEFAULT_PRICE = 2000000; // 20,000 Naira in kobo
+const DEFAULT_PRICE = 10000; // 100 Naira in kobo
 let cachedPrice = null;
 let priceLoadPromise = null;
 
@@ -185,5 +185,36 @@ export async function getEntryFeeInNairaAsync() {
 export function formatPrice(priceInKobo = null) {
   const price = priceInKobo || cachedPrice || getEntryFeeFromLocalStorage();
   return `₦${(price / 100).toLocaleString()}`;
+}
+
+/**
+ * Get the spectator fee in kobo from Supabase
+ * @returns {Promise<number>} Spectator fee in kobo
+ */
+export async function getSpectatorFee() {
+  try {
+    const { data, error } = await supabase
+      .from('payment_settings')
+      .select('spectator_fee')
+      .limit(1)
+      .single();
+
+    if (error) {
+      console.warn('Error loading spectator fee from Supabase:', error);
+      return 5000; // default 50 Naira in kobo
+    }
+
+    if (data && data.spectator_fee) {
+      const price = parseInt(data.spectator_fee, 10);
+      if (!isNaN(price) && price > 0) {
+        return price;
+      }
+    }
+    
+    return 5000; // default 50 Naira in kobo
+  } catch (error) {
+    console.error('Error loading spectator fee:', error);
+    return 5000; // default 50 Naira in kobo
+  }
 }
 

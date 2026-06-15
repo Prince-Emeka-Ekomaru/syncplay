@@ -1,12 +1,11 @@
-"use client";
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useLanguage } from '../../contexts/LanguageContext';
-import { translations } from '../../translations/translations';
-import { saveRegistration, supabase } from '../../supabaseClient';
-import { useRegistrationCount } from '../../hooks/useRegistrationCount';
-import { getEntryFee, formatPrice, resetPriceToDefault } from '../../utils/priceManager';
-import { uploadPlayerPhoto, createImagePreview } from '../../utils/imageUpload';
+import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../translations/translations';
+import { saveRegistration, supabase } from '../supabaseClient';
+import { useRegistrationCount } from '../hooks/useRegistrationCount';
+import { getEntryFee, formatPrice, resetPriceToDefault } from '../utils/priceManager';
+import { uploadPlayerPhoto, createImagePreview } from '../utils/imageUpload';
 import {
   initializePayment,
   initializePaymentGateways,
@@ -14,11 +13,11 @@ import {
   PAYMENT_GATEWAYS,
   getGatewayDisplayName,
   getGatewayIcon,
-} from '../../services/paymentService';
+} from '../services/paymentService';
 import './Register.css';
 
 const Register = () => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const { currentLanguage } = useLanguage();
   const t = translations[currentLanguage];
 
@@ -61,7 +60,6 @@ const Register = () => {
     player2: null
   });
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
-  const [registrationData, setRegistrationData] = useState(null); // holds team info for success screen
 
   // Initialize payment gateways on mount
   useEffect(() => {
@@ -123,11 +121,14 @@ const Register = () => {
           parsedFormData = JSON.parse(pendingData);
           console.log('Processing registration save for:', parsedFormData.teamName);
           
+          // Verify payment with Kora (you should verify on backend)
+          // For now, we'll assume payment was successful if we got redirected back
+          // In production, verify payment status via Kora API
+          
           const entryFee = await getEntryFee();
           await saveRegistration(paymentRef, parsedFormData, PAYMENT_GATEWAYS.KORA, entryFee);
           
           console.log('Registration saved successfully to database!');
-          setRegistrationData(parsedFormData); // store for success screen
           refresh();
           setCurrentStep(5);
           
@@ -180,15 +181,6 @@ const Register = () => {
     
     if (type === 'file' && files && files[0]) {
       const file = files[0];
-      
-      // Maximum file size of 5MB (5 * 1024 * 1024 bytes)
-      const MAX_FILE_SIZE = 5 * 1024 * 1024; 
-      if (file.size > MAX_FILE_SIZE) {
-        alert(`Image is too large (${(file.size / (1024 * 1024)).toFixed(1)}MB). Please upload an image smaller than 5MB.`);
-        e.target.value = ''; // Reset the file input
-        return;
-      }
-
       const playerNum = name.includes('player1') ? 'player1' : 'player2';
       
       // Create preview
@@ -310,7 +302,6 @@ const Register = () => {
         // Upload photos before payment
         let player1PhotoUrl = formData.player1PhotoUrl;
         let player2PhotoUrl = formData.player2PhotoUrl;
-        let finalFormData = { ...formData };
         
         if (formData.player1Photo && !player1PhotoUrl) {
           console.log('Uploading Player 1 photo...');
@@ -319,7 +310,7 @@ const Register = () => {
             formData.teamName,
             'player1'
           );
-          finalFormData.player1PhotoUrl = player1PhotoUrl;
+          setFormData(prev => ({ ...prev, player1PhotoUrl: player1PhotoUrl }));
         }
         
         if (formData.player2Photo && !player2PhotoUrl) {
@@ -329,10 +320,9 @@ const Register = () => {
             formData.teamName,
             'player2'
           );
-          finalFormData.player2PhotoUrl = player2PhotoUrl;
+          setFormData(prev => ({ ...prev, player2PhotoUrl: player2PhotoUrl }));
         }
         
-        setFormData(finalFormData);
         setUploadingPhotos(false);
       } catch (error) {
         setUploadingPhotos(false);
@@ -346,17 +336,30 @@ const Register = () => {
       console.log('Team Name:', formData.teamName);
       console.log('Selected Gateway:', selectedPaymentGateway);
       
+      // Get the appropriate public key based on selected gateway
+      // Note: Kora Pay uses backend API, so public key is optional
       let publicKey;
       if (selectedPaymentGateway === PAYMENT_GATEWAYS.KORA) {
-        publicKey = process.env.NEXT_PUBLIC_KORA_PUBLIC_KEY;
+        publicKey = process.env.REACT_APP_KORA_PUBLIC_KEY;
+        // Kora Pay uses backend API, so we don't need public key check
+        // But we'll still pass it if available for future use
       }
 
+      // Only check for public key if gateway requires it (not needed for Kora Pay backend API)
+      // if (!publicKey && selectedPaymentGateway !== PAYMENT_GATEWAYS.KORA) {
+      //   alert(`Payment gateway not configured. Please contact support.`);
+      //   setPaymentLoading(false);
+      //   return;
+      // }
+
+      // Create payment configuration
+      // Get entry fee asynchronously
       const entryFee = await getEntryFee();
       const paymentConfig = {
         reference: `SP-${Date.now()}`,
         email: formData.player1Email,
-        amount: entryFee,
-        publicKey: publicKey || '',
+        amount: entryFee, // Dynamic entry fee in kobo
+        publicKey: publicKey || '', // Optional for Kora Pay
         metadata: {
           teamName: formData.teamName,
           player1Name: formData.player1Name,
@@ -367,10 +370,17 @@ const Register = () => {
       };
 
       try {
-        sessionStorage.setItem('pending_registration', JSON.stringify(finalFormData));
+        // For Kora Pay, it redirects, so we handle it differently
+        // Store form data in sessionStorage for after redirect
+        sessionStorage.setItem('pending_registration', JSON.stringify(formData));
         sessionStorage.setItem('selected_gateway', selectedPaymentGateway);
         
+        // Initialize payment using the payment service
+        // This will redirect to Kora Pay checkout
         await initializePayment(paymentConfig, selectedPaymentGateway);
+        
+        // Note: For Kora Pay, redirect happens, so we don't reach here
+        // The callback will be handled when user returns via URL params
       } catch (error) {
         console.error('Payment error:', error);
         if (error.message !== 'Payment window closed') {
@@ -435,7 +445,7 @@ const Register = () => {
       </div>
 
       <div className="form-actions">
-        <button type="button" className="btn btn-secondary" onClick={() => router.push('/events')}>
+        <button type="button" className="btn btn-secondary" onClick={() => navigate('/events')}>
           {t.cancel}
         </button>
         <button type="button" className="btn btn-primary" onClick={nextStep}>
@@ -567,7 +577,7 @@ const Register = () => {
           )}
         </div>
         {errors.player1Photo && <span className="error-message">{errors.player1Photo}</span>}
-        <small>Accepted formats: JPG, PNG. Max size: 10MB</small>
+        <small>Accepted formats: JPG, PNG. Max size: 5MB</small>
       </div>
 
       <div className="form-actions">
@@ -703,7 +713,7 @@ const Register = () => {
           )}
         </div>
         {errors.player2Photo && <span className="error-message">{errors.player2Photo}</span>}
-        <small>Accepted formats: JPG, PNG. Max size: 10MB</small>
+        <small>Accepted formats: JPG, PNG. Max size: 5MB</small>
       </div>
 
       <div className="form-actions">
@@ -802,6 +812,7 @@ const Register = () => {
             <span className="payment-value">{formatPrice()} <span className="subsidized-badge">(Subsidized)</span></span>
           </div>
           
+          {/* Payment Gateway Selection */}
           {availableGateways.length > 1 && (
             <div className="payment-gateway-selector">
               <label className="payment-gateway-label">
@@ -903,45 +914,13 @@ const Register = () => {
       <p className="success-message">
         {t.thankYou}
       </p>
-
-      {/* Team summary */}
-      {registrationData && (
-        <div className="team-summary-card">
-          <h3><i className="fas fa-users"></i> {registrationData.teamName}</h3>
-          <div className="team-players-row">
-            <div className="team-player">
-              <i className="fas fa-gamepad"></i>
-              <div>
-                <strong>{registrationData.player1Name}</strong>
-                <span>{registrationData.player1GamerTag} &middot; {registrationData.player1Platform}</span>
-                <span className="player-email">{registrationData.player1Email}</span>
-              </div>
-            </div>
-            <div className="team-player player2">
-              <i className="fas fa-gamepad"></i>
-              <div>
-                <strong>{registrationData.player2Name}</strong>
-                <span>{registrationData.player2GamerTag} &middot; {registrationData.player2Platform}</span>
-                <span className="player-email">{registrationData.player2Email}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
+      
       <div className="success-details">
         <div className="detail-card">
           <i className="fas fa-calendar"></i>
           <div>
             <strong>Tournament Date</strong>
-            <span>Thursday, July 30, 2026</span>
-          </div>
-        </div>
-        <div className="detail-card">
-          <i className="fas fa-map-marker-alt"></i>
-          <div>
-            <strong>Venue</strong>
-            <span>Rufus and Bee&apos;s, Twinwaters Lagos</span>
+            <span>Saturday, May 23, 2026</span>
           </div>
         </div>
         <div className="detail-card">
@@ -962,7 +941,7 @@ const Register = () => {
           <i className="fas fa-envelope"></i>
           <div>
             <strong>Confirmation Sent</strong>
-            <span>Check your email (both players)</span>
+            <span>Check your email</span>
           </div>
         </div>
       </div>
@@ -970,63 +949,25 @@ const Register = () => {
       <div className="next-steps">
         <h3>{t.whatNext}</h3>
         <ul>
-          <li><i className="fas fa-check"></i> Both players will receive a confirmation email with team details</li>
-          <li><i className="fas fa-check"></i> Player 2 ({registrationData?.player2Name || 'your teammate'}) should check their email for their copy</li>
+          <li><i className="fas fa-check"></i> {t.confirmationEmail}</li>
           <li><i className="fas fa-check"></i> {t.discordInvite}</li>
-          <li><i className="fas fa-check"></i> Match schedule &amp; bracket announced 1 week before tournament (July 23)</li>
-          <li><i className="fas fa-check"></i> Arrive at Rufus and Bee&apos;s by 10:00 AM on July 30 for check-in</li>
-          <li><i className="fas fa-gamepad"></i> Players are encouraged to bring their own controllers/pads if possible — venue controllers will be available but personal pads are recommended</li>
+          <li><i className="fas fa-check"></i> {t.scheduleAnnouncement}</li>
           <li><i className="fas fa-check"></i> {t.stayConnected}</li>
         </ul>
       </div>
 
-      {/* Social Share */}
-      <div className="social-share-section">
-        <p className="share-label"><i className="fas fa-share-alt"></i> Share your registration</p>
-        <div className="share-buttons">
-          <a
-            href={`https://wa.me/?text=${encodeURIComponent(`🎮 Just registered for the Syncplay 2v2 EA Sports FC 26 Tournament on July 30! Team: ${registrationData?.teamName || 'We are in!'}. Join us 👉 https://syncplay.co/register`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="share-btn whatsapp"
-          >
-            <i className="fab fa-whatsapp"></i> WhatsApp
-          </a>
-          <a
-            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`🎮 Just registered for the @syncplay_co 2v2 EA FC 26 Tournament on July 30! Team ${registrationData?.teamName || ''} is coming 🔥 #Syncplay #eFootball #EAFC26`)}&url=${encodeURIComponent('https://syncplay.co/register')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="share-btn twitter"
-          >
-            <i className="fab fa-x-twitter"></i> Post on X
-          </a>
-          <button
-            className="share-btn copy-link"
-            onClick={() => {
-              navigator.clipboard.writeText('https://syncplay.co/register');
-              const btn = document.getElementById('copy-link-btn');
-              if (btn) { btn.textContent = '✅ Copied!'; setTimeout(() => { btn.textContent = '🔗 Copy Link'; }, 2000); }
-            }}
-          >
-            <span id="copy-link-btn">🔗 Copy Link</span>
-          </button>
-        </div>
-        <p className="share-instagram-hint">
-          <i className="fab fa-instagram"></i> For Instagram — screenshot this page and share to your story!
-        </p>
-      </div>
-
       <div className="success-actions">
-        <button className="btn btn-primary" onClick={() => router.push('/events')}>
+        <button className="btn btn-primary" onClick={() => navigate('/events')}>
           {t.viewAllEvents}
         </button>
-        <button className="btn btn-secondary" onClick={() => router.push('/')}>
+        <button className="btn btn-secondary" onClick={() => navigate('/')}>
           {t.backToHome}
         </button>
       </div>
     </div>
   );
 
+  // Show loading state
   if (isLoading) {
     return (
       <div className="register-page">
@@ -1041,6 +982,7 @@ const Register = () => {
     );
   }
 
+  // Show full message if registration is full
   if (isFull) {
     return (
       <div className="register-page">
@@ -1059,15 +1001,15 @@ const Register = () => {
                 <i className="fas fa-users-slash"></i>
               </div>
               <h2>Registration Full!</h2>
-              <p>All {totalSlots} team slots have been filled for our Second Edition tournament on Thursday, July 30, 2026.</p>
+              <p>All {totalSlots} team slots have been filled for our Second Edition tournament on Saturday, May 23, 2026.</p>
               <p className="full-subtitle">
                 Thank you for your interest! Join our waiting list to be notified about future tournaments and upcoming editions.
               </p>
               <div className="full-actions">
-                <button className="btn btn-primary" onClick={() => router.push('/events')}>
+                <button className="btn btn-primary" onClick={() => navigate('/events')}>
                   View Tournament Details
                 </button>
-                <button className="btn btn-secondary" onClick={() => router.push('/contact')}>
+                <button className="btn btn-secondary" onClick={() => navigate('/contact')}>
                   Join Waiting List
                 </button>
               </div>
@@ -1080,13 +1022,14 @@ const Register = () => {
 
   return (
     <div className="register-page">
+      {/* Hero Section */}
       <section className="register-hero">
         <div className="register-hero-overlay"></div>
         <div className="container">
           <h1>{t.tournamentRegistration}</h1>
           <p>EA Sports FC 26 - 2v2 {t.tournaments} - Second Edition</p>
           <div className="tournament-details-hero">
-            <span><i className="fas fa-calendar"></i> Thursday, July 30, 2026</span>
+            <span><i className="fas fa-calendar"></i> Saturday, May 23, 2026</span>
             <span><i className="fas fa-trophy"></i> {t.exclusivePrizePoolShort}</span>
             <span><i className="fas fa-money-bill-wave"></i> {formatPrice()} {t.entryFee} <span className="subsidized-badge">(Subsidized)</span></span>
             <span className={slotsRemaining <= 5 ? 'slots-warning' : ''}>
@@ -1101,12 +1044,13 @@ const Register = () => {
         </div>
       </section>
 
+      {/* Registration Form */}
       <section className="register-form-section">
         <div className="container">
           <div className="register-form-container">
             {currentStep < 5 && renderProgressBar()}
             
-            <form className="registration-form" onSubmit={(e) => e.preventDefault()}>
+            <form className="registration-form">
               {currentStep === 1 && renderStep1()}
               {currentStep === 2 && renderStep2()}
               {currentStep === 3 && renderStep3()}
@@ -1121,3 +1065,4 @@ const Register = () => {
 };
 
 export default Register;
+

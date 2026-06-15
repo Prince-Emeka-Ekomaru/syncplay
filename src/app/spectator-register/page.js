@@ -225,9 +225,9 @@ const SpectatorRegister = () => {
         <div className="register-hero-overlay"></div>
         <div className="container">
           <h1>Spectator Tickets</h1>
-          <p>Join us at Rufus and Bee's, Lagos on July 29, 2026</p>
+          <p>Join us at Rufus and Bee's, Lagos on July 30, 2026</p>
           <div className="tournament-details-hero">
-            <span><i className="fas fa-calendar-alt"></i> July 29, 2026</span>
+            <span><i className="fas fa-calendar-alt"></i> July 30, 2026</span>
             <span><i className="fas fa-map-marker-alt"></i> Rufus and Bee's, Twinwaters Lagos</span>
             <span><i className="fas fa-ticket-alt"></i> ₦{(ticketPriceKobo / 100).toLocaleString()} / Ticket</span>
           </div>

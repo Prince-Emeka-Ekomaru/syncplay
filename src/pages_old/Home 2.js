@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
 // Registration count hook removed as tournament is completed
+import { getMediaUrl } from '../supabaseClient';
 import './Home.css';
 
 const Home = () => {
@@ -66,7 +67,11 @@ const Home = () => {
           <div className="hero-logo animate-on-scroll">
             <img src="/syncplay text nobg 1.png" alt="syncplay Logo" />
           </div>
-          <h1 className="hero-title animate-on-scroll" data-title={t.heroTitle}></h1>
+          <h1 className="hero-title animate-on-scroll" data-title={t.heroTitle}>
+            <span style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
+              {t.heroTitle}
+            </span>
+          </h1>
           <p className="hero-subtitle animate-on-scroll">
             {t.heroSubtitle}
           </p>
@@ -219,7 +224,7 @@ const Home = () => {
             {newsArticles.map(article => (
               <div key={article.id} className="news-card animate-on-scroll">
                 <div className="news-image">
-                  <img src={article.image} alt={article.title} />
+                  <img src={getMediaUrl(article.image)} alt={article.title} />
                   <div className="news-date">{article.date}</div>
                 </div>
                 <div className="news-content">
@@ -254,16 +259,17 @@ const Home = () => {
             </p>
             <Link to="/contact" className="btn btn-primary btn-get-in-touch">{t.getInTouch}</Link>
           </div>
-
-          {/* Partner Logos */}
+          {/* Venue Spotlight */}
           <div className="partners-section animate-on-scroll">
-            <h3 className="partners-title">{t.mediaPartner}</h3>
+            <h3 className="partners-title">{t.nextVenue || 'NEXT EVENT VENUE'}</h3>
             <div className="partner-logos">
-              <div className="partner-logo partner-logo-featured">
-                <img src="/the-twelfth-man.jpg" alt="The Twelfth Man" />
+              <div className="partner-logo partner-logo-featured" style={{ background: 'transparent', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <span style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#FFB300', letterSpacing: '2px' }}>RUFUS & BEE'S</span>
               </div>
             </div>
-            <p className="partner-description">{t.mediaPartnerDesc}</p>
+            <p className="partner-description" style={{ maxWidth: '600px', margin: '1rem auto 0 auto' }}>
+              {t.nextVenueDesc || "Lagos' premier arcade games center, sports bar, and bowling alley. Join us live at Twinwaters Lagos for high-stakes esports action, arcade chips, and premium entertainment."}
+            </p>
           </div>
         </div>
       </section>

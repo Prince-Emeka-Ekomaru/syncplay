@@ -10,6 +10,7 @@ import {
   initializePayment,
   initializePaymentGateways,
   getAvailableGateways,
+  getActiveGateway,
   PAYMENT_GATEWAYS,
   getGatewayDisplayName,
   getGatewayIcon,
@@ -71,9 +72,9 @@ const Register = () => {
       
       // Check and reset price if old value detected
       const currentPrice = await getEntryFee();
-      // If somehow we got the old price (20k), reset to default (50k)
-      if (currentPrice === 2000000) {
-        console.log('Detected old price (₦20,000), resetting to default (₦50,000)');
+      // If somehow we got the old price (50k), reset to default (20k)
+      if (currentPrice === 5000000) {
+        console.log('Detected old price (₦50,000), resetting to default (₦20,000)');
         resetPriceToDefault();
       }
     };
@@ -116,17 +117,16 @@ const Register = () => {
       });
 
       if (pendingData && storedRef === paymentRef) {
-        let parsedFormData = null;
         try {
-          parsedFormData = JSON.parse(pendingData);
-          console.log('Processing registration save for:', parsedFormData.teamName);
+          const formData = JSON.parse(pendingData);
+          console.log('Processing registration save for:', formData.teamName);
           
           // Verify payment with Kora (you should verify on backend)
           // For now, we'll assume payment was successful if we got redirected back
           // In production, verify payment status via Kora API
           
           const entryFee = await getEntryFee();
-          await saveRegistration(paymentRef, parsedFormData, PAYMENT_GATEWAYS.KORA, entryFee);
+          await saveRegistration(paymentRef, formData, PAYMENT_GATEWAYS.KORA, entryFee);
           
           console.log('Registration saved successfully to database!');
           refresh();
@@ -151,13 +151,13 @@ const Register = () => {
             details: error.details,
             hint: error.hint,
             paymentRef,
-            teamName: parsedFormData?.teamName
+            teamName: formData?.teamName
           };
           console.error('Error saving registration:', errorInfo);
           
           // Show detailed error to user
           const errorMsg = error.message || 'Unknown error occurred';
-          alert(`Payment successful but registration save failed.\n\nError: ${errorMsg}\n\nPlease contact support with reference: ${paymentRef}\n\nTeam: ${parsedFormData?.teamName || 'Unknown'}`);
+          alert(`Payment successful but registration save failed.\n\nError: ${errorMsg}\n\nPlease contact support with reference: ${paymentRef}\n\nTeam: ${formData?.teamName || 'Unknown'}`);
         }
       } else {
         // SessionStorage was cleared or reference mismatch

@@ -36,7 +36,7 @@ const Tournaments = () => {
       id: 1,
       title: t.tournament2v2 || '2v2 eFootball Tournament',
       game: 'eFootball - EA Sports FC 26',
-      date: 'July 29, 2026',
+      date: 'July 30, 2026',
       time: '10:00 AM',
       prize: t.exclusivePrizePoolShort || 'Exclusive Prize Pool',
       participants: '',
@@ -81,7 +81,7 @@ const Tournaments = () => {
           <li><strong>Format:</strong> 2v2 Team Competition</li>
 
           <li><strong>Entry Fee:</strong> ₦50,000 per team</li>
-          <li><strong>Date:</strong> July 29, 2026 at 10:00 AM WAT</li>
+          <li><strong>Date:</strong> July 30, 2026 at 10:00 AM WAT</li>
           <li><strong>Structure:</strong> League Phase (3 matches per team) followed by Top 8 playoffs (Quarter-finals and Semi-finals: Home & Away matches; Grand Final: One Match).</li>
         </ul>
       )
@@ -186,7 +186,7 @@ const Tournaments = () => {
                     <div className="featured-header">
                       <div className="event-game-tag">{event.game}</div>
                       <h2>{event.title}</h2>
-                      <p className="featured-subtitle">Wednesday, July 29, 2026</p>
+                      <p className="featured-subtitle">Thursday, July 30, 2026</p>
                       <p className="featured-description">{event.description}</p>
                     </div>
                     <div className="featured-details">

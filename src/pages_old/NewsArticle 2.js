@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
+import { supabase } from '../supabaseClient';
 import './NewsArticle.css';
 
 const NewsArticle = () => {
   const { id } = useParams();
   const { currentLanguage } = useLanguage();
   const t = translations[currentLanguage];
+  const [article, setArticle] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Article data based on ID
-  const getArticleData = () => {
+  const getStaticArticleData = () => {
     const articleId = parseInt(id);
     
     if (articleId === 7) {
@@ -25,14 +28,14 @@ const NewsArticle = () => {
           <p>Our inaugural 2v2 EA Sports FC 26 Tournament has been completed successfully! After intense competition, we're proud to announce our champions.</p>
           
           <h3>Final Standings</h3>
-          <p><strong>1st Place:</strong> ${t.winnerTeamName || 'Champions'} - ${t.winnerPrize || '₦500,000'}</p>
-          <p><strong>2nd Place:</strong> ${t.runnerUpTeamName || 'Runner-Up'} - ${t.runnerUpPrize || '₦300,000'}</p>
-          <p><strong>3rd Place:</strong> ${t.thirdPlaceTeamName || 'Third Place'} - ${t.thirdPlacePrize || '₦200,000'}</p>
+          <p><strong>1st Place:</strong> ${t.winnerTeamName || 'Champions'} - ${t.winnerPrize || '₦800,000'}</p>
+          <p><strong>2nd Place:</strong> ${t.runnerUpTeamName || 'Runner-Up'} - ${t.runnerUpPrize || '₦400,000'}</p>
+          <p><strong>3rd Place:</strong> ${t.thirdPlaceTeamName || 'Third Place'} - ${t.thirdPlacePrize || '₦300,000'}</p>
           
           <h3>Tournament Highlights</h3>
           <p>The tournament featured 12 teams competing in a group stage format, followed by knockout rounds. The competition was fierce, with many close matches and incredible displays of skill.</p>
           
-          <p>Thank you to all participants, supporters, and our media partner The Twelfth Man for making this inaugural tournament a success!</p>
+          <p>Thank you to all participants and supporters for making this inaugural tournament a success!</p>
           
           <div style="margin: 2rem 0; text-align: center;">
             <a href="/tournament-results" style="display: inline-block; padding: 1rem 2rem; background: #E63946; color: white; text-decoration: none; border-radius: 5px; margin: 0.5rem;">
@@ -72,6 +75,84 @@ const NewsArticle = () => {
           <p>Check out our <a href="/videos">Videos page</a> for full match highlights and player interviews!</p>
         `
       };
+    } else if (articleId === 1) {
+      return {
+        id: articleId,
+        title: t.newsArticle1Title,
+        category: t.announcements,
+        author: t.syncplayTeam,
+        date: 'October 23, 2025',
+        image: '/ea-sports-fc-26-xbox-one-xbox-series-x-s-microsoft-store-cover.jpg',
+        content: `
+          <p>syncplay eSports has officially launched! Our inaugural 2v2 tournament on December 20, 2025 was a massive success, bringing together the region's top eFootball talent. The event showcased high-level team coordination, strategic depth, and intense matches.</p>
+          <p>We want to thank all of our competing teams and spectators for their support during this historic launch. Stay tuned as we build the premier esports platform in Nigeria!</p>
+        `
+      };
+    } else if (articleId === 2) {
+      return {
+        id: articleId,
+        title: t.newsArticle2Title,
+        category: t.announcements,
+        author: t.syncplayTeam,
+        date: 'October 23, 2025',
+        image: '/fc-26-1024x639.jpg',
+        content: `
+          <p>Our registration window for the inaugural 2v2 tournament was completed successfully, with 12 elite teams securing their spots to compete. Teams went head-to-head for recognition and exclusive prizes in the tournament.</p>
+          <p>For future events, keep an eye on our Events page and make sure to register early, as team slots are limited and fill up very quickly!</p>
+        `
+      };
+    } else if (articleId === 3) {
+      return {
+        id: articleId,
+        title: t.newsArticle3Title,
+        category: t.announcements,
+        author: t.syncplayTeam,
+        date: 'October 22, 2025',
+        image: '/1acc9234056000389336228dc9f195d0570f25a5.png',
+        content: `
+          <p>syncplay eSports is Nigeria's newest dedicated platform for competitive sports simulation gaming. Focused on bringing gamers together, we organize professional-grade tournaments for eFootball and eBasketball.</p>
+          <p>By partnering with industry experts, experienced organizers, and talented broadcasters, syncplay is set to become your ultimate destination for high-quality esports content and competitive tournaments. Join us on this journey!</p>
+        `
+      };
+    } else if (articleId === 4) {
+      return {
+        id: articleId,
+        title: t.newsArticle4Title,
+        category: t.announcements,
+        author: t.syncplayTeam,
+        date: 'October 22, 2025',
+        image: '/ea-sports-fc-26-xbox-one-xbox-series-x-s-microsoft-store-cover.jpg',
+        content: `
+          <p>To ensure fair play and professional standards, the syncplay eSports committee has officially published the Tournament Rules and Regulations. All participating teams and players must review these guidelines before competing.</p>
+          <p>The rules cover game settings (half length, difficulty, controller settings), match reporting, disconnection handling, and our code of conduct. Check our Tournaments page for the complete rulebook.</p>
+        `
+      };
+    } else if (articleId === 5) {
+      return {
+        id: articleId,
+        title: t.newsArticle5Title,
+        category: t.announcements,
+        author: t.syncplayTeam,
+        date: 'October 21, 2025',
+        image: '/49f5b4f9bcc62ca23349c7f4096a7d52b91a7a3f.jpg',
+        content: `
+          <p>Following our successful December 2025 launch, syncplay is gearing up for a packed schedule of competitive gaming. We are expanding our tournament offerings to include regular Weekend Cups and Championship Series.</p>
+          <p>Whether you are a casual gamer looking for fun or a professional player aiming for the top, there will be plenty of opportunities to showcase your skills and win cash prizes.</p>
+        `
+      };
+    } else if (articleId === 6) {
+      return {
+        id: articleId,
+        title: t.newsArticle6Title,
+        category: t.announcements,
+        author: t.syncplayTeam,
+        date: 'October 20, 2025',
+        image: '/fc-26-1024x639.jpg',
+        content: `
+          <p>Following overwhelming feedback and requests from the Nigerian gaming community, syncplay is excited to announce that eBasketball tournaments will be joining our lineup soon!</p>
+          <p>We are currently working with esports organizers to finalize rules, structure, and schedules for the upcoming basketball events. Stay tuned to our announcements and follow us on social media for updates.</p>
+        `
+      };
     } else {
       return {
         id: articleId,
@@ -85,7 +166,44 @@ const NewsArticle = () => {
     }
   };
 
-  const article = getArticleData();
+  useEffect(() => {
+    const fetchArticle = async () => {
+      setLoading(true);
+      try {
+        // If ID is not a small integer, try loading from Supabase
+        const isNumeric = /^\d+$/.test(id);
+        if (!isNumeric && id) {
+          const { data, error } = await supabase
+            .from('news')
+            .select('*')
+            .eq('id', id)
+            .single();
+
+          if (!error && data) {
+            setArticle({
+              id: data.id,
+              title: data.title,
+              category: data.category,
+              author: data.author,
+              date: new Date(data.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }),
+              image: data.image_url,
+              content: data.content
+            });
+            setLoading(false);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to load from DB, falling back:', err);
+      }
+
+      // Fallback
+      setArticle(getStaticArticleData());
+      setLoading(false);
+    };
+
+    fetchArticle();
+  }, [id, currentLanguage]);
 
   const relatedArticles = [
     {
@@ -104,6 +222,30 @@ const NewsArticle = () => {
       image: '/ea-sports-fc-26-xbox-one-xbox-series-x-s-microsoft-store-cover.jpg'
     }
   ];
+
+  if (loading) {
+    return (
+      <div className="article-page" style={{ paddingTop: '100px', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', color: '#888' }}>
+          <i className="fas fa-spinner fa-spin" style={{ fontSize: '2.5rem', marginBottom: '1rem', color: '#E63946' }}></i>
+          <p>Loading article details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!article) {
+    return (
+      <div className="article-page" style={{ paddingTop: '100px', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <i className="fas fa-exclamation-circle" style={{ fontSize: '3rem', color: '#E63946', marginBottom: '1rem' }}></i>
+          <h2>Article Not Found</h2>
+          <p style={{ margin: '1rem 0 2rem' }}>The article you are looking for does not exist or has been removed.</p>
+          <Link to="/news" className="btn btn-primary">Back to News</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="article-page">
