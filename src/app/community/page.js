@@ -909,7 +909,7 @@ const CommunityChat = () => {
       if (otherMember) {
         const otherProfile = allProfiles.find(p => p.id === otherMember.user_id);
         if (otherProfile) {
-          return otherProfile.username || otherProfile.gamer_tag || 'Chat Partner';
+          return otherProfile.gamer_tag || otherProfile.username || 'Chat Partner';
         }
       }
       return 'Direct Message';
@@ -1496,7 +1496,7 @@ const CommunityChat = () => {
               {messages.map(msg => {
                 const senderProfile = profilesCache[msg.sender_id] || {};
                 const isMyMessage = msg.sender_id === user?.id;
-                const senderDisplayName = senderProfile.username || senderProfile.gamer_tag || 'Player';
+                const senderDisplayName = senderProfile.gamer_tag || senderProfile.username || 'Player';
                 
                 return (
                   <div key={msg.id} className={`message-bubble-wrapper ${isMyMessage ? 'own-message' : ''}`}>
@@ -1641,12 +1641,12 @@ const CommunityChat = () => {
                   .filter(p => p.id !== user?.id)
                   .filter(p => {
                     if (!searchQuery) return true;
-                    const tag = p.username || p.gamer_tag || '';
+                    const tag = p.gamer_tag || p.username || '';
                     return tag.toLowerCase().includes(searchQuery.toLowerCase());
                   })
                   .map(player => {
                     const isOnline = !!onlineUsers[player.id];
-                    const displayName = player.username || player.gamer_tag || 'Player';
+                    const displayName = player.gamer_tag || player.username || 'Player';
                     return (
                       <li 
                         key={player.id} 
