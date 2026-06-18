@@ -27,14 +27,18 @@ const AdBanner = () => {
 
   return (
     <div className="ad-banner">
-      <div className="ad-banner-content container">
+      <div className="ad-banner-content">
         <div className="ad-banner-text">
-          <span className="ad-badge">NEW</span>
-          <p>Registration is open for the upcoming July 30th 2v2 Tournament! Limited spots available.</p>
+          <div className="ad-icon-pulse">
+            <i className="fas fa-trophy"></i>
+          </div>
+          <div className="ad-text-wrapper">
+            <p><strong>REGISTER NOW!</strong> July 30th 2v2 Tournament. Limited spots available.</p>
+          </div>
         </div>
         <div className="ad-banner-actions">
           <Link href="/register" className="btn-ad-register" onClick={handleClose}>
-            Register Now
+            Sign Up
           </Link>
           <button className="ad-banner-close" onClick={handleClose} aria-label="Close">
             <i className="fas fa-times"></i>

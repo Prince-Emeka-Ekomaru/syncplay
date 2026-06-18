@@ -1,109 +1,193 @@
 .ad-banner {
-  background: linear-gradient(90deg, #E63946, #c21e2b);
-  color: #fff;
-  padding: 12px 0;
-  position: relative;
-  z-index: 1000;
-  animation: slideDown 0.5s ease-out forwards;
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: 90%;
+  max-width: 600px;
+  animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes slideDown {
+@keyframes slideUpFade {
   from {
-    transform: translateY(-100%);
+    transform: translate(-50%, 100%);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translate(-50%, 0);
     opacity: 1;
   }
 }
 
 .ad-banner-content {
+  background: rgba(20, 20, 24, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(230, 57, 70, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(230, 57, 70, 0.2);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
+  gap: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Add a glowing animated line at the top of the banner */
+.ad-banner-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, #E63946, transparent);
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; box-shadow: 0 0 10px #E63946; }
+  100% { opacity: 0.3; }
 }
 
 .ad-banner-text {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 1rem;
   flex: 1;
 }
 
-.ad-banner-text p {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 500;
+.ad-icon-pulse {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  background: rgba(230, 57, 70, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.ad-badge {
-  background: #fff;
+.ad-icon-pulse i {
+  color: #E63946;
+  font-size: 1rem;
+  animation: bounceTrophy 2s infinite;
+}
+
+@keyframes bounceTrophy {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px) scale(1.1); }
+}
+
+.ad-icon-pulse::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid #E63946;
+  animation: ripple 1.5s infinite ease-out;
+}
+
+@keyframes ripple {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.ad-text-wrapper p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1.4;
+}
+
+.ad-text-wrapper strong {
   color: #E63946;
   font-weight: 800;
-  font-size: 0.75rem;
-  padding: 3px 8px;
-  border-radius: 4px;
-  letter-spacing: 1px;
 }
 
 .ad-banner-actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 1rem;
 }
 
 .btn-ad-register {
-  background: #fff;
-  color: #E63946;
+  background: linear-gradient(90deg, #E63946, #c21e2b);
+  color: #fff;
   font-weight: 700;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
   text-transform: uppercase;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   transition: all 0.2s ease;
   white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3);
+  text-decoration: none;
 }
 
 .btn-ad-register:hover {
-  background: #f0f0f0;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 15px rgba(230, 57, 70, 0.5);
 }
 
 .ad-banner-close {
-  background: rgba(255, 255, 255, 0.2);
+  background: transparent;
   border: none;
-  color: #fff;
-  width: 30px;
-  height: 30px;
+  color: #71717a;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  font-size: 1rem;
 }
 
 .ad-banner-close:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
+  .ad-banner {
+    bottom: 1rem;
+    width: 95%;
+  }
+  
   .ad-banner-content {
     flex-direction: column;
     text-align: center;
-    justify-content: center;
+    padding: 1rem;
+    gap: 1rem;
   }
   
   .ad-banner-text {
     flex-direction: column;
+    gap: 0.75rem;
   }
   
   .ad-banner-actions {
     width: 100%;
     justify-content: space-between;
+  }
+  
+  .btn-ad-register {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .ad-banner-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
   }
 }
