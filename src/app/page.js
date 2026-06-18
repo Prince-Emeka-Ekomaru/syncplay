@@ -16,22 +16,6 @@ const Home = () => {
   const [loadingNews, setLoadingNews] = useState(true);
 
   useEffect(() => {
-    // Scroll animation observer
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-in-up');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-
     // Fetch latest news
     const fetchLatestNews = async () => {
       try {
@@ -61,9 +45,29 @@ const Home = () => {
     };
 
     fetchLatestNews();
+  }, []);
+
+  useEffect(() => {
+    // Scroll animation observer
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-up');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
     return () => observer.disconnect();
-  }, []);
+  }, [newsArticles]);
+
+
 
   return (
     <div className="home">
