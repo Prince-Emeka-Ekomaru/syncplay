@@ -47,6 +47,26 @@ const Home = () => {
     fetchLatestNews();
   }, []);
 
+  const handleShare = async (article) => {
+    const shareUrl = window.location.origin + `/news/${article.id}`;
+    const shareData = {
+      title: article.title,
+      text: article.excerpt,
+      url: shareUrl
+    };
+    
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(shareUrl);
+        alert('Link copied to clipboard!');
+      }
+    } catch (err) {
+      console.log('Error sharing:', err);
+    }
+  };
+
   useEffect(() => {
     // Scroll animation observer
     const observerOptions = {
@@ -248,9 +268,32 @@ const Home = () => {
                   <div className="news-content">
                     <h3>{article.title}</h3>
                     <p>{article.excerpt}</p>
-                    <Link href={`/news/${article.id}`} className="news-link">
-                      {t.readMore} <i className="fas fa-arrow-right"></i>
-                    </Link>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
+                      <Link href={`/news/${article.id}`} className="news-link" style={{ margin: 0 }}>
+                        {t.readMore} <i className="fas fa-arrow-right"></i>
+                      </Link>
+                      <button 
+                        onClick={() => handleShare(article)}
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)',
+                          color: '#a1a1aa',
+                          width: '36px',
+                          height: '36px',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onMouseOver={(e) => { e.currentTarget.style.color = '#e63946'; e.currentTarget.style.borderColor = '#e63946'; }}
+                        onMouseOut={(e) => { e.currentTarget.style.color = '#a1a1aa'; e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'; }}
+                        title="Share this news"
+                      >
+                        <i className="fas fa-share-alt"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))
