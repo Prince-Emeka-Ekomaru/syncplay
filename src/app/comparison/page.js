@@ -307,7 +307,7 @@ const ComparisonContent = () => {
         ) : (
           <>
             {/* Comparison Mode Selector Buttons */}
-            <div className="comparison-mode-selector" style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '2rem' }}>
+            <div className="comparison-mode-selector" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', marginBottom: '2rem' }}>
               <button 
                 className={`mode-btn ${comparisonMode === 'team' ? 'active' : ''}`}
                 onClick={() => setComparisonMode('team')}
@@ -315,7 +315,7 @@ const ComparisonContent = () => {
                   background: comparisonMode === 'team' ? '#e63946' : 'rgba(255,255,255,0.05)',
                   color: '#ffffff',
                   border: 'none',
-                  padding: '0.65rem 1.75rem',
+                  padding: '0.65rem 1.25rem',
                   borderRadius: '20px',
                   fontWeight: 700,
                   fontSize: '0.9rem',
@@ -337,7 +337,7 @@ const ComparisonContent = () => {
                   background: comparisonMode === 'player' ? '#e63946' : 'rgba(255,255,255,0.05)',
                   color: '#ffffff',
                   border: 'none',
-                  padding: '0.65rem 1.75rem',
+                  padding: '0.65rem 1.25rem',
                   borderRadius: '20px',
                   fontWeight: 700,
                   fontSize: '0.9rem',
