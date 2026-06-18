@@ -1,0 +1,109 @@
+.ad-banner {
+  background: linear-gradient(90deg, #E63946, #c21e2b);
+  color: #fff;
+  padding: 12px 0;
+  position: relative;
+  z-index: 1000;
+  animation: slideDown 0.5s ease-out forwards;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.ad-banner-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.ad-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.ad-banner-text p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.ad-badge {
+  background: #fff;
+  color: #E63946;
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+.ad-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.btn-ad-register {
+  background: #fff;
+  color: #E63946;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-ad-register:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.ad-banner-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.ad-banner-close:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 768px) {
+  .ad-banner-content {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .ad-banner-text {
+    flex-direction: column;
+  }
+  
+  .ad-banner-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

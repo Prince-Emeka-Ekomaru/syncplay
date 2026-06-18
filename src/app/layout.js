@@ -3,6 +3,7 @@ import './globals.css';
 import { LanguageProvider } from '../contexts/LanguageContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import AdBanner from '../components/AdBanner';
 
 const poppins = Poppins({
   weight: ['400', '600', '700', '800'],
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
       <body>
         <LanguageProvider>
           <div className="App">
+            <AdBanner />
             <Navbar />
             {children}
             <Footer />
