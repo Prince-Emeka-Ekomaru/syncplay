@@ -1,10 +1,10 @@
 "use client";
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
 // Registration count hook removed as tournament is completed
-import { getMediaUrl } from '../supabaseClient';
+import { supabase, getMediaUrl } from '../supabaseClient';
 import './Home.css';
 
 const Home = () => {
@@ -12,6 +12,9 @@ const Home = () => {
   const t = translations[currentLanguage];
   // Registration count hook removed as tournament is completed
   
+  const [newsArticles, setNewsArticles] = useState([]);
+  const [loadingNews, setLoadingNews] = useState(true);
+
   useEffect(() => {
     // Scroll animation observer
     const observerOptions = {
@@ -29,33 +32,38 @@ const Home = () => {
 
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
+    // Fetch latest news
+    const fetchLatestNews = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('news')
+          .select('*')
+          .eq('published', true)
+          .order('created_at', { ascending: false })
+          .limit(3);
+
+        if (!error && data) {
+          const formatted = data.map(art => ({
+            id: art.id,
+            title: art.title,
+            excerpt: art.excerpt,
+            image: art.image_url,
+            date: new Date(art.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }),
+            category: art.category
+          }));
+          setNewsArticles(formatted);
+        }
+      } catch (err) {
+        console.error('Failed to load latest news:', err);
+      } finally {
+        setLoadingNews(false);
+      }
+    };
+
+    fetchLatestNews();
+
     return () => observer.disconnect();
   }, []);
-
-  const newsArticles = [
-    {
-      id: 7,
-      title: t.tournamentChampionsCrowned || 'Tournament Champions Crowned - Full Results & Highlights',
-      excerpt: t.tournamentChampionsExcerpt || 'Our inaugural tournament is complete! View the champions, final standings, prize distribution, and relive the best moments...',
-      image: '/images/news/champions.png',
-      date: 'December 20, 2025',
-      category: 'tournament-results'
-    },
-    {
-      id: 1,
-      title: 'syncplay eSports Launches - Historic 2v2 Tournament December 20th',
-      excerpt: 'syncplay eSports officially launched with our inaugural 2v2 EA Sports FC 26 Tournament on December 20, 2025. The tournament has been completed successfully...',
-      image: '/images/news/launch.png',
-      date: 'October 23, 2025'
-    },
-    {
-      id: 2,
-      title: 'Registration Now Open - 2v2 EA Sports FC 26 Tournament',
-      excerpt: 'Registration was open for our first tournament! 12 teams competed for exclusive prizes. Entry fee was ₦50,000 per team...',
-      image: '/images/news/registration.png',
-      date: 'October 23, 2025'
-    }
-  ];
 
   return (
     <div className="home">
@@ -222,21 +230,31 @@ const Home = () => {
           </div>
 
           <div className="news-grid">
-            {newsArticles.map(article => (
-              <div key={article.id} className="news-card animate-on-scroll">
-                <div className="news-image">
-                  <img src={getMediaUrl(article.image)} alt={article.title} />
-                  <div className="news-date">{article.date}</div>
-                </div>
-                <div className="news-content">
-                  <h3>{article.title}</h3>
-                  <p>{article.excerpt}</p>
-                  <Link href={`/news/${article.id}`} className="news-link">
-                    {t.readMore} <i className="fas fa-arrow-right"></i>
-                  </Link>
-                </div>
+            {loadingNews ? (
+              <div className="loading-spinner" style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '2rem', color: '#71717a' }}>
+                <i className="fas fa-circle-notch fa-spin"></i> Loading latest news...
               </div>
-            ))}
+            ) : newsArticles.length > 0 ? (
+              newsArticles.map(article => (
+                <div key={article.id} className="news-card animate-on-scroll">
+                  <div className="news-image">
+                    <img src={getMediaUrl(article.image)} alt={article.title} />
+                    <div className="news-date">{article.date}</div>
+                  </div>
+                  <div className="news-content">
+                    <h3>{article.title}</h3>
+                    <p>{article.excerpt}</p>
+                    <Link href={`/news/${article.id}`} className="news-link">
+                      {t.readMore} <i className="fas fa-arrow-right"></i>
+                    </Link>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '2rem', color: '#71717a' }}>
+                No news articles found.
+              </div>
+            )}
           </div>
 
           <div className="news-cta text-center animate-on-scroll">
