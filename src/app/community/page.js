@@ -1409,6 +1409,82 @@ const CommunityChat = () => {
             <button className={`filter-pill ${chatFilter === 'groups' ? 'active' : ''}`} onClick={() => setChatFilter('groups')}>Groups</button>
           </div>
           
+          {/* Online Now (Stories-style Horizontal List) */}
+          {allProfiles.filter(p => p.id !== user?.id && onlineUsers[p.id]).length > 0 && (
+            <div className="online-now-scroll" style={{
+              display: 'flex',
+              overflowX: 'auto',
+              gap: '1rem',
+              padding: '1rem 1.25rem',
+              borderBottom: '1px solid #27272a',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none'
+            }}>
+              {allProfiles
+                .filter(p => p.id !== user?.id && onlineUsers[p.id])
+                .map(onlinePlayer => {
+                  const displayName = onlinePlayer.gamer_tag || onlinePlayer.username || 'Player';
+                  return (
+                    <div 
+                      key={onlinePlayer.id} 
+                      className="online-story-item" 
+                      onClick={() => handleStartDM(onlinePlayer.id, displayName)}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '0.35rem',
+                        cursor: 'pointer',
+                        minWidth: '60px'
+                      }}
+                      title={`Start chat with ${displayName}`}
+                    >
+                      <div className="story-avatar-wrapper" style={{ position: 'relative' }}>
+                        <div className="story-avatar" style={{
+                          width: '50px',
+                          height: '50px',
+                          borderRadius: '50%',
+                          background: 'linear-gradient(135deg, #27272a 0%, #3f3f46 100%)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#fff',
+                          fontWeight: 700,
+                          fontSize: '1.2rem',
+                          border: '2px solid #e63946',
+                          boxShadow: '0 0 10px rgba(230, 57, 70, 0.3)'
+                        }}>
+                          {displayName.substring(0, 2).toUpperCase()}
+                        </div>
+                        <span className="status-badge-dot online" style={{
+                          position: 'absolute',
+                          bottom: '0',
+                          right: '0',
+                          width: '14px',
+                          height: '14px',
+                          background: '#4ade80',
+                          border: '2px solid #121215',
+                          borderRadius: '50%'
+                        }}></span>
+                      </div>
+                      <span className="story-name" style={{
+                        fontSize: '0.75rem',
+                        color: '#a1a1aa',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        maxWidth: '60px',
+                        fontWeight: 600
+                      }}>
+                        {displayName.length > 8 ? displayName.substring(0, 8) + '...' : displayName}
+                      </span>
+                    </div>
+                  );
+              })}
+            </div>
+          )}
+          
           <ul className="rooms-list unified-chat-list">
             {/* Global Chat Pinned to Top */}
             {chatFilter !== 'unread' && chatFilter !== 'groups' && (
