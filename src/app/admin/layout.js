@@ -47,16 +47,31 @@ export default function AdminLayout({ children }) {
   useEffect(() => {
     const checkUserSession = async () => {
       setLoading(true);
+      
+      // Safety timeout: force loading to false after 6 seconds if Supabase hangs
+      const safetyTimer = setTimeout(() => {
+        setLoading(false);
+      }, 6000);
+      
       try {
         if (supabase) {
-          const { data: { session: currentSession } } = await supabase.auth.getSession();
-          await handleUserSession(currentSession);
+          // Race between getSession and a 5 second timeout
+          const getSessionPromise = supabase.auth.getSession();
+          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Supabase getSession timeout')), 5000));
+          
+          const { data: { session: currentSession } } = await Promise.race([getSessionPromise, timeoutPromise]);
+          
+          // Also race the handleUserSession
+          const handlePromise = handleUserSession(currentSession);
+          const handleTimeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('handleUserSession timeout')), 5000));
+          await Promise.race([handlePromise, handleTimeoutPromise]);
         } else {
           setIsAdmin(false);
         }
       } catch (err) {
         console.error('Error checking user session:', err);
       } finally {
+        clearTimeout(safetyTimer);
         setLoading(false);
       }
     };
