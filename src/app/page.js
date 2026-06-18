@@ -37,7 +37,7 @@ const Home = () => {
       id: 7,
       title: t.tournamentChampionsCrowned || 'Tournament Champions Crowned - Full Results & Highlights',
       excerpt: t.tournamentChampionsExcerpt || 'Our inaugural tournament is complete! View the champions, final standings, prize distribution, and relive the best moments...',
-      image: '/tournament-media/photos/winners ss.png',
+      image: '/images/news/champions.png',
       date: 'December 20, 2025',
       category: 'tournament-results'
     },
@@ -45,14 +45,14 @@ const Home = () => {
       id: 1,
       title: 'syncplay eSports Launches - Historic 2v2 Tournament December 20th',
       excerpt: 'syncplay eSports officially launched with our inaugural 2v2 EA Sports FC 26 Tournament on December 20, 2025. The tournament has been completed successfully...',
-      image: '/ea-sports-fc-26-xbox-one-xbox-series-x-s-microsoft-store-cover.jpg',
+      image: '/images/news/launch.png',
       date: 'October 23, 2025'
     },
     {
       id: 2,
       title: 'Registration Now Open - 2v2 EA Sports FC 26 Tournament',
-      excerpt: 'Registration was open for our first tournament! 12 teams competed for exclusive prizes. Entry fee was ₦20,000 per team (subsidized rate)...',
-      image: '/fc-26-1024x639.jpg',
+      excerpt: 'Registration was open for our first tournament! 12 teams competed for exclusive prizes. Entry fee was ₦50,000 per team...',
+      image: '/images/news/registration.png',
       date: 'October 23, 2025'
     }
   ];
