@@ -217,6 +217,33 @@
   display: block;
 }
 
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #a1a1aa;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  z-index: 2;
+}
+
+.password-toggle-btn:hover {
+  color: #fff;
+}
+
 .auth-form .form-group input,
 .auth-form .form-group select {
   background: #27272a;
@@ -226,6 +253,10 @@
   border-radius: 8px;
   font-size: 0.95rem;
   width: 100%;
+}
+
+.password-input-wrapper input {
+  padding-right: 2.5rem !important;
 }
 
 .auth-form .form-group input:focus,
