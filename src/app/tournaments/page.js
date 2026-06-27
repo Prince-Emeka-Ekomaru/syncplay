@@ -346,7 +346,7 @@ const Tournaments = () => {
                       <span>{t.teamsLabel || 'TEAMS'}</span>
                     </div>
                     <div className="stat">
-                      <strong>₦1.5M</strong>
+                      <strong>₦800k</strong>
                       <span>{t.prize || 'PRIZE POOL'}</span>
                     </div>
                   </div>

@@ -24,7 +24,7 @@ const SpectatorRegister = () => {
   const [errors, setErrors] = useState({});
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [successData, setSuccessData] = useState(null);
-  const [ticketPriceKobo, setTicketPriceKobo] = useState(5000); // default ₦50
+  const [ticketPriceKobo, setTicketPriceKobo] = useState(500000); // default ₦5,000
 
   // Load spectator fee dynamically from Supabase / priceManager
   useEffect(() => {

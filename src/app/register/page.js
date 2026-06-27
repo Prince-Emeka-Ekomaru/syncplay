@@ -73,9 +73,9 @@ const Register = () => {
       
       // Check and reset price if old value detected
       const currentPrice = await getEntryFee();
-      // If somehow we got the old price (20k), reset to default (50k)
-      if (currentPrice === 2000000) {
-        console.log('Detected old price (₦20,000), resetting to default (₦50,000)');
+      // If somehow we got the old wrong price (₦100 = 10000 kobo), reset to default (₦50,000)
+      if (currentPrice === 10000) {
+        console.log('Detected wrong price (₦100), resetting to default (₦50,000)');
         resetPriceToDefault();
       }
     };

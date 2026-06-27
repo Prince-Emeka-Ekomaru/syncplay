@@ -4,7 +4,7 @@
 import { supabase } from '../supabaseClient';
 
 const PRICE_STORAGE_KEY = 'syncplay_entry_fee';
-const DEFAULT_PRICE = 10000; // 100 Naira in kobo
+const DEFAULT_PRICE = 5000000; // 50,000 Naira in kobo
 let cachedPrice = null;
 let priceLoadPromise = null;
 
@@ -38,7 +38,7 @@ export async function getEntryFee() {
         // If Supabase error, check localStorage but prefer default if localStorage has old value
         const localPrice = getEntryFeeFromLocalStorage();
         // If localStorage has old price (50k), use default instead
-        if (localPrice === 5000000) {
+        if (localPrice === 10000) {
           cachedPrice = DEFAULT_PRICE;
           localStorage.setItem(PRICE_STORAGE_KEY, DEFAULT_PRICE.toString());
           return DEFAULT_PRICE;
@@ -201,7 +201,7 @@ export async function getSpectatorFee() {
 
     if (error) {
       console.warn('Error loading spectator fee from Supabase:', error);
-      return 5000; // default 50 Naira in kobo
+      return 500000; // default 5,000 Naira in kobo
     }
 
     if (data && data.spectator_fee) {
@@ -211,10 +211,10 @@ export async function getSpectatorFee() {
       }
     }
     
-    return 5000; // default 50 Naira in kobo
+    return 500000; // default 5,000 Naira in kobo
   } catch (error) {
     console.error('Error loading spectator fee:', error);
-    return 5000; // default 50 Naira in kobo
+    return 500000; // default 5,000 Naira in kobo
   }
 }
 
