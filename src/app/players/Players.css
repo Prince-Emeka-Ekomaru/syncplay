@@ -59,6 +59,13 @@
 .leaderboard-tabs {
   display: flex;
   gap: 1.5rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.leaderboard-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tab-item {
@@ -984,5 +991,14 @@
   .player-details-container {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+  
+  .leaderboard-tabs {
+    gap: 0.75rem;
+  }
+  
+  .tab-item {
+    padding: 1rem 0.75rem;
+    font-size: 0.8rem;
   }
 }

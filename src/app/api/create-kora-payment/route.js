@@ -25,21 +25,30 @@ export async function POST(request) {
       );
     }
 
+    // Clean up metadata to remove null, undefined, or empty string values,
+    // which cause Korapay validation errors (e.g. metadata.player2Name is not allowed to be empty)
+    const cleanMetadata = {};
+    if (metadata && typeof metadata === 'object') {
+      for (const [key, val] of Object.entries(metadata)) {
+        if (val !== null && val !== undefined && val !== '') {
+          cleanMetadata[key] = val;
+        }
+      }
+    }
+    cleanMetadata.source = 'syncplay-registration';
+
     const requestBody = {
       reference,
       amount,         // in Naira — converted from kobo by paymentService.js before reaching here
       currency: 'NGN',
       customer: {
         email,
-        name: metadata?.teamName || metadata?.player1Name || 'Syncplay Player',
+        name: cleanMetadata.teamName || cleanMetadata.player1Name || 'Syncplay Player',
       },
       notification_url: callback_url,
       redirect_url: callback_url,
       channels: ['card', 'bank_transfer', 'pay_with_bank'],
-      metadata: {
-        ...metadata,
-        source: 'syncplay-registration',
-      },
+      metadata: cleanMetadata,
     };
 
     console.log('Calling Kora Pay API with:', JSON.stringify(requestBody, null, 2));
