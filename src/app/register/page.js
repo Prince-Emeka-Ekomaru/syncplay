@@ -988,40 +988,69 @@ const Register = () => {
       </div>
 
       {/* Social Share */}
-      <div className="social-share-section">
-        <p className="share-label"><i className="fas fa-share-alt"></i> Share your registration</p>
-        <div className="share-buttons">
-          <a
-            href={`https://wa.me/?text=${encodeURIComponent(`🎮 Just registered for the Syncplay 2v2 EA Sports FC 26 Tournament on July 30! Team: ${registrationData?.teamName || 'We are in!'}. Join us 👉 https://syncplay.co/register`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="share-btn whatsapp"
-          >
-            <i className="fab fa-whatsapp"></i> WhatsApp
-          </a>
-          <a
-            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`🎮 Just registered for the @syncplay_co 2v2 EA FC 26 Tournament on July 30! Team ${registrationData?.teamName || ''} is coming 🔥 #Syncplay #eFootball #EAFC26`)}&url=${encodeURIComponent('https://syncplay.co/register')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="share-btn twitter"
-          >
-            <i className="fab fa-x-twitter"></i> Post on X
-          </a>
-          <button
-            className="share-btn copy-link"
-            onClick={() => {
-              navigator.clipboard.writeText('https://syncplay.co/register');
-              const btn = document.getElementById('copy-link-btn');
-              if (btn) { btn.textContent = '✅ Copied!'; setTimeout(() => { btn.textContent = '🔗 Copy Link'; }, 2000); }
-            }}
-          >
-            <span id="copy-link-btn">🔗 Copy Link</span>
-          </button>
-        </div>
-        <p className="share-instagram-hint">
-          <i className="fab fa-instagram"></i> For Instagram — screenshot this page and share to your story!
-        </p>
-      </div>
+      {(() => {
+        const p1Name = registrationData?.player1Name || 'Player 1';
+        const p2Name = registrationData?.player2Name || 'Teammate';
+        const teamNameVal = registrationData?.teamName || 'Syncplay Team';
+        
+        const fullShareText = `🎮 We are officially registered for the Syncplay 2v2 EA Sports FC 26 Tournament!
+
+🏆 Team: ${teamNameVal}
+👥 Players: ${p1Name} & ${p2Name}
+📅 Date: Thursday, July 30, 2026
+📍 Venue: Rufus & Bee, Lekki
+🔥 Watch us play or join the action!
+
+#Syncplay #EAFC26 #Esports #GamingTournaments
+https://syncplay.co/register`;
+
+        const waText = encodeURIComponent(fullShareText);
+        
+        const xText = encodeURIComponent(`🎮 Team ${teamNameVal} is registered for @syncplay_co 2v2 EA FC 26 Tournament on July 30!\n\nPlayers: ${p1Name} & ${p2Name}\n\n#Syncplay #EAFC26`);
+        const xUrl = encodeURIComponent('https://syncplay.co/register');
+
+        return (
+          <div className="social-share-section">
+            <p className="share-label"><i className="fas fa-share-alt"></i> Share your registration</p>
+            <div className="share-buttons">
+              <a
+                href={`https://wa.me/?text=${waText}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="share-btn whatsapp"
+              >
+                <i className="fab fa-whatsapp"></i> WhatsApp
+              </a>
+              <a
+                href={`https://twitter.com/intent/tweet?text=${xText}&url=${xUrl}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="share-btn twitter"
+              >
+                <i className="fab fa-x-twitter"></i> Post on X
+              </a>
+              <button
+                className="share-btn copy-link"
+                onClick={() => {
+                  navigator.clipboard.writeText(fullShareText);
+                  const btn = document.getElementById('copy-link-btn');
+                  if (btn) {
+                    btn.textContent = '✅ Copied!';
+                    setTimeout(() => {
+                      btn.textContent = '🔗 Copy Details';
+                    }, 2000);
+                  }
+                }}
+              >
+                <span id="copy-link-btn">🔗 Copy Details</span>
+              </button>
+            </div>
+            <p className="share-instagram-hint">
+              <i className="fab fa-instagram"></i> For Instagram — screenshot this page and share to your story!
+            </p>
+          </div>
+        );
+      })()}
 
       <div className="success-actions">
         <button className="btn btn-primary" onClick={() => router.push('/events')}>
