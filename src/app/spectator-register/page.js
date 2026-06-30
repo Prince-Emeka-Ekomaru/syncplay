@@ -63,7 +63,23 @@ const SpectatorRegister = () => {
         let parsedFormData = null;
         try {
           parsedFormData = JSON.parse(pendingData);
-          console.log('Processing spectator ticket save for:', parsedFormData.buyerName);
+          console.log('Verifying Kora Pay payment status with server...');
+
+          const verifyResponse = await fetch('/api/verify-kora-payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ reference: paymentRef }),
+          });
+
+          const verifyData = await verifyResponse.json();
+
+          if (!verifyData.success) {
+            throw new Error(verifyData.message || 'Payment has not been completed yet.');
+          }
+
+          console.log('Payment verified! Processing spectator ticket save for:', parsedFormData.buyerName);
           
           const totalAmount = ticketPriceKobo * parseInt(parsedFormData.ticketQuantity, 10);
           const savedData = await saveSpectatorTicket(paymentRef, parsedFormData, totalAmount);
@@ -88,8 +104,11 @@ const SpectatorRegister = () => {
           window.history.replaceState({}, document.title, window.location.pathname);
         } catch (error) {
           sessionStorage.removeItem(processedKey);
-          console.error('Error saving spectator ticket:', error);
-          alert(`Payment successful but ticket registration failed.\n\nError: ${error.message || 'Unknown error'}\n\nPlease contact support with reference: ${paymentRef}`);
+          console.error('Error processing spectator ticket:', error);
+          alert(`Payment verification or ticket registration failed.\n\nError: ${error.message || 'Unknown error'}\n\nPlease complete the payment or contact support with reference: ${paymentRef}`);
+          
+          // Clean URL to prevent loops
+          window.history.replaceState({}, document.title, window.location.pathname);
         }
       } else {
         sessionStorage.removeItem(processedKey);

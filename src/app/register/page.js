@@ -121,7 +121,23 @@ const Register = () => {
         let parsedFormData = null;
         try {
           parsedFormData = JSON.parse(pendingData);
-          console.log('Processing registration save for:', parsedFormData.teamName);
+          console.log('Verifying Kora Pay payment status with server...');
+
+          const verifyResponse = await fetch('/api/verify-kora-payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ reference: paymentRef }),
+          });
+
+          const verifyData = await verifyResponse.json();
+
+          if (!verifyData.success) {
+            throw new Error(verifyData.message || 'Payment has not been completed yet.');
+          }
+
+          console.log('Payment verified! Processing registration save for:', parsedFormData.teamName);
           
           const entryFee = await getEntryFee();
           await saveRegistration(paymentRef, parsedFormData, PAYMENT_GATEWAYS.KORA, entryFee);
@@ -142,21 +158,11 @@ const Register = () => {
         } catch (error) {
           // Remove processed flag on error so it can be retried if needed
           sessionStorage.removeItem(processedKey);
+          console.error('Registration processing error:', error);
+          alert(`Payment verification or registration failed.\n\nError: ${error.message || 'Unknown error'}\n\nPlease complete the payment or contact support with reference: ${paymentRef}`);
           
-          // Log error once with structured data
-          const errorInfo = {
-            message: error.message,
-            code: error.code,
-            details: error.details,
-            hint: error.hint,
-            paymentRef,
-            teamName: parsedFormData?.teamName
-          };
-          console.error('Error saving registration:', errorInfo);
-          
-          // Show detailed error to user
-          const errorMsg = error.message || 'Unknown error occurred';
-          alert(`Payment successful but registration save failed.\n\nError: ${errorMsg}\n\nPlease contact support with reference: ${paymentRef}\n\nTeam: ${parsedFormData?.teamName || 'Unknown'}`);
+          // Clean URL to prevent loops
+          window.history.replaceState({}, document.title, window.location.pathname);
         }
       } else {
         // SessionStorage was cleared or reference mismatch
