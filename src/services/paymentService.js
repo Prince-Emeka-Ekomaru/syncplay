@@ -105,9 +105,9 @@ export async function initializeKoraPayment(config) {
         callback_url: callbackUrl,
         metadata: (() => {
           const m = {};
-          if (config.metadata?.teamName) m.teamName = config.metadata.teamName;
-          if (config.metadata?.player1Name) m.player1Name = config.metadata.player1Name;
-          if (config.metadata?.player2Name) m.player2Name = config.metadata.player2Name;
+          if (config.metadata?.teamName) m.teamName = config.metadata.teamName.trim();
+          if (config.metadata?.player1Name) m.player1Name = config.metadata.player1Name.trim();
+          if (config.metadata?.player2Name) m.player2Name = config.metadata.player2Name.trim();
           return m;
         })(),
       }),

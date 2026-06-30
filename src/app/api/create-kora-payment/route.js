@@ -26,24 +26,31 @@ export async function POST(request) {
     }
 
     // Clean up metadata to remove null, undefined, or empty string values,
-    // which cause Korapay validation errors (e.g. metadata.player2Name is not allowed to be empty)
+    // and trim string values to prevent Korapay whitespace validation errors (e.g. metadata.teamName must not have leading/trailing whitespace)
     const cleanMetadata = {};
     if (metadata && typeof metadata === 'object') {
       for (const [key, val] of Object.entries(metadata)) {
-        if (val !== null && val !== undefined && val !== '') {
-          cleanMetadata[key] = val;
+        if (val !== null && val !== undefined) {
+          const trimmedVal = typeof val === 'string' ? val.trim() : val;
+          if (trimmedVal !== '') {
+            cleanMetadata[key] = trimmedVal;
+          }
         }
       }
     }
     cleanMetadata.source = 'syncplay-registration';
+
+    const trimmedEmail = typeof email === 'string' ? email.trim() : email;
+    const customerName = cleanMetadata.teamName || cleanMetadata.player1Name || 'Syncplay Player';
+    const trimmedName = typeof customerName === 'string' ? customerName.trim() : customerName;
 
     const requestBody = {
       reference,
       amount,         // in Naira — converted from kobo by paymentService.js before reaching here
       currency: 'NGN',
       customer: {
-        email,
-        name: cleanMetadata.teamName || cleanMetadata.player1Name || 'Syncplay Player',
+        email: trimmedEmail,
+        name: trimmedName,
       },
       notification_url: callback_url,
       redirect_url: callback_url,
