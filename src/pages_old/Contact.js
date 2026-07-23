@@ -50,11 +50,12 @@ const Contact = () => {
   ];
 
   const socialLinks = [
-    { icon: 'fa-instagram', url: 'https://instagram.com', name: 'Instagram' },
-    { icon: 'fa-tiktok', url: 'https://tiktok.com', name: 'TikTok' },
-    { icon: 'fa-discord', url: 'https://discord.com', name: 'Discord' },
-    { icon: 'fa-youtube', url: 'https://youtube.com', name: 'YouTube' },
-    { icon: 'fa-telegram', url: 'https://telegram.org', name: 'Telegram' }
+    { icon: 'fa-instagram', url: 'https://www.instagram.com/syncplay_esports/', name: 'Instagram' },
+    { icon: 'fa-tiktok', url: 'https://www.tiktok.com/@syncplay_esport', name: 'TikTok' },
+    { icon: 'fa-discord', url: 'https://discord.gg/utstb8rGgM', name: 'Discord' },
+    { icon: 'fa-youtube', url: 'https://www.youtube.com/@syncplayEsports', name: 'YouTube' },
+    { icon: 'fa-twitter', url: 'https://x.com/SyncplayEsport', name: 'X (Twitter)' },
+    { icon: 'fa-tower-broadcast', url: 'https://streamlivr.com/@syncplayesports', name: 'Streamlivr' }
   ];
 
   return (

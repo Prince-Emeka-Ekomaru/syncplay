@@ -57,7 +57,7 @@ const Footer = () => {
             </div>
 
             <div className="footer-column">
-              <h4>{t.followUs} & Live</h4>
+              <h4>{t.followUs}</h4>
               <div className="footer-social">
                 <a href="https://www.instagram.com/syncplay_esports/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                   <i className="fab fa-instagram"></i>
@@ -76,24 +76,6 @@ const Footer = () => {
                 </a>
                 <a href="https://streamlivr.com/@syncplayesports" target="_blank" rel="noopener noreferrer" aria-label="Streamlivr" title="Streamlivr - Official Exclusive Stream Partner" style={{ color: '#29A7E4' }}>
                   <i className="fas fa-tower-broadcast"></i>
-                </a>
-              </div>
-              <div style={{ marginTop: '0.8rem' }}>
-                <a 
-                  href="https://streamlivr.com/@syncplayesports" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  style={{ 
-                    fontSize: '0.8rem', 
-                    color: '#29A7E4', 
-                    display: 'inline-flex', 
-                    alignItems: 'center', 
-                    gap: '6px',
-                    fontWeight: '600',
-                    textDecoration: 'none'
-                  }}
-                >
-                  <i className="fas fa-video"></i> Stream Partner: Streamlivr (@syncplayesports)
                 </a>
               </div>
             </div>
