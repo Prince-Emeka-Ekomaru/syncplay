@@ -202,12 +202,13 @@ const TournamentRules = () => {
             </ul>
 
             <h2>11. Streaming and Content</h2>
-            <h3>11.1 Broadcasting Rights</h3>
+            <h3>11.1 Broadcasting Rights & Exclusive Stream Partner</h3>
             <ul>
-              <li>syncplay eSports reserves the right to stream all matches</li>
-              <li>Players may stream their own POV with proper credit</li>
-              <li>Content must comply with EA Sports terms of service</li>
-              <li>Offensive or inappropriate content is prohibited</li>
+              <li><strong>Exclusive Live Stream Partner:</strong> <a href="https://streamlivr.com/@syncplayesports" target="_blank" rel="noopener noreferrer" style={{color: '#29A7E4', fontWeight: 'bold'}}>Streamlivr</a> (https://streamlivr.com/@syncplayesports) is syncplay eSports' official exclusive live stream partner.</li>
+              <li>All official tournament broadcasts, live streams, spectator feeds, and featured matches are streamed solely and exclusively on Streamlivr.</li>
+              <li>Players and spectators must join and watch live broadcasts directly on Streamlivr.</li>
+              <li>Content must comply with EA Sports terms of service.</li>
+              <li>Offensive or inappropriate content is strictly prohibited.</li>
             </ul>
 
             <h3>11.2 Media Obligations</h3>

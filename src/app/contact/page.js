@@ -168,6 +168,61 @@ const Contact = () => {
                 </div>
               </div>
 
+              <div className="info-card partner-info-card" style={{
+                background: 'linear-gradient(135deg, rgba(30, 27, 75, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
+                border: '2px solid rgba(41, 167, 228, 0.4)',
+                borderRadius: '16px',
+                padding: '1.5rem',
+                marginBottom: '1.5rem'
+              }}>
+                <div style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(90deg, #29A7E4, #1d4ed8)',
+                  color: '#fff',
+                  fontSize: '0.68rem',
+                  fontWeight: '800',
+                  letterSpacing: '1px',
+                  padding: '4px 10px',
+                  borderRadius: '4px',
+                  marginBottom: '10px',
+                  textTransform: 'uppercase'
+                }}>
+                  {t.streamPartner || 'EXCLUSIVE LIVESTREAM PARTNER'}
+                </div>
+                <div style={{ margin: '0.5rem 0' }}>
+                  <a href="https://streamlivr.com/@syncplayesports" target="_blank" rel="noopener noreferrer">
+                    <img 
+                      src="/streamlivr-logo-white.svg" 
+                      alt="Streamlivr Logo" 
+                      style={{ height: '48px', width: 'auto', maxWidth: '100%' }}
+                    />
+                  </a>
+                </div>
+                <p style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: '1.5', margin: '0.5rem 0 1rem 0' }}>
+                  {t.streamPartnerDesc || 'Streamlivr is our exclusive live stream partner — the only platform where you can join and watch our live streams! Streamlivr is a social and livestreaming app where gamers, creators, and streamers create and share content, go live, and earn from rewards, fan gifts, and purchases with a built-in wallet and instant bank payouts.'}
+                </p>
+                <a 
+                  href="https://streamlivr.com/@syncplayesports" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    color: '#fff',
+                    background: 'linear-gradient(135deg, #29A7E4 0%, #1d4ed8 100%)',
+                    padding: '8px 16px',
+                    borderRadius: '6px',
+                    fontSize: '0.85rem',
+                    fontWeight: '700',
+                    textDecoration: 'none'
+                  }}
+                >
+                  <i className="fas fa-external-link-alt"></i>
+                  {t.watchLiveOnStreamlivr || 'Watch Live on Streamlivr'}
+                </a>
+              </div>
+
               <div className="info-card social-card">
                 <h3>FOLLOW US</h3>
                 <p>Stay connected on social media</p>
@@ -184,6 +239,17 @@ const Contact = () => {
                       <i className={`fab ${social.icon}`}></i>
                     </a>
                   ))}
+                  <a
+                    href="https://streamlivr.com/@syncplayesports"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-link"
+                    aria-label="Streamlivr"
+                    title="Streamlivr - Official Stream Partner"
+                    style={{ background: 'rgba(41, 167, 228, 0.15)', borderColor: '#29A7E4', color: '#29A7E4' }}
+                  >
+                    <i className="fas fa-tower-broadcast"></i>
+                  </a>
                 </div>
               </div>
 

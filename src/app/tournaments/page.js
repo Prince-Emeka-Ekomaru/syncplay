@@ -117,6 +117,31 @@ const Tournaments = () => {
           <li>Prizes will be paid immediately the tournament finishes, split equally between team members.</li>
         </ul>
       )
+    },
+    {
+      title: t.ruleStreamingTitle || '5. Official Live Streaming & Broadcast',
+      content: (
+        <div>
+          <p>{t.ruleStreamingDesc || 'Streamlivr (https://streamlivr.com) is syncplay eSports\' exclusive live stream partner. All official tournament live broadcasts, spectator feeds, and featured matches are streamed solely and exclusively on Streamlivr.'}</p>
+          <div style={{ marginTop: '12px' }}>
+            <a 
+              href="https://streamlivr.com/@syncplayesports" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                color: '#29A7E4',
+                fontWeight: '600',
+                textDecoration: 'none'
+              }}
+            >
+              <i className="fas fa-external-link-alt"></i> Join live stream on Streamlivr (@syncplayesports)
+            </a>
+          </div>
+        </div>
+      )
     }
   ];
 

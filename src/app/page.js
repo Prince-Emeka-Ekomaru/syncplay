@@ -325,8 +325,92 @@ const Home = () => {
             </p>
             <Link href="/contact" className="btn btn-primary btn-get-in-touch">{t.getInTouch}</Link>
           </div>
-          {/* Venue Spotlight */}
-          <div className="partners-section animate-on-scroll">
+
+          {/* Official Partners Spotlight */}
+          <div className="partners-section animate-on-scroll" style={{ marginTop: '3rem' }}>
+            <div className="stream-partner-card" style={{
+              background: 'linear-gradient(135deg, rgba(30, 27, 75, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%)',
+              border: '2px solid rgba(41, 167, 228, 0.4)',
+              borderRadius: '20px',
+              padding: '2.5rem 2rem',
+              margin: '0 auto 3rem auto',
+              maxWidth: '850px',
+              boxShadow: '0 10px 30px rgba(41, 167, 228, 0.15)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                position: 'absolute',
+                top: '0',
+                right: '0',
+                background: 'linear-gradient(90deg, #29A7E4, #e63946)',
+                color: '#fff',
+                fontSize: '0.75rem',
+                fontWeight: '800',
+                letterSpacing: '1.5px',
+                padding: '6px 16px',
+                borderBottomLeftRadius: '12px',
+                textTransform: 'uppercase'
+              }}>
+                <i className="fas fa-signal" style={{ marginRight: '6px' }}></i>
+                {t.streamPartner || 'EXCLUSIVE LIVESTREAM PARTNER'}
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <a href="https://streamlivr.com/@syncplayesports" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', margin: '1rem 0' }}>
+                  <img 
+                    src="/streamlivr-logo-white.svg" 
+                    alt="Streamlivr - Official Exclusive Stream Partner" 
+                    style={{ height: '70px', width: 'auto', maxWidth: '100%', filter: 'drop-shadow(0 4px 12px rgba(41, 167, 228, 0.3))' }}
+                  />
+                </a>
+                
+                <h3 style={{ color: '#fff', fontSize: '1.4rem', fontWeight: '700', margin: '0.5rem 0 1rem 0' }}>
+                  {t.streamPartnerSubtitle || 'Official & Exclusive Live Streaming Home for syncplay eSports'}
+                </h3>
+                
+                <p style={{ color: '#cbd5e1', fontSize: '0.98rem', lineHeight: '1.6', maxWidth: '700px', margin: '0 auto 1.5rem auto' }}>
+                  {t.streamPartnerDesc || 'Streamlivr is our exclusive live stream partner — the only platform where you can join and watch our live streams! Streamlivr is a social and livestreaming app where gamers, creators, and streamers create and share content, go live, and earn from rewards, fan gifts, and purchases with a built-in wallet and instant bank payouts.'}
+                </p>
+
+                <div style={{
+                  background: 'rgba(230, 57, 70, 0.1)',
+                  border: '1px solid rgba(230, 57, 70, 0.3)',
+                  borderRadius: '8px',
+                  padding: '8px 16px',
+                  marginBottom: '1.5rem',
+                  fontSize: '0.85rem',
+                  color: '#f87171',
+                  fontWeight: '600'
+                }}>
+                  <i className="fas fa-exclamation-circle" style={{ marginRight: '8px' }}></i>
+                  {t.streamPartnerDisclaimer || 'Streamlivr is the ONLY official platform to join syncplay live streams.'}
+                </div>
+
+                <a 
+                  href="https://streamlivr.com/@syncplayesports" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn btn-primary"
+                  style={{
+                    background: 'linear-gradient(135deg, #29A7E4 0%, #1d4ed8 100%)',
+                    borderColor: '#29A7E4',
+                    boxShadow: '0 4px 15px rgba(41, 167, 228, 0.4)',
+                    padding: '12px 28px',
+                    fontSize: '1rem',
+                    fontWeight: '700',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px'
+                  }}
+                >
+                  <i className="fas fa-play-circle" style={{ fontSize: '1.2rem' }}></i>
+                  {t.watchLiveOnStreamlivr || 'Watch Live on Streamlivr'}
+                </a>
+              </div>
+            </div>
+
+            {/* Venue Spotlight */}
             <h3 className="partners-title">{t.nextVenue || 'NEXT EVENT VENUE'}</h3>
             <div className="partner-logos">
               <div className="partner-logo partner-logo-featured" style={{ background: 'transparent', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
