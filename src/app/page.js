@@ -129,7 +129,7 @@ const Home = () => {
               <i className="fab fa-twitter"></i>
             </a>
             <a href="https://streamlivr.com/@syncplayesports" target="_blank" rel="noopener noreferrer" aria-label="Streamlivr" title="Streamlivr - Official Stream Partner" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img src="/streamlivr-icon.png" alt="Streamlivr" style={{ width: '28px', height: '28px', borderRadius: '6px', objectFit: 'contain' }} />
+              <img src="/STREAMLIVR logo WHITE.png" alt="Streamlivr" style={{ width: '28px', height: '28px', borderRadius: '6px', objectFit: 'contain' }} />
             </a>
           </div>
         </div>
@@ -362,7 +362,7 @@ const Home = () => {
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                 <a href="https://streamlivr.com/@syncplayesports" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', margin: '1rem 0' }}>
                   <img 
-                    src="/streamlivr-logo-white.svg" 
+                    src="/STREAMLIVR logo WHITE.png" 
                     alt="Streamlivr - Official Exclusive Stream Partner" 
                     style={{ height: '70px', width: 'auto', maxWidth: '100%', filter: 'drop-shadow(0 4px 12px rgba(41, 167, 228, 0.3))' }}
                   />

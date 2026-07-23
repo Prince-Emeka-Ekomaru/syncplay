@@ -192,7 +192,7 @@ const Contact = () => {
                 <div style={{ margin: '0.5rem 0' }}>
                   <a href="https://streamlivr.com/@syncplayesports" target="_blank" rel="noopener noreferrer">
                     <img 
-                      src="/streamlivr-logo-white.svg" 
+                      src="/STREAMLIVR logo WHITE.png" 
                       alt="Streamlivr Logo" 
                       style={{ height: '48px', width: 'auto', maxWidth: '100%' }}
                     />
@@ -248,7 +248,7 @@ const Contact = () => {
                     title="Streamlivr - Official Stream Partner"
                     style={{ background: 'rgba(41, 167, 228, 0.15)', borderColor: '#29A7E4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   >
-                    <img src="/streamlivr-icon.png" alt="Streamlivr" style={{ width: '24px', height: '24px', borderRadius: '5px', objectFit: 'contain' }} />
+                    <img src="/STREAMLIVR logo WHITE.png" alt="Streamlivr" style={{ width: '24px', height: '24px', borderRadius: '5px', objectFit: 'contain' }} />
                   </a>
                 </div>
               </div>
