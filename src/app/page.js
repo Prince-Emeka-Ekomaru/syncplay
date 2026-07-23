@@ -129,7 +129,7 @@ const Home = () => {
               <i className="fab fa-twitter"></i>
             </a>
             <a href="https://streamlivr.com/@syncplayesports" target="_blank" rel="noopener noreferrer" aria-label="Streamlivr" title="Streamlivr - Official Stream Partner" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img src="/STREAMLIVR logo WHITE.png" alt="Streamlivr" style={{ width: '28px', height: '28px', borderRadius: '6px', objectFit: 'contain' }} />
+              <img src="/streamlivr-icon.png" alt="Streamlivr" style={{ width: '28px', height: '28px', borderRadius: '6px', objectFit: 'contain' }} />
             </a>
           </div>
         </div>

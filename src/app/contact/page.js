@@ -248,7 +248,7 @@ const Contact = () => {
                     title="Streamlivr - Official Stream Partner"
                     style={{ background: 'rgba(41, 167, 228, 0.15)', borderColor: '#29A7E4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   >
-                    <img src="/STREAMLIVR logo WHITE.png" alt="Streamlivr" style={{ width: '24px', height: '24px', borderRadius: '5px', objectFit: 'contain' }} />
+                    <img src="/streamlivr-icon.png" alt="Streamlivr" style={{ width: '24px', height: '24px', borderRadius: '5px', objectFit: 'contain' }} />
                   </a>
                 </div>
               </div>
