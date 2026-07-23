@@ -68,8 +68,8 @@ const Navbar = () => {
           <a href="https://x.com/SyncplayEsport" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
             <i className="fab fa-twitter"></i>
           </a>
-          <a href="https://streamlivr.com/@syncplayesports" target="_blank" rel="noopener noreferrer" aria-label="Streamlivr" title="Streamlivr - Official Stream Partner">
-            <i className="fas fa-tower-broadcast" style={{ color: '#29A7E4' }}></i>
+          <a href="https://streamlivr.com/@syncplayesports" target="_blank" rel="noopener noreferrer" aria-label="Streamlivr" title="Streamlivr - Official Stream Partner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <img src="/streamlivr-icon.png" alt="Streamlivr" style={{ width: '26px', height: '26px', borderRadius: '6px', objectFit: 'contain' }} />
           </a>
         </div>
       )}

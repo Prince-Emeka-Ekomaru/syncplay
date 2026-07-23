@@ -246,9 +246,9 @@ const Contact = () => {
                     className="social-link"
                     aria-label="Streamlivr"
                     title="Streamlivr - Official Stream Partner"
-                    style={{ background: 'rgba(41, 167, 228, 0.15)', borderColor: '#29A7E4', color: '#29A7E4' }}
+                    style={{ background: 'rgba(41, 167, 228, 0.15)', borderColor: '#29A7E4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   >
-                    <i className="fas fa-tower-broadcast"></i>
+                    <img src="/streamlivr-icon.png" alt="Streamlivr" style={{ width: '24px', height: '24px', borderRadius: '5px', objectFit: 'contain' }} />
                   </a>
                 </div>
               </div>
